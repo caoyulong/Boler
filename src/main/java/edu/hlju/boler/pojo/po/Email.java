@@ -2,23 +2,17 @@ package edu.hlju.boler.pojo.po;
 
 import java.util.Date;
 
+import org.springframework.mail.SimpleMailMessage;
+
 public class Email {
+    private SimpleMailMessage mail;
+
     private Integer id;
 
     private User user;
 
-    private String from;
-
-    private String to;
-
-    private String subject;
-
-    private Date sendTime;
-
-    private String text;
-
     public String getFrom() {
-        return from;
+        return mail.getFrom();
     }
 
     public Integer getId() {
@@ -26,19 +20,19 @@ public class Email {
     }
 
     public Date getSendTime() {
-        return sendTime;
+        return mail.getSentDate();
     }
 
     public String getSubject() {
-        return subject;
+        return mail.getSubject();
     }
 
     public String getText() {
-        return text;
+        return mail.getText();
     }
 
     public String getTo() {
-        return to;
+        return mail.getTo()[0];
     }
 
     public User getUser() {
@@ -46,7 +40,7 @@ public class Email {
     }
 
     public void setFrom(String from) {
-        this.from = from;
+        mail.setFrom(from);
     }
 
     public void setId(Integer id) {
@@ -54,19 +48,19 @@ public class Email {
     }
 
     public void setSendTime(Date sendTime) {
-        this.sendTime = sendTime;
+        mail.setSentDate(sendTime);
     }
 
     public void setSubject(String subject) {
-        this.subject = subject;
+        mail.setSubject(subject);
     }
 
     public void setText(String text) {
-        this.text = text;
+        mail.setText(text);
     }
 
     public void setTo(String to) {
-        this.to = to;
+        mail.setText(to);
     }
 
     public void setUser(User user) {

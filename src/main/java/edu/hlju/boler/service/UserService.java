@@ -1,9 +1,10 @@
-package edu.hlju.boler.service.user;
+package edu.hlju.boler.service;
 
 import java.sql.SQLException;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ import edu.hlju.boler.pojo.po.User;
 import edu.hlju.boler.pojo.po.UserLog;
 import edu.hlju.boler.pojo.vo.StateResponse;
 import edu.hlju.boler.pojo.vo.UserRole;
-import edu.hlju.boler.service.interfaces.user.IUserService;
+import edu.hlju.boler.service.interfaces.IUserService;
 import edu.hlju.boler.util.Encrytor;
 import edu.hlju.boler.util.LegalityVerificator;
 
@@ -26,6 +27,7 @@ public class UserService implements IUserService {
     public static final String USER_OBJECT = "user";
     public static final int MAX_ERROR_TIMES = 3;
     private int errorTimes = 0;
+    private HttpSession session;
 
     @Resource
     private IUserDao userDao;
@@ -35,6 +37,11 @@ public class UserService implements IUserService {
 
     @Resource
     private IPermissionDao permDao;
+
+    @Override
+    public HttpSession getSession() {
+        return session;
+    }
 
     @Override
     public StateResponse login(HttpServletRequest request, User user) {
@@ -54,7 +61,8 @@ public class UserService implements IUserService {
 
         // TODO
         UserLog log = new UserLog(addr, selected.getId(), 1);
-        request.getSession().setAttribute(USER_OBJECT, selected);
+        session = request.getSession();
+        session.setAttribute(USER_OBJECT, selected);
         return new StateResponse(UserDataDict.LOGIN_SUCCESS);
     }
 

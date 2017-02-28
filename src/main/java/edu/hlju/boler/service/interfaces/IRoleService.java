@@ -1,4 +1,4 @@
-package edu.hlju.boler.service.interfaces.user;
+package edu.hlju.boler.service.interfaces;
 
 import java.util.List;
 

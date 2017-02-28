@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import edu.hlju.boler.pojo.po.Role;
 import edu.hlju.boler.pojo.po.User;
 import edu.hlju.boler.pojo.vo.BaseResponse;
-import edu.hlju.boler.service.interfaces.user.IUserService;
+import edu.hlju.boler.service.interfaces.IUserService;
 
 @Controller
 @RequestMapping(value = "/user")

@@ -1,4 +1,4 @@
-package edu.hlju.boler.service.interfaces.system.activemq;
+package edu.hlju.boler.core.interfaces;
 
 public interface IMessageSender {
 

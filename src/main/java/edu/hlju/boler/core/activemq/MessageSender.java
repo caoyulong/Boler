@@ -1,10 +1,10 @@
-package edu.hlju.boler.service.system.activemq;
+package edu.hlju.boler.core.activemq;
 
 import javax.annotation.Resource;
 
 import org.springframework.jms.core.JmsTemplate;
 
-import edu.hlju.boler.service.interfaces.system.activemq.IMessageSender;
+import edu.hlju.boler.core.interfaces.IMessageSender;
 
 public class MessageSender implements IMessageSender {
     @Resource(name = "jmsQueueTemplate")

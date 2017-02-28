@@ -1,4 +1,4 @@
-package edu.hlju.boler.service.interfaces.system;
+package edu.hlju.boler.core.interfaces;
 
 import edu.hlju.boler.pojo.po.UserLog;
 

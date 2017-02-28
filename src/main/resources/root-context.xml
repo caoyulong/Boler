@@ -61,22 +61,27 @@
     <bean id="connectionFactory" class="org.apache.activemq.spring.ActiveMQConnectionFactory">
         <property name="brokerURL" value="tcp://127.0.0.1:61616" />
     </bean> 
-    <!-- 点对点消息队列 -->
-    <bean id="queue" class="org.apache.activemq.command.ActiveMQQueue">
-        <property name="physicalName" value="boler.queue" />
+     <!-- 点对点消息队列-->
+    <bean id="message_queue" class="org.apache.activemq.command.ActiveMQQueue">
+        <property name="physicalName" value="email_queue" />
     </bean>
     <!-- JMSTemplate -->
     <bean id="jmsQueueTemplate" class="org.springframework.jms.core.JmsTemplate">
         <property name="connectionFactory" ref="connectionFactory" />
         <!-- 默认目的地 -->
-        <property name="defaultDestination" ref="queue" />
+        <property name="defaultDestination" ref="message_queue" />
         <property name="messageConverter" ref="messageConvert" />
     </bean>
     <!-- 消息转换器 -->
     <bean id="messageConvert" class="org.springframework.jms.support.converter.MappingJackson2MessageConverter" />
     <!-- JMS消息监听器 -->
     <jms:listener-container connection-factory="connectionFactory">
-        <jms:listener destination="boler.queue" ref="messageReceiver"/>
+        <jms:listener destination="message_queue" ref="messageReceiver"/>
     </jms:listener-container>
+    <!-- Email Sender -->
+    <bean id="javaMailSenderImpl" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="protocol" value="smtp" />
+        <property name="host" value="smtp.163.com" />
+    </bean>
 	
 </beans>

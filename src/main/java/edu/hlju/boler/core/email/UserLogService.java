@@ -1,4 +1,4 @@
-package edu.hlju.boler.service.system;
+package edu.hlju.boler.core.email;
 
 import java.sql.SQLException;
 
@@ -6,9 +6,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import edu.hlju.boler.core.interfaces.IUserLogService;
 import edu.hlju.boler.dao.IUserLogDao;
 import edu.hlju.boler.pojo.po.UserLog;
-import edu.hlju.boler.service.interfaces.system.IUserLogService;
 
 @Service("userLogService")
 public class UserLogService implements IUserLogService {
