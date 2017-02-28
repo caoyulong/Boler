@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.hlju.boler.dao.IApplicationDao">
+
+    <resultMap id="BaseResultMap" type="edu.hlju.boler.pojo.po.Application">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        
+        <association column="employ" property="employ" select="edu.hlju.boler.dao.IUserDao.selectById" />
+        <association column="employee" property="employee" select="edu.hlju.boler.dao.IUserDao.selectById" />
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        id, create_time, employ, employee
+    </sql>
+    
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_list" />
+        from application
+    </select>
+    
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from application
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from application
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    
+    <insert id="insert" parameterType="edu.hlju.boler.pojo.po.Application">
+        insert into application (id, create_time, employ, employee)
+        values (#{id,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+	        #{employ.id,jdbcType=INTEGER},
+	        #{employee.id,jdbcType=INTEGER}
+        )
+    </insert>
+    
+    <insert id="insertSelective" parameterType="edu.hlju.boler.pojo.po.Application">
+        insert into application
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="employ.id != null">
+                employ.id,
+            </if>
+            <if test="employee.id != null">
+                employee.id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="employ.id != null">
+                #{employ.id,jdbcType=INTEGER},
+            </if>
+            <if test="employee.id != null">
+                #{employee.id,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    
+    <update id="updateByIdSelective" parameterType="edu.hlju.boler.pojo.po.Application">
+        update application
+        <set>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="employ.id != null">
+                employ = #{employ.id,jdbcType=INTEGER},
+            </if>
+            <if test="employee.id != null">
+                employee = #{employee.id,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    
+    <update id="updateById" parameterType="edu.hlju.boler.pojo.po.Application">
+        update application
+        set create_time = #{createTime,jdbcType=TIMESTAMP},
+        employ = #{employ.id,jdbcType=INTEGER},
+        employee = #{employee.id,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    
+</mapper>

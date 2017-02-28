@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.hlju.boler.dao.IRecruitmentDao">
+
+    <resultMap id="BaseResultMap" type="edu.hlju.boler.pojo.po.Recruitment">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="corporation" jdbcType="VARCHAR" property="corporation" />
+        <result column="job_name" jdbcType="VARCHAR" property="jobName" />
+        <result column="low_salary" jdbcType="INTEGER" property="lowSalary" />
+        <result column="high_salary" jdbcType="INTEGER" property="highSalary" />
+        <result column="address" jdbcType="VARCHAR" property="address" />
+        <result column="industry" jdbcType="VARCHAR" property="industry" />
+        <result column="job_detail" jdbcType="VARCHAR" property="jobDetail" />
+        <result column="requirement" jdbcType="VARCHAR" property="requirement" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        
+        <association column="user" property="user" 
+            select="edu.hlju.boler.dao.IUserDao.selectById" />
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        id, corporation, job_name, low_salary, high_salary, address, industry,
+        job_detail,
+        requirement, user, create_time
+    </sql>
+    
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_list" />
+        from recruitment
+    </select>
+    
+    <select id="selectById" parameterType="java.lang.Integer"
+        resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from recruitment
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from recruitment
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    
+    <insert id="insert" parameterType="edu.hlju.boler.pojo.po.Recruitment">
+        insert into recruitment (
+	        id, corporation, job_name,
+	        low_salary, high_salary, address,
+	        industry, job_detail, requirement,
+	        user, create_time
+        )
+        values (
+	        #{id,jdbcType=INTEGER}, 
+	        #{corporation,jdbcType=VARCHAR},
+	        #{jobName,jdbcType=VARCHAR},
+	        #{lowSalary,jdbcType=INTEGER}, 
+	        #{highSalary,jdbcType=INTEGER}, 
+	        #{address,jdbcType=VARCHAR},
+	        #{industry,jdbcType=VARCHAR}, 
+	        #{jobDetail,jdbcType=VARCHAR},
+	        #{requirement,jdbcType=VARCHAR},
+	        #{user.id,jdbcType=INTEGER}, 
+	        #{createTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    
+    <insert id="insertSelective" parameterType="edu.hlju.boler.pojo.po.Recruitment">
+        insert into recruitment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="corporation != null">
+                corporation,
+            </if>
+            <if test="jobName != null">
+                job_name,
+            </if>
+            <if test="lowSalary != null">
+                low_salary,
+            </if>
+            <if test="highSalary != null">
+                high_salary,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="industry != null">
+                industry,
+            </if>
+            <if test="jobDetail != null">
+                job_detail,
+            </if>
+            <if test="requirement != null">
+                requirement,
+            </if>
+            <if test="user.id != null">
+                user,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="corporation != null">
+                #{corporation,jdbcType=VARCHAR},
+            </if>
+            <if test="jobName != null">
+                #{jobName,jdbcType=VARCHAR},
+            </if>
+            <if test="lowSalary != null">
+                #{lowSalary,jdbcType=INTEGER},
+            </if>
+            <if test="highSalary != null">
+                #{highSalary,jdbcType=INTEGER},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="industry != null">
+                #{industry,jdbcType=VARCHAR},
+            </if>
+            <if test="jobDetail != null">
+                #{jobDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="requirement != null">
+                #{requirement,jdbcType=VARCHAR},
+            </if>
+            <if test="user.id != null">
+                #{user.id,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    
+    <update id="updateByIdSelective" parameterType="edu.hlju.boler.pojo.po.Recruitment">
+        update recruitment
+        <set>
+            <if test="corporation != null">
+                corporation = #{corporation,jdbcType=VARCHAR},
+            </if>
+            <if test="jobName != null">
+                job_name = #{jobName,jdbcType=VARCHAR},
+            </if>
+            <if test="lowSalary != null">
+                low_salary = #{lowSalary,jdbcType=INTEGER},
+            </if>
+            <if test="highSalary != null">
+                high_salary = #{highSalary,jdbcType=INTEGER},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="industry != null">
+                industry = #{industry,jdbcType=VARCHAR},
+            </if>
+            <if test="jobDetail != null">
+                job_detail = #{jobDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="requirement != null">
+                requirement = #{requirement,jdbcType=VARCHAR},
+            </if>
+            <if test="user.id != null">
+                user = #{user.id,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    
+    <update id="updateById" parameterType="edu.hlju.boler.pojo.po.Recruitment">
+        update recruitment
+        set corporation = #{corporation,jdbcType=VARCHAR},
+        job_name = #{jobName,jdbcType=VARCHAR},
+        low_salary = #{lowSalary,jdbcType=INTEGER},
+        high_salary = #{highSalary,jdbcType=INTEGER},
+        address = #{address,jdbcType=VARCHAR},
+        industry = #{industry,jdbcType=VARCHAR},
+        job_detail = #{jobDetail,jdbcType=VARCHAR},
+        requirement = #{requirement,jdbcType=VARCHAR},
+        user = #{user.id,jdbcType=INTEGER},
+        create_time = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    
+</mapper>

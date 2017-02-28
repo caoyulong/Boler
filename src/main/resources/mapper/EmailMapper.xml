@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.hlju.boler.dao.IEmailDao">
+
+    <resultMap id="BaseResultMap" type="edu.hlju.boler.pojo.po.Email">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="from" jdbcType="VARCHAR" property="from" />
+        <result column="to" jdbcType="VARCHAR" property="target" />
+        <result column="subject" jdbcType="VARCHAR" property="subject" />
+        <result column="send_time" jdbcType="TIMESTAMP" property="sendTime" />
+        
+        <association column="user" property="user" 
+            select="edu.hlju.boler.dao.IUserDao.selectById" />
+    </resultMap>
+    
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs"
+        type="edu.hlju.boler.pojo.po.Email">
+        <result column="text" jdbcType="LONGVARCHAR" property="text" />
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        id, user, from, to, subject, send_time
+    </sql>
+    
+    <sql id="Blob_Column_List">
+        text
+    </sql>
+    
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_list" />
+        from email
+    </select>
+    
+    <select id="selectById" parameterType="java.lang.Integer"
+        resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from email
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from email
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    
+    <insert id="insert" parameterType="edu.hlju.boler.pojo.po.Email">
+        insert into email (id, user, from,
+        to, subject, send_time,
+        text)
+        values (#{id,jdbcType=INTEGER}, #{user.id,jdbcType=INTEGER},
+        #{from,jdbcType=VARCHAR},
+        #{to,jdbcType=VARCHAR}, #{subject,jdbcType=VARCHAR}, #{sendTime,jdbcType=TIMESTAMP},
+        #{text,jdbcType=LONGVARCHAR})
+    </insert>
+    
+    <insert id="insertSelective" parameterType="edu.hlju.boler.pojo.po.Email">
+        insert into email
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="user != null">
+                user.id,
+            </if>
+            <if test="from != null">
+                from,
+            </if>
+            <if test="to != null">
+                to,
+            </if>
+            <if test="subject != null">
+                subject,
+            </if>
+            <if test="sendTime != null">
+                send_time,
+            </if>
+            <if test="text != null">
+                text,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="user != null">
+                #{user.id,jdbcType=INTEGER},
+            </if>
+            <if test="from != null">
+                #{from,jdbcType=VARCHAR},
+            </if>
+            <if test="to != null">
+                #{to,jdbcType=VARCHAR},
+            </if>
+            <if test="subject != null">
+                #{subject,jdbcType=VARCHAR},
+            </if>
+            <if test="sendTime != null">
+                #{sendTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="text != null">
+                #{text,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    
+    <update id="updateByIdSelective" parameterType="edu.hlju.boler.pojo.po.Email">
+        update email
+        <set>
+            <if test="user.id != null">
+                user = #{user.id,jdbcType=INTEGER},
+            </if>
+            <if test="from != null">
+                from = #{from,jdbcType=VARCHAR},
+            </if>
+            <if test="to != null">
+                to = #{to,jdbcType=VARCHAR},
+            </if>
+            <if test="subject != null">
+                subject = #{subject,jdbcType=VARCHAR},
+            </if>
+            <if test="sendTime != null">
+                send_time = #{sendTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="text != null">
+                text = #{text,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    
+    <update id="updateByIdWithBLOBs" parameterType="edu.hlju.boler.pojo.po.Email">
+        update email
+        set user = #{user.id,jdbcType=INTEGER},
+        from = #{from,jdbcType=VARCHAR},
+        to = #{to,jdbcType=VARCHAR},
+        subject = #{subject,jdbcType=VARCHAR},
+        send_time = #{sendTime,jdbcType=TIMESTAMP},
+        text = #{text,jdbcType=LONGVARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    
+    <update id="updateById" parameterType="edu.hlju.boler.pojo.po.Email">
+        update email
+        set user = #{user.id,jdbcType=INTEGER},
+        from = #{from,jdbcType=VARCHAR},
+        to = #{to,jdbcType=VARCHAR},
+        subject = #{subject,jdbcType=VARCHAR},
+        send_time = #{sendTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    
+</mapper>

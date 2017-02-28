@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.hlju.boler.dao.IPersonInfoDao">
+
+    <resultMap id="BaseResultMap" type="edu.hlju.boler.pojo.po.PersonInfomation">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="realname" jdbcType="VARCHAR" property="realname" />
+        <result column="sex" jdbcType="CHAR" property="sex" />
+        <result column="birthday" jdbcType="DATE" property="birthday" />
+        <result column="cellphone" jdbcType="VARCHAR" property="cellphone" />
+        <result column="profile" jdbcType="VARCHAR" property="profile" />
+        <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+        <result column="address" jdbcType="VARCHAR" property="address" />
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        id, realname, sex, birthday, cellphone, profile, avatar, address
+    </sql>
+    
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_list" />
+        from person_info
+    </select>
+    
+    <select id="selectById" parameterType="java.lang.Integer"
+        resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from person_info
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from person_info
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    
+    <insert id="insert" parameterType="edu.hlju.boler.pojo.po.PersonInfomation">
+        insert into person_info (id, realname, sex, birthday, cellphone, profile, avatar, address)
+        values (
+	        #{id,jdbcType=INTEGER}, 
+	        #{realname,jdbcType=VARCHAR},
+	        #{sex,jdbcType=CHAR},
+	        #{birthday,jdbcType=DATE}, 
+	        #{cellphone,jdbcType=VARCHAR}, 
+	        #{profile,jdbcType=VARCHAR},
+	        #{avatar,jdbcType=VARCHAR},
+	        #{address,jdbcType=VARCHAR}
+        )
+    </insert>
+    
+    <insert id="insertSelective" parameterType="edu.hlju.boler.pojo.po.PersonInfomation">
+        insert into person_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="realname != null">
+                realname,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="cellphone != null">
+                cellphone,
+            </if>
+            <if test="profile != null">
+                profile,
+            </if>
+            <if test="avatar != null">
+                avatar,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="realname != null">
+                #{realname,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=CHAR},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=DATE},
+            </if>
+            <if test="cellphone != null">
+                #{cellphone,jdbcType=VARCHAR},
+            </if>
+            <if test="profile != null">
+                #{profile,jdbcType=VARCHAR},
+            </if>
+            <if test="avatar != null">
+                #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    
+    <update id="updateByIdSelective" parameterType="edu.hlju.boler.pojo.po.PersonInfomation">
+        update person_info
+        <set>
+            <if test="realname != null">
+                realname = #{realname,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=CHAR},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=DATE},
+            </if>
+            <if test="cellphone != null">
+                cellphone = #{cellphone,jdbcType=VARCHAR},
+            </if>
+            <if test="profile != null">
+                profile = #{profile,jdbcType=VARCHAR},
+            </if>
+            <if test="avatar != null">
+                avatar = #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    
+    <update id="updateById" parameterType="edu.hlju.boler.pojo.po.PersonInfomation">
+        update person_info
+        set realname = #{realname,jdbcType=VARCHAR},
+        sex = #{sex,jdbcType=CHAR},
+        birthday = #{birthday,jdbcType=DATE},
+        cellphone = #{cellphone,jdbcType=VARCHAR},
+        profile = #{profile,jdbcType=VARCHAR},
+        avatar = #{avatar,jdbcType=VARCHAR},
+        address = #{address,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    
+</mapper>
