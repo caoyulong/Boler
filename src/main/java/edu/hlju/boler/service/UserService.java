@@ -15,7 +15,6 @@ import edu.hlju.boler.datadictory.RegExDataDict;
 import edu.hlju.boler.datadictory.UserDataDict;
 import edu.hlju.boler.pojo.po.Role;
 import edu.hlju.boler.pojo.po.User;
-import edu.hlju.boler.pojo.po.UserLog;
 import edu.hlju.boler.pojo.vo.StateResponse;
 import edu.hlju.boler.pojo.vo.UserRole;
 import edu.hlju.boler.service.interfaces.IUserService;
@@ -26,7 +25,7 @@ import edu.hlju.boler.util.LegalityVerificator;
 public class UserService implements IUserService {
     public static final String USER_OBJECT = "user";
     public static final int MAX_ERROR_TIMES = 3;
-    private int errorTimes = 0;
+//    private int errorTimes = 0;
     private HttpSession session;
 
     @Resource
@@ -53,17 +52,20 @@ public class UserService implements IUserService {
             return new StateResponse(UserDataDict.REGISTER_FAILED);
         }
 
-        String addr = request.getRemoteAddr();
         boolean isCorrect = selected != null && Encrytor.encrypt(user.getPassword()).equals(selected.getPassword());
         if (!isCorrect) {
             return new StateResponse(UserDataDict.LOGIN_FAILED);
         }
 
-        // TODO
-        UserLog log = new UserLog(addr, selected.getId(), 1);
         session = request.getSession();
         session.setAttribute(USER_OBJECT, selected);
         return new StateResponse(UserDataDict.LOGIN_SUCCESS);
+    }
+
+    @Override
+    public StateResponse logout(HttpServletRequest request) {
+        //TODO
+        return null;
     }
 
     @Override

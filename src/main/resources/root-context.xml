@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:amq="http://activemq.apache.org/schema/core"
-	xmlns:jms="http://www.springframework.org/schema/jms"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
     
     <!-- Root Context: defines shared resources visible to all other web components -->
     <context:component-scan base-package="edu.hlju.boler" />
+    <!-- 启用自动事务管理 -->
+    <aop:aspectj-autoproxy proxy-target-class="true" />
     
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="location" value="classpath:jdbc.properties" />
+        <property name="locations">
+            <list>
+                <value>classpath:/properties/jdbc.properties</value>
+                <value>classpath:/properties/email.properties</value>
+            </list>
+        </property>
     </bean>
     
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
@@ -55,33 +59,10 @@
         <property name="dataSource" ref="dataSource" />
     </bean>
     
-    <aop:aspectj-autoproxy proxy-target-class="true" />
-    
-    <!-- ActiveMQ -->
-    <bean id="connectionFactory" class="org.apache.activemq.spring.ActiveMQConnectionFactory">
-        <property name="brokerURL" value="tcp://127.0.0.1:61616" />
-    </bean> 
-     <!-- 点对点消息队列-->
-    <bean id="message_queue" class="org.apache.activemq.command.ActiveMQQueue">
-        <property name="physicalName" value="email_queue" />
-    </bean>
-    <!-- JMSTemplate -->
-    <bean id="jmsQueueTemplate" class="org.springframework.jms.core.JmsTemplate">
-        <property name="connectionFactory" ref="connectionFactory" />
-        <!-- 默认目的地 -->
-        <property name="defaultDestination" ref="message_queue" />
-        <property name="messageConverter" ref="messageConvert" />
-    </bean>
-    <!-- 消息转换器 -->
-    <bean id="messageConvert" class="org.springframework.jms.support.converter.MappingJackson2MessageConverter" />
-    <!-- JMS消息监听器 -->
-    <jms:listener-container connection-factory="connectionFactory">
-        <jms:listener destination="message_queue" ref="messageReceiver"/>
-    </jms:listener-container>
     <!-- Email Sender -->
     <bean id="javaMailSenderImpl" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="protocol" value="smtp" />
-        <property name="host" value="smtp.163.com" />
+        <property name="protocol" value="${protocol]" />
+        <property name="host" value="${host}" />
     </bean>
 	
 </beans>

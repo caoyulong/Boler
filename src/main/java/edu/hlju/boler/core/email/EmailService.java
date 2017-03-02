@@ -36,8 +36,8 @@ public class EmailService implements IEmailService {
 
     @Override
     public void send(Email email) {
+        User user = email.getUser();
         SimpleMailMessage ssm = this.sendable(email);
-        User user = (User) userService.getSession();
         emailSender.setUsername(user.getEmail());
         emailSender.setPassword(user.getPassword());
         emailSender.send(ssm);

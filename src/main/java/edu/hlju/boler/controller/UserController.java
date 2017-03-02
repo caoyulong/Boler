@@ -17,7 +17,7 @@ import edu.hlju.boler.pojo.vo.BaseResponse;
 import edu.hlju.boler.service.interfaces.IUserService;
 
 @Controller
-@RequestMapping(value = "/user")
+@RequestMapping(value = "api/user")
 public class UserController {
     private static Logger logger = LoggerFactory.getLogger(HomeController.class);
 
@@ -29,6 +29,13 @@ public class UserController {
     public BaseResponse login(HttpServletRequest request, @RequestParam User user, Role role) {
         logger.info(user.toString() + "login.");
         return userService.login(request, user);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/logout")
+    public BaseResponse logout(HttpServletRequest request) {
+        logger.info("User logout.");
+        return userService.logout(request);
     }
 
     @ResponseBody
