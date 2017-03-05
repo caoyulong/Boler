@@ -13,9 +13,9 @@
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/boler"
 			userId="root" password="root" />
 		<!-- 生成模型的包名和位置 -->
-		<javaModelGenerator targetPackage="edu.hlju.boler.model" targetProject="Boler/src/main/java" />
+		<javaModelGenerator targetPackage="edu.hlju.boler.pojo.po" targetProject="Boler/src/main/java" />
 		<!-- 生成的映射文件报名和位置 -->
-		<sqlMapGenerator targetPackage="edu.hlju.boler.mapper" targetProject="Boler/src/main/java" />
+		<sqlMapGenerator targetPackage="mapper" targetProject="Boler/src/main/resources" />
 		<!-- 生成DAO的包名和位置 -->
 		<javaClientGenerator targetPackage="edu.hlju.boler.dao" targetProject="Boler/src/main/java"
 			type="XMLMAPPER" />
