@@ -23,6 +23,9 @@ public class UserLog {
         this.permission = permission;
     }
 
+    public UserLog(String ipAddress, Integer user, String message) {
+    }
+
     public Integer getId() {
         return id;
     }

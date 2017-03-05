@@ -12,11 +12,13 @@
     <!-- 启用自动事务管理 -->
     <aop:aspectj-autoproxy proxy-target-class="true" />
     
+    <!-- 在Spring中只能定义一个PropertyPlaceholderConfigurer，故讲配置文件放在一起进行读取 -->
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
                 <value>classpath:/properties/jdbc.properties</value>
                 <value>classpath:/properties/email.properties</value>
+                <value>classpath:/properties/redis.properties</value>
             </list>
         </property>
     </bean>

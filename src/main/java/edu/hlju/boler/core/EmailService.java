@@ -1,4 +1,4 @@
-package edu.hlju.boler.core.email;
+package edu.hlju.boler.core;
 
 import java.sql.SQLException;
 

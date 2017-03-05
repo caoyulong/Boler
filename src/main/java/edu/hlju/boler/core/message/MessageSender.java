@@ -1,4 +1,4 @@
-package edu.hlju.boler.core.activemq;
+package edu.hlju.boler.core.message;
 
 import javax.annotation.Resource;
 
