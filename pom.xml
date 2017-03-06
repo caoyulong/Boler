@@ -21,6 +21,7 @@
         <activemq-version>5.11.3</activemq-version>
         <jackson-version>2.8.5</jackson-version>
         <redis-version>2.9.0</redis-version>
+        <hibernate-verson>5.4.0.Final</hibernate-version>
     </properties>
     <dependencies>
         <!-- Spring -->
@@ -220,6 +221,13 @@
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
             <version>${redis-version}</version>
+        </dependency>
+
+        <!-- hibernate validator -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate-version}</version>
         </dependency>
                 
     </dependencies>

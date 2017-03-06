@@ -1,10 +1,11 @@
-CREATE DATABASE  IF NOT EXISTS `boler` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+DROP DATABASE IF NOT EXISTS `boler`;
+CREATE DATABASE `boler`;
 USE `boler`;
--- MySQL dump 10.13  Distrib 5.7.16, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for Linux (x86_64)
 --
 -- Host: localhost    Database: boler
 -- ------------------------------------------------------
--- Server version	5.7.16-0ubuntu0.16.04.1
+-- Server version	5.7.17-0ubuntu0.16.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -190,34 +191,6 @@ LOCK TABLES `online_resume` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `permission`
---
-
-DROP TABLE IF EXISTS `permission`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `permission` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) NOT NULL,
-  `code` varchar(32) NOT NULL,
-  `url` varchar(64) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name_UNIQUE` (`name`),
-  UNIQUE KEY `code_UNIQUE` (`code`),
-  UNIQUE KEY `url_UNIQUE` (`url`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `permission`
---
-
-LOCK TABLES `permission` WRITE;
-/*!40000 ALTER TABLE `permission` DISABLE KEYS */;
-/*!40000 ALTER TABLE `permission` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `person_info`
 --
 
@@ -351,7 +324,7 @@ CREATE TABLE `role` (
   `name` varchar(16) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -360,33 +333,8 @@ CREATE TABLE `role` (
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
+INSERT INTO `role` VALUES (1,'employ'),(2,'employee');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `role_permission`
---
-
-DROP TABLE IF EXISTS `role_permission`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `role_permission` (
-  `role` int(11) NOT NULL AUTO_INCREMENT,
-  `permission` int(11) NOT NULL,
-  PRIMARY KEY (`role`,`permission`),
-  KEY `FK_RP_PMS_idx` (`permission`),
-  CONSTRAINT `FK_RP_PMS` FOREIGN KEY (`permission`) REFERENCES `permission` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_RP_ROLE` FOREIGN KEY (`role`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `role_permission`
---
-
-LOCK TABLES `role_permission` WRITE;
-/*!40000 ALTER TABLE `role_permission` DISABLE KEYS */;
-/*!40000 ALTER TABLE `role_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -423,12 +371,16 @@ CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(64) NOT NULL,
   `password` char(32) NOT NULL,
+  `role` int(11) NOT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `person_info` int(11) NOT NULL,
+  `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `FK_USER_PERSON_INFO_idx` (`person_info`),
-  CONSTRAINT `FK_USER_PERSON_INFO` FOREIGN KEY (`person_info`) REFERENCES `person_info` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `FK_USER_ROLE_idx` (`role`),
+  CONSTRAINT `FK_USER_PERSON_INFO` FOREIGN KEY (`person_info`) REFERENCES `person_info` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_USER_ROLE` FOREIGN KEY (`role`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -453,7 +405,6 @@ CREATE TABLE `user_log` (
   `record_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `ip_address` varchar(15) NOT NULL,
   `user` int(11) NOT NULL,
-  `permission` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_UL_USER` (`user`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
@@ -466,32 +417,6 @@ CREATE TABLE `user_log` (
 LOCK TABLES `user_log` WRITE;
 /*!40000 ALTER TABLE `user_log` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_log` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `user_role`
---
-
-DROP TABLE IF EXISTS `user_role`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `user_role` (
-  `user` int(11) NOT NULL AUTO_INCREMENT,
-  `role` int(11) NOT NULL,
-  PRIMARY KEY (`user`,`role`),
-  KEY `FK_UR_ROLE` (`role`),
-  CONSTRAINT `FK_UR_ROLE` FOREIGN KEY (`role`) REFERENCES `role` (`id`),
-  CONSTRAINT `FK_UR_USER` FOREIGN KEY (`user`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `user_role`
---
-
-LOCK TABLES `user_role` WRITE;
-/*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
-/*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -535,4 +460,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-13  0:18:28
+-- Dump completed on 2017-03-06 11:03:17
