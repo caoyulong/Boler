@@ -37,10 +37,10 @@
     </delete>
     
     <insert id="insert" parameterType="edu.hlju.boler.pojo.po.OnlineResume">
-        insert into online_resume (id, name, create_time,
+        insert into online_resume (
+            id, name, create_time,
         	person_info, user, update_tmie
-        )
-        values (
+        ) values (
         	#{id,jdbcType=INTEGER}, 
         	#{name,jdbcType=VARCHAR},
 	        #{createTime,jdbcType=TIMESTAMP},
@@ -117,13 +117,16 @@
     </update>
     
     <update id="updateById" parameterType="edu.hlju.boler.pojo.po.OnlineResume">
-        update online_resume
-        set name = #{name,jdbcType=VARCHAR},
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-        person_info = #{personInfo.id,jdbcType=INTEGER},
-        user = #{user.id,jdbcType=INTEGER},
-        update_tmie = #{updateTime,jdbcType=TIMESTAMP}
-        where id = #{id,jdbcType=INTEGER}
+        update 
+            online_resume
+        set 
+            name = #{name,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            person_info = #{personInfo.id,jdbcType=INTEGER},
+            user = #{user.id,jdbcType=INTEGER},
+            update_tmie = #{updateTime,jdbcType=TIMESTAMP}
+        where 
+            id = #{id,jdbcType=INTEGER}
     </update>
     
 </mapper>

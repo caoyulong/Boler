@@ -21,6 +21,4 @@ public interface IEmailDao {
 
     int updateByIdSelective(Email record) throws SQLException;
 
-    int updateByIdWithBLOBs(Email record) throws SQLException;
-
 }

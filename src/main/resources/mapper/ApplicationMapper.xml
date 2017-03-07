@@ -5,13 +5,14 @@
     <resultMap id="BaseResultMap" type="edu.hlju.boler.pojo.po.Application">
         <id column="id" jdbcType="INTEGER" property="id" />
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
         
         <association column="employ" property="employ" select="edu.hlju.boler.dao.IUserDao.selectById" />
         <association column="employee" property="employee" select="edu.hlju.boler.dao.IUserDao.selectById" />
     </resultMap>
     
     <sql id="Base_Column_List">
-        id, create_time, employ, employee
+        id, employ, employee, create_time, modify_time
     </sql>
     
     <select id="selectAll" resultMap="BaseResultMap">
@@ -33,10 +34,14 @@
     </delete>
     
     <insert id="insert" parameterType="edu.hlju.boler.pojo.po.Application">
-        insert into application (id, create_time, employ, employee)
-        values (#{id,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+        insert into application (
+            id, employ, employee, create_time, modify_time
+        ) values (
+            #{id,jdbcType=INTEGER}, 
 	        #{employ.id,jdbcType=INTEGER},
-	        #{employee.id,jdbcType=INTEGER}
+	        #{employee.id,jdbcType=INTEGER},
+            #{createTime,jdbcType=TIMESTAMP},
+            #{modifyTime,jdbcType=TIMESTAMP}
         )
     </insert>
     
@@ -46,22 +51,22 @@
             <if test="id != null">
                 id,
             </if>
-            <if test="createTime != null">
-                create_time,
-            </if>
             <if test="employ.id != null">
                 employ.id,
             </if>
             <if test="employee.id != null">
                 employee.id,
             </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 #{id,jdbcType=INTEGER},
-            </if>
-            <if test="createTime != null">
-                #{createTime,jdbcType=TIMESTAMP},
             </if>
             <if test="employ.id != null">
                 #{employ.id,jdbcType=INTEGER},
@@ -69,31 +74,44 @@
             <if test="employee.id != null">
                 #{employee.id,jdbcType=INTEGER},
             </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+             <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
         </trim>
     </insert>
     
     <update id="updateByIdSelective" parameterType="edu.hlju.boler.pojo.po.Application">
         update application
         <set>
-            <if test="createTime != null">
-                create_time = #{createTime,jdbcType=TIMESTAMP},
-            </if>
             <if test="employ.id != null">
                 employ = #{employ.id,jdbcType=INTEGER},
             </if>
             <if test="employee.id != null">
                 employee = #{employee.id,jdbcType=INTEGER},
             </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+             <if test="modifyTime != null">
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
     
     <update id="updateById" parameterType="edu.hlju.boler.pojo.po.Application">
-        update application
-        set create_time = #{createTime,jdbcType=TIMESTAMP},
-        employ = #{employ.id,jdbcType=INTEGER},
-        employee = #{employee.id,jdbcType=INTEGER}
-        where id = #{id,jdbcType=INTEGER}
+        update 
+            application
+        set 
+            employ = #{employ.id,jdbcType=INTEGER},
+            employee = #{employee.id,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+        where
+            id = #{id,jdbcType=INTEGER}
     </update>
     
 </mapper>

@@ -7,13 +7,14 @@
         <result column="email" jdbcType="VARCHAR" property="email" />
         <result column="password" jdbcType="CHAR" property="password" />
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
         
         <association column="person_info" property="personInfo"
             select="edu.hlju.boler.dao.IPersonInfoDao.selectById" />
     </resultMap>
     
     <sql id="Base_Column_List">
-        id, email, password, create_time, person_info
+        id, email, password, person_info, create_time, modify_time
     </sql>
     
     <select id="selectAll" resultMap="BaseResultMap">
@@ -43,12 +44,14 @@
     
     <insert id="insert" parameterType="edu.hlju.boler.pojo.po.User" useGeneratedKeys="true" keyProperty="id">
         insert into user (
-        	id, email, password, create_time, person_info
+        	id, email, password, person_info, create_time, modify_time
         )
         values (
 	        #{id,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR},
 	        #{password,jdbcType=CHAR},
-	        #{createTime,jdbcType=TIMESTAMP}, #{personInfo.id,jdbcType=INTEGER}
+            #{personInfo.id,jdbcType=INTEGER},
+	        #{createTime,jdbcType=TIMESTAMP}, 
+            #{modifyTime,jdbcType=TIMESTAMP}
         )
     </insert>
     
@@ -64,11 +67,14 @@
             <if test="password != null">
                 password,
             </if>
+            <if test="personInfo.id != null">
+                person_info,
+            </if>
             <if test="createTime != null">
                 create_time,
             </if>
-            <if test="personInfo.id != null">
-                person_info,
+            <if test="modifyTime != null">
+                modify_time,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -87,13 +93,15 @@
             <if test="personInfo.id != null">
                 #{personInfo.id,jdbcType=INTEGER},
             </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
         </trim>
     </insert>
-    
-    <insert id="insertUserRole" parameterType="edu.hlju.boler.pojo.vo.UserRole">
-        insert into user_role(user, role) values(#{user.id}, #{role.id})
-    </insert>
-    
+
     <update id="updateByIdSelective" parameterType="edu.hlju.boler.pojo.po.User">
         update user
         <set>
@@ -103,23 +111,30 @@
             <if test="password != null">
                 password = #{password,jdbcType=CHAR},
             </if>
+            <if test="personInfo.id != null">
+                person_info = #{personInfo.id,jdbcType=INTEGER},
+            </if>
             <if test="createTime != null">
                 create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="personInfo.id != null">
-                person_info = #{personInfo.id,jdbcType=INTEGER},
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
     
     <update id="updateById" parameterType="edu.hlju.boler.pojo.po.User">
-        update user
-        set email = #{email,jdbcType=VARCHAR},
-        password = #{password,jdbcType=CHAR},
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-        person_info = #{personInfo.id,jdbcType=INTEGER}
-        where id = #{id,jdbcType=INTEGER}
+        update 
+            user
+        set 
+            email = #{email,jdbcType=VARCHAR},
+            password = #{password,jdbcType=CHAR},
+            person_info = #{personInfo.id,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+        where 
+            id = #{id,jdbcType=INTEGER}
     </update>
     
 </mapper>

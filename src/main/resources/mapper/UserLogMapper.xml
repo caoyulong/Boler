@@ -4,14 +4,13 @@
 
     <resultMap id="BaseResultMap" type="edu.hlju.boler.pojo.po.UserLog">
         <id column="id" jdbcType="INTEGER" property="id" />
-        <result column="record_time" jdbcType="TIMESTAMP" property="recordTime" />
         <result column="ip_address" jdbcType="VARCHAR" property="ipAddress" />
         <result column="user" jdbcType="INTEGER" property="user" />
-        <result column="permission" jdbcType="INTEGER" property="permission" />
+        <result column="record_time" jdbcType="TIMESTAMP" property="recordTime" />
     </resultMap>
     
     <sql id="Base_Column_List">
-        id, record_time, ip_address, user, permission
+        id, record_time, ip_address, user
     </sql>
     
     <select id="selectAll" resultMap="BaseResultMap">
@@ -34,12 +33,13 @@
     </delete>
     
     <insert id="insert" parameterType="edu.hlju.boler.pojo.po.UserLog">
-        insert into user_log (id, record_time, ip_address, user, permission)
-        values (
+        insert into user_log (
+            id, record_time, ip_address, user
+        ) values (
             #{id,jdbcType=INTEGER}, 
             #{recordTime,jdbcType=TIMESTAMP},
             #{ipAddress,jdbcType=VARCHAR},
-            #{user,jdbcType=INTEGER}, #{permission,jdbcType=INTEGER}
+            #{user,jdbcType=INTEGER}
         )
     </insert>
     
@@ -58,9 +58,6 @@
             <if test="user != null">
                 user,
             </if>
-            <if test="permission != null">
-                permission,
-            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -74,9 +71,6 @@
             </if>
             <if test="user != null">
                 #{user,jdbcType=INTEGER},
-            </if>
-            <if test="permission != null">
-                #{permission,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
@@ -93,20 +87,19 @@
             <if test="user != null">
                 user = #{user,jdbcType=INTEGER},
             </if>
-            <if test="permission != null">
-                permission = #{permission,jdbcType=INTEGER},
-            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
     
     <update id="updateById" parameterType="edu.hlju.boler.pojo.po.UserLog">
-        update user_log
-        set record_time = #{recordTime,jdbcType=TIMESTAMP},
-        ip_address = #{ipAddress,jdbcType=VARCHAR},
-        user = #{user,jdbcType=INTEGER},
-        permission = #{permission,jdbcType=INTEGER}
-        where id = #{id,jdbcType=INTEGER}
+        update 
+            user_log
+        set 
+            record_time = #{recordTime,jdbcType=TIMESTAMP},
+            ip_address = #{ipAddress,jdbcType=VARCHAR},
+            user = #{user,jdbcType=INTEGER},
+        where 
+            id = #{id,jdbcType=INTEGER}
     </update>
     
 </mapper>

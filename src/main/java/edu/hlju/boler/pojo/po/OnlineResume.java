@@ -7,13 +7,13 @@ public class OnlineResume {
 
     private String name;
 
-    private Date createTime;
-
     private PersonInfomation personInfo;
 
     private User user;
 
-    private Date updateTime;
+    private Date createTime;
+
+    private Date modifyTime;
 
     public Date getCreateTime() {
         return createTime;
@@ -32,7 +32,7 @@ public class OnlineResume {
     }
 
     public Date getUpdateTime() {
-        return updateTime;
+        return modifyTime;
     }
 
     public User getUser() {
@@ -56,10 +56,16 @@ public class OnlineResume {
     }
 
     public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+        modifyTime = updateTime;
     }
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "OnlineResume [id=" + id + ", name=" + name + ", personInfo=" + personInfo + ", user=" + user
+                + ", createTime=" + createTime + ", modifyTime=" + modifyTime + "]";
     }
 }

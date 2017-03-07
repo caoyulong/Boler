@@ -5,13 +5,11 @@ import java.util.Date;
 public class UserLog {
     private Integer id;
 
-    private Date recordTime;
+    private Integer user;
 
     private String ipAddress;
 
-    private Integer user;
-
-    private Integer permission;
+    private Date recordTime;
 
     public UserLog() {
     }
@@ -20,7 +18,6 @@ public class UserLog {
         super();
         this.ipAddress = ipAddress;
         this.user = user;
-        this.permission = permission;
     }
 
     public UserLog(String ipAddress, Integer user, String message) {
@@ -32,10 +29,6 @@ public class UserLog {
 
     public String getIpAddress() {
         return ipAddress;
-    }
-
-    public Integer getPermission() {
-        return permission;
     }
 
     public Date getRecordTime() {
@@ -52,10 +45,6 @@ public class UserLog {
 
     public void setIpAddress(String ipAddress) {
         this.ipAddress = ipAddress;
-    }
-
-    public void setPermission(Integer permission) {
-        this.permission = permission;
     }
 
     public void setRecordTime(Date recordTime) {

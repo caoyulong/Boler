@@ -19,8 +19,16 @@ public class EducationExperience {
 
     private OnlineResume resume;
 
+    private Date createTime;
+
+    private Date modifyTime;
+
     public String getCourse() {
         return course;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
     }
 
     public String getDegree() {
@@ -39,7 +47,15 @@ public class EducationExperience {
         return major;
     }
 
+    public Date getModifyTime() {
+        return modifyTime;
+    }
+
     public OnlineResume getOnlineResume() {
+        return resume;
+    }
+
+    public OnlineResume getResume() {
         return resume;
     }
 
@@ -53,6 +69,10 @@ public class EducationExperience {
 
     public void setCourse(String course) {
         this.course = course;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public void setDegree(String degree) {
@@ -71,7 +91,15 @@ public class EducationExperience {
         this.major = major;
     }
 
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
+    }
+
     public void setOnlineResume(OnlineResume resume) {
+        this.resume = resume;
+    }
+
+    public void setResume(OnlineResume resume) {
         this.resume = resume;
     }
 
@@ -81,5 +109,12 @@ public class EducationExperience {
 
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
+    }
+
+    @Override
+    public String toString() {
+        return "EducationExperience [id=" + id + ", startTime=" + startTime + ", endTime=" + endTime + ", school="
+                + school + ", degree=" + degree + ", major=" + major + ", course=" + course + ", resume=" + resume
+                + ", createTime=" + createTime + ", modifyTime=" + modifyTime + "]";
     }
 }

@@ -21,6 +21,10 @@ public class WorkExperience {
 
     private OnlineResume resume;
 
+    private Date createTime;
+
+    private Date modifyTime;
+
     public String getCorporation() {
         return corporation;
     }
@@ -43,6 +47,10 @@ public class WorkExperience {
 
     public String getJob() {
         return job;
+    }
+
+    public Date getModifyTime() {
+        return modifyTime;
     }
 
     public OnlineResume getResume() {
@@ -81,6 +89,10 @@ public class WorkExperience {
         this.job = job;
     }
 
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
+    }
+
     public void setResume(OnlineResume resume) {
         this.resume = resume;
     }
@@ -91,5 +103,12 @@ public class WorkExperience {
 
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
+    }
+
+    @Override
+    public String toString() {
+        return "WorkExperience [id=" + id + ", startTime=" + startTime + ", endTime=" + endTime + ", corporation="
+                + corporation + ", scale=" + scale + ", department=" + department + ", job=" + job + ", detail="
+                + detail + ", resume=" + resume + ", createTime=" + createTime + ", modifyTime=" + modifyTime + "]";
     }
 }

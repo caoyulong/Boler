@@ -13,6 +13,7 @@
         <result column="job_detail" jdbcType="VARCHAR" property="jobDetail" />
         <result column="requirement" jdbcType="VARCHAR" property="requirement" />
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
         
         <association column="user" property="user" 
             select="edu.hlju.boler.dao.IUserDao.selectById" />
@@ -20,8 +21,7 @@
     
     <sql id="Base_Column_List">
         id, corporation, job_name, low_salary, high_salary, address, industry,
-        job_detail,
-        requirement, user, create_time
+        job_detail, requirement, user, create_time, modify_time
     </sql>
     
     <select id="selectAll" resultMap="BaseResultMap">
@@ -48,9 +48,8 @@
 	        id, corporation, job_name,
 	        low_salary, high_salary, address,
 	        industry, job_detail, requirement,
-	        user, create_time
-        )
-        values (
+	        user, create_time, modify_time
+        ) values (
 	        #{id,jdbcType=INTEGER}, 
 	        #{corporation,jdbcType=VARCHAR},
 	        #{jobName,jdbcType=VARCHAR},
@@ -61,7 +60,8 @@
 	        #{jobDetail,jdbcType=VARCHAR},
 	        #{requirement,jdbcType=VARCHAR},
 	        #{user.id,jdbcType=INTEGER}, 
-	        #{createTime,jdbcType=TIMESTAMP}
+	        #{createTime,jdbcType=TIMESTAMP},
+            #{modifyTime,jdbcType=TIMESTAMP}
         )
     </insert>
     
@@ -101,6 +101,9 @@
             <if test="createTime != null">
                 create_time,
             </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -135,6 +138,9 @@
             </if>
             <if test="createTime != null">
                 #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
             </if>
         </trim>
     </insert>
@@ -172,23 +178,30 @@
             <if test="createTime != null">
                 create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
     
     <update id="updateById" parameterType="edu.hlju.boler.pojo.po.Recruitment">
-        update recruitment
-        set corporation = #{corporation,jdbcType=VARCHAR},
-        job_name = #{jobName,jdbcType=VARCHAR},
-        low_salary = #{lowSalary,jdbcType=INTEGER},
-        high_salary = #{highSalary,jdbcType=INTEGER},
-        address = #{address,jdbcType=VARCHAR},
-        industry = #{industry,jdbcType=VARCHAR},
-        job_detail = #{jobDetail,jdbcType=VARCHAR},
-        requirement = #{requirement,jdbcType=VARCHAR},
-        user = #{user.id,jdbcType=INTEGER},
-        create_time = #{createTime,jdbcType=TIMESTAMP}
-        where id = #{id,jdbcType=INTEGER}
+        update 
+            recruitment
+        set 
+            corporation = #{corporation,jdbcType=VARCHAR},
+            job_name = #{jobName,jdbcType=VARCHAR},
+            low_salary = #{lowSalary,jdbcType=INTEGER},
+            high_salary = #{highSalary,jdbcType=INTEGER},
+            address = #{address,jdbcType=VARCHAR},
+            industry = #{industry,jdbcType=VARCHAR},
+            job_detail = #{jobDetail,jdbcType=VARCHAR},
+            requirement = #{requirement,jdbcType=VARCHAR},
+            user = #{user.id,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+        where 
+            id = #{id,jdbcType=INTEGER}
     </update>
     
 </mapper>

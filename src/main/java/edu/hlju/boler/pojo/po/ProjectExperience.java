@@ -21,6 +21,14 @@ public class ProjectExperience {
 
     private OnlineResume resume;
 
+    private Date createTime;
+
+    private Date modifyTime;
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
     public String getDetail() {
         return detail;
     }
@@ -31,6 +39,10 @@ public class ProjectExperience {
 
     public Integer getId() {
         return id;
+    }
+
+    public Date getModifyTime() {
+        return modifyTime;
     }
 
     public String getName() {
@@ -57,6 +69,10 @@ public class ProjectExperience {
         return teamScale;
     }
 
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
     public void setDetail(String detail) {
         this.detail = detail;
     }
@@ -67,6 +83,10 @@ public class ProjectExperience {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
     }
 
     public void setName(String name) {

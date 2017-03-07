@@ -8,6 +8,8 @@
         <result column="to" jdbcType="VARCHAR" property="target" />
         <result column="subject" jdbcType="VARCHAR" property="subject" />
         <result column="send_time" jdbcType="TIMESTAMP" property="sendTime" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
         
         <association column="user" property="user" 
             select="edu.hlju.boler.dao.IUserDao.selectById" />
@@ -19,11 +21,7 @@
     </resultMap>
     
     <sql id="Base_Column_List">
-        id, user, from, to, subject, send_time
-    </sql>
-    
-    <sql id="Blob_Column_List">
-        text
+        id, user, from, to, subject, text, send_time, create_time, modify_time
     </sql>
     
     <select id="selectAll" resultMap="BaseResultMap">
@@ -36,8 +34,6 @@
         resultMap="ResultMapWithBLOBs">
         select
         <include refid="Base_Column_List" />
-        ,
-        <include refid="Blob_Column_List" />
         from email
         where id = #{id,jdbcType=INTEGER}
     </select>
@@ -48,13 +44,19 @@
     </delete>
     
     <insert id="insert" parameterType="edu.hlju.boler.pojo.po.Email">
-        insert into email (id, user, from,
-        to, subject, send_time,
-        text)
-        values (#{id,jdbcType=INTEGER}, #{user.id,jdbcType=INTEGER},
-        #{from,jdbcType=VARCHAR},
-        #{to,jdbcType=VARCHAR}, #{subject,jdbcType=VARCHAR}, #{sendTime,jdbcType=TIMESTAMP},
-        #{text,jdbcType=LONGVARCHAR})
+        insert into email (
+            id, user, from, to, subject, send_time, text, create_time, modify_time
+        ) values (
+            #{id,jdbcType=INTEGER}, 
+            #{user.id,jdbcType=INTEGER},
+            #{from,jdbcType=VARCHAR},
+            #{to,jdbcType=VARCHAR}, 
+            #{subject,jdbcType=VARCHAR}, 
+            #{sendTime,jdbcType=TIMESTAMP},
+            #{text,jdbcType=LONGVARCHAR},
+            #{createTime,jdbcType=TIMESTAMP},
+            #{modifyTime,jdbcType=TIMESTAMP}
+        )
     </insert>
     
     <insert id="insertSelective" parameterType="edu.hlju.boler.pojo.po.Email">
@@ -81,6 +83,12 @@
             <if test="text != null">
                 text,
             </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -103,6 +111,12 @@
             </if>
             <if test="text != null">
                 #{text,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+             <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
             </if>
         </trim>
     </insert>
@@ -128,29 +142,29 @@
             <if test="text != null">
                 text = #{text,jdbcType=LONGVARCHAR},
             </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+             <if test="modifyTime != null">
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
     
-    <update id="updateByIdWithBLOBs" parameterType="edu.hlju.boler.pojo.po.Email">
-        update email
-        set user = #{user.id,jdbcType=INTEGER},
-        from = #{from,jdbcType=VARCHAR},
-        to = #{to,jdbcType=VARCHAR},
-        subject = #{subject,jdbcType=VARCHAR},
-        send_time = #{sendTime,jdbcType=TIMESTAMP},
-        text = #{text,jdbcType=LONGVARCHAR}
-        where id = #{id,jdbcType=INTEGER}
-    </update>
-    
     <update id="updateById" parameterType="edu.hlju.boler.pojo.po.Email">
-        update email
-        set user = #{user.id,jdbcType=INTEGER},
-        from = #{from,jdbcType=VARCHAR},
-        to = #{to,jdbcType=VARCHAR},
-        subject = #{subject,jdbcType=VARCHAR},
-        send_time = #{sendTime,jdbcType=TIMESTAMP}
-        where id = #{id,jdbcType=INTEGER}
+        update 
+            email
+        set 
+            user = #{user.id,jdbcType=INTEGER},
+            from = #{from,jdbcType=VARCHAR},
+            to = #{to,jdbcType=VARCHAR},
+            subject = #{subject,jdbcType=VARCHAR},
+            send_time = #{sendTime,jdbcType=TIMESTAMP},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+        where 
+            id = #{id,jdbcType=INTEGER}
     </update>
     
 </mapper>

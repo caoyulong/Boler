@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
-import edu.hlju.boler.dao.IPermissionDao;
 import edu.hlju.boler.dao.IUserDao;
 import edu.hlju.boler.dao.IUserLogDao;
 import edu.hlju.boler.datadictory.RegExDataDict;
@@ -25,7 +24,7 @@ import edu.hlju.boler.util.LegalityVerificator;
 public class UserService implements IUserService {
     public static final String USER_OBJECT = "user";
     public static final int MAX_ERROR_TIMES = 3;
-//    private int errorTimes = 0;
+// private int errorTimes = 0;
     private HttpSession session;
 
     @Resource
@@ -33,9 +32,6 @@ public class UserService implements IUserService {
 
     @Resource
     private IUserLogDao userLogDao;
-
-    @Resource
-    private IPermissionDao permDao;
 
     @Override
     public HttpSession getSession() {
@@ -64,7 +60,7 @@ public class UserService implements IUserService {
 
     @Override
     public StateResponse logout(HttpServletRequest request) {
-        //TODO
+        // TODO
         return null;
     }
 

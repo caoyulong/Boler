@@ -11,12 +11,24 @@ public class Email {
 
     private User user;
 
+    private Date createTime;
+
+    private Date modifyTime;
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
     public String getFrom() {
         return mail.getFrom();
     }
 
     public Integer getId() {
         return id;
+    }
+
+    public Date getModifyTime() {
+        return modifyTime;
     }
 
     public Date getSendTime() {
@@ -39,12 +51,20 @@ public class Email {
         return user;
     }
 
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
     public void setFrom(String from) {
         mail.setFrom(from);
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
     }
 
     public void setSendTime(Date sendTime) {
@@ -65,5 +85,11 @@ public class Email {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Email [mail=" + mail + ", id=" + id + ", user=" + user + ", createTime=" + createTime + ", modifyTime="
+                + modifyTime + "]";
     }
 }

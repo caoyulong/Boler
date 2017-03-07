@@ -19,67 +19,94 @@ public class PersonInfomation {
 
     private String address;
 
-    public Integer getId() {
-        return id;
-    }
+    private Date createTime;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    private Date modifyTime;
 
-    public String getRealname() {
-        return realname;
-    }
-
-    public void setRealname(String realname) {
-        this.realname = realname;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getCellphone() {
-        return cellphone;
-    }
-
-    public void setCellphone(String cellphone) {
-        this.cellphone = cellphone;
-    }
-
-    public String getProfile() {
-        return profile;
-    }
-
-    public void setProfile(String profile) {
-        this.profile = profile;
+    public String getAddress() {
+        return address;
     }
 
     public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public Date getBirthday() {
+        return birthday;
     }
 
-    public String getAddress() {
-        return address;
+    public String getCellphone() {
+        return cellphone;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Date getModifyTime() {
+        return modifyTime;
+    }
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public String getRealname() {
+        return realname;
+    }
+
+    public String getSex() {
+        return sex;
     }
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setCellphone(String cellphone) {
+        this.cellphone = cellphone;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
+
+    public void setRealname(String realname) {
+        this.realname = realname;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    @Override
+    public String toString() {
+        return "PersonInfomation [id=" + id + ", realname=" + realname + ", sex=" + sex + ", birthday=" + birthday
+                + ", cellphone=" + cellphone + ", profile=" + profile + ", avatar=" + avatar + ", address=" + address
+                + ", createTime=" + createTime + ", modifyTime=" + modifyTime + "]";
     }
 }

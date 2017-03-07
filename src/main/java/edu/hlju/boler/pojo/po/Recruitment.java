@@ -25,6 +25,8 @@ public class Recruitment {
 
     private Date createTime;
 
+    private Date modifyTime;
+
     public String getAddress() {
         return address;
     }
@@ -59,6 +61,10 @@ public class Recruitment {
 
     public Integer getLowSalary() {
         return lowSalary;
+    }
+
+    public Date getModifyTime() {
+        return modifyTime;
     }
 
     public String getRequirement() {
@@ -105,11 +111,23 @@ public class Recruitment {
         this.lowSalary = lowSalary;
     }
 
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
+    }
+
     public void setRequirement(String requirement) {
         this.requirement = requirement;
     }
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Recruitment [id=" + id + ", corporation=" + corporation + ", jobName=" + jobName + ", lowSalary="
+                + lowSalary + ", highSalary=" + highSalary + ", address=" + address + ", industry=" + industry
+                + ", jobDetail=" + jobDetail + ", requirement=" + requirement + ", user=" + user + ", createTime="
+                + createTime + ", modifyTime=" + modifyTime + "]";
     }
 }

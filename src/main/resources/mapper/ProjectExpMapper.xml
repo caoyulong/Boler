@@ -11,6 +11,8 @@
         <result column="start_time" jdbcType="DATE" property="startTime" />
         <result column="end_time" jdbcType="DATE" property="endTime" />
         <result column="detail" jdbcType="VARCHAR" property="detail" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
         
         <association column="resume" property="resume"
             select="edu.hlju.boler.dao.IOnlineResumeDao.selectById" />
@@ -18,7 +20,7 @@
     
     <sql id="Base_Column_List">
         id, name, team_scale, role, project_introduction, start_time, end_time,
-        detail, resume
+        detail, resume, create_time, modify_time
     </sql>
     
     <select id="selectAll" resultMap="BaseResultMap">
@@ -42,11 +44,9 @@
     
     <insert id="insert" parameterType="edu.hlju.boler.pojo.po.ProjectExperience">
         insert into project_exp (
-	        id, name, team_scale,
-	        role, project_introduction, start_time,
-	        end_time, detail, resume
-        )
-        values (
+	        id, name, team_scale, role, project_introduction, start_time,
+	        end_time, detail, resume, create_time, modify_time
+        ) values (
 	        #{id,jdbcType=INTEGER}, 
 	        #{name,jdbcType=VARCHAR},
 	        #{teamScale,jdbcType=VARCHAR},
@@ -55,7 +55,9 @@
 	        #{startTime,jdbcType=DATE},
 	        #{endTime,jdbcType=DATE}, 
 	        #{detail,jdbcType=VARCHAR},
-	        #{resume.id,jdbcType=INTEGER}
+	        #{resume.id,jdbcType=INTEGER},
+            #{createTime,jdbcType=TIMESTAMP},
+            #{modifyTime,jdbcType=TIMESTAMP}
         )
     </insert>
     
@@ -89,6 +91,12 @@
             <if test="resume.id != null">
                 resume.id,
             </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -117,6 +125,12 @@
             </if>
             <if test="resume.id != null">
                 #{resume.id,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
             </if>
         </trim>
     </insert>
@@ -148,21 +162,32 @@
             <if test="resume.id != null">
                 resume = #{resume.id,jdbcType=INTEGER},
             </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
     
     <update id="updateById" parameterType="edu.hlju.boler.pojo.po.ProjectExperience">
-        update project_exp
-        set name = #{name,jdbcType=VARCHAR},
-        team_scale = #{teamScale,jdbcType=VARCHAR},
-        role = #{role,jdbcType=VARCHAR},
-        project_introduction = #{projectIntroduction,jdbcType=VARCHAR},
-        start_time = #{startTime,jdbcType=DATE},
-        end_time = #{endTime,jdbcType=DATE},
-        detail = #{detail,jdbcType=VARCHAR},
-        resume = #{resume.id,jdbcType=INTEGER}
-        where id = #{id,jdbcType=INTEGER}
+        update 
+            project_exp
+        set 
+            name = #{name,jdbcType=VARCHAR},
+            team_scale = #{teamScale,jdbcType=VARCHAR},
+            role = #{role,jdbcType=VARCHAR},
+            project_introduction = #{projectIntroduction,jdbcType=VARCHAR},
+            start_time = #{startTime,jdbcType=DATE},
+            end_time = #{endTime,jdbcType=DATE},
+            detail = #{detail,jdbcType=VARCHAR},
+            resume = #{resume.id,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+        where 
+            id = #{id,jdbcType=INTEGER}
     </update>
     
 </mapper>

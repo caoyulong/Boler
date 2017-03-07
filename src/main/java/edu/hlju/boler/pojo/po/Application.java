@@ -5,11 +5,13 @@ import java.util.Date;
 public class Application {
     private Integer id;
 
-    private Date createTime;
-
     private User employ;
 
     private User employee;
+
+    private Date createTime;
+
+    private Date modifyTime;
 
     public Date getCreateTime() {
         return createTime;
@@ -27,6 +29,10 @@ public class Application {
         return id;
     }
 
+    public Date getModifyTime() {
+        return modifyTime;
+    }
+
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
@@ -41,5 +47,15 @@ public class Application {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Application [id=" + id + ", createTime=" + createTime + ", employ=" + employ + ", employee=" + employee
+                + ", modifyTime=" + modifyTime + "]";
     }
 }

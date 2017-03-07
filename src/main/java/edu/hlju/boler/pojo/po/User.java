@@ -2,16 +2,28 @@ package edu.hlju.boler.pojo.po;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+
 public class User {
     private Integer id;
 
+    @NotNull
+    private Role role;
+
+    @Email
     private String email;
 
+    @Length(min = 8, max = 16)
     private String password;
+
+    private PersonInfomation personInfo;
 
     private Date createTime;
 
-    private PersonInfomation personInfo;
+    private Date modifyTime;
 
     public Date getCreateTime() {
         return createTime;
@@ -25,12 +37,20 @@ public class User {
         return id;
     }
 
+    public Date getModifyTime() {
+        return modifyTime;
+    }
+
     public String getPassword() {
         return password;
     }
 
     public PersonInfomation getPersonInfo() {
         return personInfo;
+    }
+
+    public Role getRole() {
+        return role;
     }
 
     public void setCreateTime(Date createTime) {
@@ -46,6 +66,10 @@ public class User {
 
     }
 
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -54,10 +78,14 @@ public class User {
         this.personInfo = personInfo;
     }
 
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
-        return "User [id=" + id + ", email=" + email + ", password=" + password + ", createTime=" + createTime
-                + ", personInfo=" + personInfo + "]";
+        return "User [id=" + id + ", role=" + role + ", email=" + email + ", password=" + password + ", personInfo="
+                + personInfo + ", createTime=" + createTime + ", modifyTime=" + modifyTime + "]";
     }
 
 }

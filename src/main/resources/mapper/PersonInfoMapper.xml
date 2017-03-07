@@ -11,10 +11,13 @@
         <result column="profile" jdbcType="VARCHAR" property="profile" />
         <result column="avatar" jdbcType="VARCHAR" property="avatar" />
         <result column="address" jdbcType="VARCHAR" property="address" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
     </resultMap>
     
     <sql id="Base_Column_List">
-        id, realname, sex, birthday, cellphone, profile, avatar, address
+        id, realname, sex, birthday, cellphone, profile, 
+        ]avatar, address, create_time, modify_time
     </sql>
     
     <select id="selectAll" resultMap="BaseResultMap">
@@ -37,8 +40,10 @@
     </delete>
     
     <insert id="insert" parameterType="edu.hlju.boler.pojo.po.PersonInfomation">
-        insert into person_info (id, realname, sex, birthday, cellphone, profile, avatar, address)
-        values (
+        insert into person_info (
+            id, realname, sex, birthday, cellphone, profile, 
+            avatar, address, create_time, modify_time
+        ) values (
 	        #{id,jdbcType=INTEGER}, 
 	        #{realname,jdbcType=VARCHAR},
 	        #{sex,jdbcType=CHAR},
@@ -46,7 +51,9 @@
 	        #{cellphone,jdbcType=VARCHAR}, 
 	        #{profile,jdbcType=VARCHAR},
 	        #{avatar,jdbcType=VARCHAR},
-	        #{address,jdbcType=VARCHAR}
+	        #{address,jdbcType=VARCHAR},
+            #{createTime,jdbcType=TIMESTAMP},
+            #{modifyTime,jdbcType=TIMESTAMP}
         )
     </insert>
     
@@ -77,6 +84,12 @@
             <if test="address != null">
                 address,
             </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -102,6 +115,12 @@
             </if>
             <if test="address != null">
                 #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
             </if>
         </trim>
     </insert>
@@ -130,20 +149,31 @@
             <if test="address != null">
                 address = #{address,jdbcType=VARCHAR},
             </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
     
     <update id="updateById" parameterType="edu.hlju.boler.pojo.po.PersonInfomation">
-        update person_info
-        set realname = #{realname,jdbcType=VARCHAR},
-        sex = #{sex,jdbcType=CHAR},
-        birthday = #{birthday,jdbcType=DATE},
-        cellphone = #{cellphone,jdbcType=VARCHAR},
-        profile = #{profile,jdbcType=VARCHAR},
-        avatar = #{avatar,jdbcType=VARCHAR},
-        address = #{address,jdbcType=VARCHAR}
-        where id = #{id,jdbcType=INTEGER}
+        update 
+            person_info
+        set 
+            realname = #{realname,jdbcType=VARCHAR},
+            sex = #{sex,jdbcType=CHAR},
+            birthday = #{birthday,jdbcType=DATE},
+            cellphone = #{cellphone,jdbcType=VARCHAR},
+            profile = #{profile,jdbcType=VARCHAR},
+            avatar = #{avatar,jdbcType=VARCHAR},
+            address = #{address,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+        where 
+            id = #{id,jdbcType=INTEGER}
     </update>
     
 </mapper>
