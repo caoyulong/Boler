@@ -5,7 +5,7 @@ import java.util.Date;
 public class UserLog {
     private Integer id;
 
-    private Integer user;
+    private User user;
 
     private String ipAddress;
 
@@ -14,13 +14,7 @@ public class UserLog {
     public UserLog() {
     }
 
-    public UserLog(String ipAddress, Integer user, Integer permission) {
-        super();
-        this.ipAddress = ipAddress;
-        this.user = user;
-    }
-
-    public UserLog(String ipAddress, Integer user, String message) {
+    public UserLog(String ipAddress, User user, String message) {
     }
 
     public Integer getId() {
@@ -35,7 +29,7 @@ public class UserLog {
         return recordTime;
     }
 
-    public Integer getUser() {
+    public User getUser() {
         return user;
     }
 
@@ -51,7 +45,7 @@ public class UserLog {
         this.recordTime = recordTime;
     }
 
-    public void setUser(Integer user) {
+    public void setUser(User user) {
         this.user = user;
     }
 }

@@ -15,10 +15,12 @@ import edu.hlju.boler.pojo.po.Role;
 import edu.hlju.boler.pojo.po.User;
 import edu.hlju.boler.pojo.vo.BaseResponse;
 import edu.hlju.boler.service.interfaces.IUserService;
+import edu.hlju.boler.util.DateTimeUtil;
 
 @Controller
 @RequestMapping(value = "api/user")
 public class UserController {
+    public static final String USER_LOG_FORMAT = "[%s] %s";
     private static Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     @Resource(name = "userService")
@@ -27,21 +29,21 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public BaseResponse login(HttpServletRequest request, @RequestParam User user, Role role) {
-        logger.info(user.toString() + "login.");
+        logger.info(USER_LOG_FORMAT, DateTimeUtil.now(), user.getId() + " login.");
         return userService.login(request, user);
     }
 
     @ResponseBody
     @RequestMapping(value = "/logout")
     public BaseResponse logout(HttpServletRequest request) {
-        logger.info("User logout.");
+        logger.info(DateTimeUtil.now() + "User logout.");
         return userService.logout(request);
     }
 
     @ResponseBody
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public BaseResponse register(@RequestParam User user, @RequestParam Role role) {
-        logger.info(user.toString() + "register.");
+        logger.info(USER_LOG_FORMAT, DateTimeUtil.now(), user.getId() + " register.");
         return userService.register(user, role);
     }
 
