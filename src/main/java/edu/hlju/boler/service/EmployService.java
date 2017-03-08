@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 import edu.hlju.boler.service.interfaces.IEmployService;
 
-@Service
+@Service("employService")
 public class EmployService implements IEmployService {
 
 }
