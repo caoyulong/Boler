@@ -72,6 +72,12 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public StateResponse modifyPassword(HttpServletRequest request, User user) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
     public StateResponse register(User user, Role role) {
         try {
             user.setPassword(Encrytor.encrypt(user.getPassword()));

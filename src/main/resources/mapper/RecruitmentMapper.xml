@@ -95,7 +95,7 @@
             <if test="requirement != null">
                 requirement,
             </if>
-            <if test="user.id != null">
+            <if test="user != null">
                 user,
             </if>
             <if test="createTime != null">
@@ -133,7 +133,7 @@
             <if test="requirement != null">
                 #{requirement,jdbcType=VARCHAR},
             </if>
-            <if test="user.id != null">
+            <if test="user != null">
                 #{user.id,jdbcType=INTEGER},
             </if>
             <if test="createTime != null">
@@ -172,7 +172,7 @@
             <if test="requirement != null">
                 requirement = #{requirement,jdbcType=VARCHAR},
             </if>
-            <if test="user.id != null">
+            <if test="user != null">
                 user = #{user.id,jdbcType=INTEGER},
             </if>
             <if test="createTime != null">

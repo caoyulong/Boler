@@ -125,7 +125,7 @@
     <update id="updateByIdSelective" parameterType="edu.hlju.boler.pojo.po.Email">
         update email
         <set>
-            <if test="user.id != null">
+            <if test="user != null">
                 user = #{user.id,jdbcType=INTEGER},
             </if>
             <if test="from != null">

@@ -51,10 +51,10 @@
             <if test="id != null">
                 id,
             </if>
-            <if test="employ.id != null">
+            <if test="employ != null">
                 employ.id,
             </if>
-            <if test="employee.id != null">
+            <if test="employee != null">
                 employee.id,
             </if>
             <if test="createTime != null">
@@ -68,10 +68,10 @@
             <if test="id != null">
                 #{id,jdbcType=INTEGER},
             </if>
-            <if test="employ.id != null">
+            <if test="employ != null">
                 #{employ.id,jdbcType=INTEGER},
             </if>
-            <if test="employee.id != null">
+            <if test="employee != null">
                 #{employee.id,jdbcType=INTEGER},
             </if>
             <if test="createTime != null">
@@ -86,10 +86,10 @@
     <update id="updateByIdSelective" parameterType="edu.hlju.boler.pojo.po.Application">
         update application
         <set>
-            <if test="employ.id != null">
+            <if test="employ != null">
                 employ = #{employ.id,jdbcType=INTEGER},
             </if>
-            <if test="employee.id != null">
+            <if test="employee != null">
                 employee = #{employee.id,jdbcType=INTEGER},
             </if>
             <if test="createTime != null">

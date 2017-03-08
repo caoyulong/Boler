@@ -9,12 +9,14 @@
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
         <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
         
+        <association column="role" property="fole"
+            select="edu.hlju.boler.dao.IRoleDao.selectById" />
         <association column="person_info" property="personInfo"
             select="edu.hlju.boler.dao.IPersonInfoDao.selectById" />
     </resultMap>
     
     <sql id="Base_Column_List">
-        id, email, password, person_info, create_time, modify_time
+        id, email, password, role, person_info, create_time, modify_time
     </sql>
     
     <select id="selectAll" resultMap="BaseResultMap">
@@ -44,11 +46,12 @@
     
     <insert id="insert" parameterType="edu.hlju.boler.pojo.po.User" useGeneratedKeys="true" keyProperty="id">
         insert into user (
-        	id, email, password, person_info, create_time, modify_time
-        )
-        values (
-	        #{id,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR},
+        	id, email, password, role, person_info, create_time, modify_time
+        ) values (
+	        #{id,jdbcType=INTEGER}, 
+            #{email,jdbcType=VARCHAR},
 	        #{password,jdbcType=CHAR},
+            #{role.id,jdbcType=INTEGER},
             #{personInfo.id,jdbcType=INTEGER},
 	        #{createTime,jdbcType=TIMESTAMP}, 
             #{modifyTime,jdbcType=TIMESTAMP}
@@ -67,7 +70,10 @@
             <if test="password != null">
                 password,
             </if>
-            <if test="personInfo.id != null">
+            <if test="role != null">
+                role,
+            </if>
+            <if test="personInfo != null">
                 person_info,
             </if>
             <if test="createTime != null">
@@ -87,10 +93,10 @@
             <if test="password != null">
                 #{password,jdbcType=CHAR},
             </if>
-            <if test="createTime != null">
-                #{createTime,jdbcType=TIMESTAMP},
+             <if test="role != null">
+                #{role.id,jdbcType=INTEGER},
             </if>
-            <if test="personInfo.id != null">
+            <if test="personInfo != null">
                 #{personInfo.id,jdbcType=INTEGER},
             </if>
             <if test="createTime != null">
@@ -111,7 +117,10 @@
             <if test="password != null">
                 password = #{password,jdbcType=CHAR},
             </if>
-            <if test="personInfo.id != null">
+            <if test="role != null">
+                role = #{role.id,jdbcType=INTEGER},
+            </if>
+            <if test="personInfo != null">
                 person_info = #{personInfo.id,jdbcType=INTEGER},
             </if>
             <if test="createTime != null">
@@ -130,6 +139,7 @@
         set 
             email = #{email,jdbcType=VARCHAR},
             password = #{password,jdbcType=CHAR},
+            role = #{role.id,jdbcType=INTEGER},
             person_info = #{personInfo.id,jdbcType=INTEGER},
             create_time = #{createTime,jdbcType=TIMESTAMP},
             modify_time = #{modifyTime,jdbcType=TIMESTAMP}

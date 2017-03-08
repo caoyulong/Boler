@@ -81,7 +81,7 @@
             <if test="course != null">
                 course,
             </if>
-            <if test="resume.id != null">
+            <if test="resume!= null">
                 resume.id,
             </if>
             <if test="createTime != null">
@@ -113,7 +113,7 @@
             <if test="course != null">
                 #{course,jdbcType=VARCHAR},
             </if>
-            <if test="resume.id != null">
+            <if test="resume != null">
                 #{resume.id,jdbcType=INTEGER},
             </if>
             <if test="createTime != null">
@@ -146,7 +146,7 @@
             <if test="course != null">
                 course = #{course,jdbcType=VARCHAR},
             </if>
-            <if test="resume.id != null">
+            <if test="resume != null">
                 resume = #{resume.id,jdbcType=INTEGER},
             </if>
             <if test="createTime != null">

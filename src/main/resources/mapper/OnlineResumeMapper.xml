@@ -62,10 +62,10 @@
             <if test="createTime != null">
                 create_time,
             </if>
-            <if test="personInfo.id != null">
+            <if test="personInfo != null">
                 person_info,
             </if>
-            <if test="user.id != null">
+            <if test="user != null">
                 user,
             </if>
             <if test="updateTime != null">
@@ -82,10 +82,10 @@
             <if test="createTime != null">
                 #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="personInfo.id != null">
+            <if test="personInfo != null">
                 #{personInfo.id,jdbcType=INTEGER},
             </if>
-            <if test="user/od != null">
+            <if test="user != null">
                 #{user.id,jdbcType=INTEGER},
             </if>
             <if test="updateTime != null">
@@ -103,10 +103,10 @@
             <if test="createTime != null">
                 create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="personInfo.id != null">
+            <if test="personInfo != null">
                 person_info = #{personInfo.id,jdbcType=INTEGER},
             </if>
-            <if test="user.id != null">
+            <if test="user != null">
                 user = #{user.id,jdbcType=INTEGER},
             </if>
             <if test="updateTime != null">

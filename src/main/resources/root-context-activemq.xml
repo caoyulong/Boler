@@ -12,7 +12,7 @@
     </bean> 
      <!-- 点对点消息队列-->
     <bean id="message_queue" class="org.apache.activemq.command.ActiveMQQueue">
-        <property name="physicalName" value="email_queue" />
+        <property name="physicalName" value="message_queue" />
     </bean>
     <!-- JMSTemplate -->
     <bean id="jmsQueueTemplate" class="org.springframework.jms.core.JmsTemplate">
