@@ -2,7 +2,6 @@ package edu.hlju.boler.service.interfaces;
 
 import javax.servlet.http.HttpServletRequest;
 
-import edu.hlju.boler.pojo.po.Role;
 import edu.hlju.boler.pojo.po.User;
 import edu.hlju.boler.pojo.vo.StateResponse;
 
@@ -12,8 +11,8 @@ public interface IUserService {
 
     StateResponse logout(HttpServletRequest request);
 
-    StateResponse modifyPassword(HttpServletRequest request, User user);
+    StateResponse modifyPassword(HttpServletRequest request, User user, String newPasswd);
 
-    StateResponse register(User user, Role role);
+    StateResponse register(User user);
 
 }

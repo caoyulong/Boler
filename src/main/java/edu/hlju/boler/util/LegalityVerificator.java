@@ -4,6 +4,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LegalityVerificator {
+    private LegalityVerificator() {
+    }
 
     public static boolean isLegal(String data, String regex) {
         Pattern pattern = Pattern.compile(regex);

@@ -39,7 +39,7 @@
         where id = #{id,jdbcType=INTEGER}
     </delete>
     
-    <insert id="insert" parameterType="edu.hlju.boler.pojo.po.PersonInfomation">
+    <insert id="insert" parameterType="edu.hlju.boler.pojo.po.PersonInfomation" useGeneratedKeys="true" keyProperty="id">
         insert into person_info (
             id, realname, sex, birthday, cellphone, profile, 
             avatar, address, create_time, modify_time

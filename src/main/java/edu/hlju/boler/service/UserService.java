@@ -8,28 +8,26 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
-import edu.hlju.boler.core.message.MessageSender;
+import edu.hlju.boler.core.interfaces.IMessageSender;
 import edu.hlju.boler.dao.IUserDao;
 import edu.hlju.boler.datadictory.UserDataDict;
-import edu.hlju.boler.pojo.po.Role;
 import edu.hlju.boler.pojo.po.User;
 import edu.hlju.boler.pojo.po.UserLog;
 import edu.hlju.boler.pojo.vo.StateResponse;
-import edu.hlju.boler.pojo.vo.UserRole;
 import edu.hlju.boler.service.interfaces.IUserService;
 import edu.hlju.boler.util.Encrytor;
 
 @Service("userService")
 public class UserService implements IUserService {
-    public static final String USER_OBJECT = "user";
-    public static final int MAX_ERROR_TIMES = 3;
-// private int errorTimes = 0;
-
     @Resource
     private IUserDao userDao;
-
     @Resource
-    private MessageSender messageSender;
+    private IMessageSender messageSender;
+
+    public static final String USER_OBJECT = "user";
+
+    public static final int MAX_ERROR_TIMES = 3;
+// private int errorTimes = 0;
 
     @Override
     public StateResponse login(HttpServletRequest request, User user) {
@@ -72,23 +70,37 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public StateResponse modifyPassword(HttpServletRequest request, User user) {
-        // TODO Auto-generated method stub
-        return null;
+    public StateResponse modifyPassword(HttpServletRequest request, User user, String newPassword) {
+        Object obj = request.getSession().getAttribute(USER_OBJECT);
+        if (obj != null) {
+            User logined = (User) obj;
+            boolean isRight = logined.getPassword().equals(Encrytor.encrypt(logined.getPassword()));
+            if (isRight) {
+                logined.setPassword(newPassword);
+                try {
+                    userDao.updateById(logined);
+                    UserLog log = new UserLog(request.getRemoteAddr(), logined, "User modify password.");
+                    messageSender.send(log);
+                    return new StateResponse(UserDataDict.MODIFY_PASSWD_SUCCEED);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return new StateResponse(UserDataDict.MODIFY_PASSWD_FAILED);
     }
 
     @Override
-    public StateResponse register(User user, Role role) {
+    public StateResponse register(User user) {
         try {
             user.setPassword(Encrytor.encrypt(user.getPassword()));
             userDao.insert(user);
-            userDao.insertUserRole(new UserRole(user, role));
+            return new StateResponse(UserDataDict.REGISTER_SUCCEED);
         } catch (SQLException e) {
             e.printStackTrace();
-            return new StateResponse(UserDataDict.REGISTER_FAILED);
         }
+        return new StateResponse(UserDataDict.REGISTER_FAILED);
 
-        return new StateResponse(UserDataDict.REGISTER_SUCCEED);
     }
 
 }

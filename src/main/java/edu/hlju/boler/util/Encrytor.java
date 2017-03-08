@@ -7,14 +7,17 @@ import java.security.NoSuchAlgorithmException;
  * @author Jing Qingyun 使用MD5对密码进行单向加密，生成32位十六进制字符的密码
  */
 public class Encrytor {
+    private Encrytor() {
+    }
 
     /**
      * @param 将要加密的密码字符串
      * @return 返回加密处理后的32位密文，加密失败返回空字符串
      */
     public static String encrypt(String message) {
-        if (message == null || message.equals(""))
+        if (message == null || message.equals("")) {
             return "";
+        }
         try {
             MessageDigest sha1 = MessageDigest.getInstance("sha1");
             byte[] data = message.getBytes();
@@ -25,10 +28,6 @@ public class Encrytor {
             e.printStackTrace();
         }
         return "";
-    }
-
-    public static void main(String[] args) {
-        System.out.println(Encrytor.encrypt("Qingyun3075833").length());
     }
 
     private static String toHexString(byte[] data) {

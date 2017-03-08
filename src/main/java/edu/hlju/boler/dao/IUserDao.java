@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import edu.hlju.boler.pojo.po.User;
-import edu.hlju.boler.pojo.vo.UserRole;
 
 @Repository
 public interface IUserDao {
@@ -16,8 +15,6 @@ public interface IUserDao {
     int insert(User record) throws SQLException;
 
     int insertSelective(User record) throws SQLException;
-
-    int insertUserRole(UserRole userRole) throws SQLException;
 
     List<User> selectAll() throws SQLException;
 

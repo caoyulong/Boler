@@ -24,6 +24,16 @@ public class EmailService implements IEmailService {
     @Resource(name = "userService")
     private IUserService userService;
 
+    private SimpleMailMessage sendable(Email email) {
+        SimpleMailMessage ssm = new SimpleMailMessage();
+        ssm.setFrom(email.getFrom());
+        ssm.setTo(email.getTo());
+        ssm.setSubject(email.getSubject());
+        ssm.setSentDate(email.getSendTime());
+        ssm.setText(email.getText());
+        return ssm;
+    }
+
     @Override
     public void save(Email email) {
         try {
@@ -41,16 +51,6 @@ public class EmailService implements IEmailService {
         emailSender.setUsername(user.getEmail());
         emailSender.setPassword(user.getPassword());
         emailSender.send(ssm);
-    }
-
-    private SimpleMailMessage sendable(Email email) {
-        SimpleMailMessage ssm = new SimpleMailMessage();
-        ssm.setFrom(email.getFrom());
-        ssm.setTo(email.getTo());
-        ssm.setSubject(email.getSubject());
-        ssm.setSentDate(email.getSendTime());
-        ssm.setText(email.getText());
-        return ssm;
     }
 
 }

@@ -2,6 +2,8 @@ package edu.hlju.boler.pojo.po;
 
 import java.util.Date;
 
+import org.hibernate.validator.constraints.Length;
+
 public class PersonInfomation {
     private Integer id;
 
@@ -11,6 +13,7 @@ public class PersonInfomation {
 
     private Date birthday;
 
+    @Length(min = 11, max = 11)
     private String cellphone;
 
     private String profile;

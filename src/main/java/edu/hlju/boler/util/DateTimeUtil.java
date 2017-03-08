@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.Locale;
 
 public class DateTimeUtil {
+    private DateTimeUtil() {
+    }
 
     public static String now() {
         Date date = new Date();

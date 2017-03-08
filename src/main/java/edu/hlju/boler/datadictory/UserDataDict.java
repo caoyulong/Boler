@@ -6,17 +6,18 @@ public enum UserDataDict {
     LOGIN_SUCCEED(102, "Login succeed."),
     LOGIN_FAILED(103, "Login failed."),
     LOGOUT_SUCCEED(104, "Logout succeed."),
-    LOGOUT_FAILED(105, "Logout failed.");
+    LOGOUT_FAILED(105, "Logout failed."),
+    MODIFY_PASSWD_SUCCEED(106, "Modify password succeed."),
+    MODIFY_PASSWD_FAILED(107, "Modify password failed."),
+    SAVE_PERSON_INFO_SCCUCEED(108, "Save person info succeed."),
+    SAVE_PERSON_INFO_FAILED(109, "Save person info failed.");
 
     private int code;
+
     private String message;
 
     private UserDataDict(int code, String message) {
         this.code = code;
-        this.message = message;
-    }
-
-    private UserDataDict(String message) {
         this.message = message;
     }
 

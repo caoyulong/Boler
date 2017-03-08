@@ -20,11 +20,11 @@ import edu.hlju.boler.util.DateTimeUtil;
 @Controller
 @RequestMapping(value = "api/user")
 public class UserController {
-    public static final String USER_LOG_FORMAT = "[%s] %s";
-    private static Logger logger = LoggerFactory.getLogger(HomeController.class);
-
     @Resource(name = "userService")
     private IUserService userService;
+    public static final String USER_LOG_FORMAT = "[%s] %s";
+
+    private static Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -41,10 +41,17 @@ public class UserController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/modifyPassword", method = RequestMethod.POST)
+    public BaseResponse modifyPasswd(HttpServletRequest request, User user, String newPasswd) {
+        logger.info(USER_LOG_FORMAT, DateTimeUtil.now() + "User modify password.");
+        return userService.modifyPassword(request, user, newPasswd);
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public BaseResponse register(@RequestParam User user, @RequestParam Role role) {
         logger.info(USER_LOG_FORMAT, DateTimeUtil.now(), user.getId() + " register.");
-        return userService.register(user, role);
+        return userService.register(user);
     }
 
 }
