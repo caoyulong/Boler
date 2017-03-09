@@ -3,6 +3,7 @@ package edu.hlju.boler.dao;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import edu.hlju.boler.pojo.po.Application;
@@ -16,8 +17,10 @@ public interface IApplicationDao {
 
     int insertSelective(Application record) throws SQLException;
 
+    @Cacheable
     List<Application> selectAll() throws SQLException;
 
+    @Cacheable
     Application selectById(Integer id) throws SQLException;
 
     int updateById(Application record) throws SQLException;

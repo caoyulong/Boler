@@ -3,6 +3,8 @@ package edu.hlju.boler.dao;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.cache.annotation.Cacheable;
+
 import edu.hlju.boler.pojo.po.PersonInfomation;
 
 public interface IPersonInfoDao {
@@ -15,6 +17,7 @@ public interface IPersonInfoDao {
 
     List<PersonInfomation> selectAll() throws SQLException;
 
+    @Cacheable
     PersonInfomation selectById(Integer id) throws SQLException;
 
     int updateById(PersonInfomation record) throws SQLException;
