@@ -3,22 +3,30 @@ package edu.hlju.boler.dao;
 import java.sql.SQLException;
 import java.util.List;
 
-import edu.hlju.boler.pojo.po.ProjectExperience;
+import org.springframework.cache.annotation.Cacheable;
+
+import edu.hlju.boler.pojo.po.OnlineResume;
+import edu.hlju.boler.pojo.po.ProjectExp;
 
 public interface IProjectExpDao {
 
     int deleteById(Integer id) throws SQLException;
 
-    int insert(ProjectExperience record) throws SQLException;
+    int insert(ProjectExp record) throws SQLException;
 
-    int insertSelective(ProjectExperience record) throws SQLException;
+    int insertSelective(ProjectExp record) throws SQLException;
 
-    List<ProjectExperience> selectAll() throws SQLException;
+    @Cacheable
+    List<ProjectExp> selectAll() throws SQLException;
 
-    ProjectExperience selectById(Integer id) throws SQLException;
+    @Cacheable
+    ProjectExp selectById(Integer id) throws SQLException;
 
-    int updateById(ProjectExperience record) throws SQLException;
+    @Cacheable
+    List<ProjectExp> selectByResume(OnlineResume resume) throws SQLException;
 
-    int updateByIdSelective(ProjectExperience record) throws SQLException;
+    int updateById(ProjectExp record) throws SQLException;
+
+    int updateByIdSelective(ProjectExp record) throws SQLException;
 
 }

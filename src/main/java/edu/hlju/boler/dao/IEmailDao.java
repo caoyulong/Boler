@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.repository.query.Param;
 
 import edu.hlju.boler.pojo.po.Email;
 
@@ -20,6 +21,13 @@ public interface IEmailDao {
 
     @Cacheable
     Email selectById(Integer id) throws SQLException;
+
+    @Cacheable
+    List<Email> selectSplit(@Param("pageNum") int pageNum, @Param("pageSize") int pageSize) throws SQLException;
+
+    @Cacheable
+    List<Email> selectSplitCondition(@Param("email") Email e, @Param("pageNum") int pageNum,
+            @Param("pageSize") int pageSize) throws SQLException;
 
     int updateById(Email record) throws SQLException;
 

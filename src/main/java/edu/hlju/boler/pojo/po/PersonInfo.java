@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.hibernate.validator.constraints.Length;
 
-public class PersonInfomation {
+public class PersonInfo {
     private Integer id;
 
     private String realname;

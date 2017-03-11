@@ -7,7 +7,7 @@ public class OnlineResume {
 
     private String name;
 
-    private PersonInfomation personInfo;
+    private PersonInfo personInfo;
 
     private User user;
 
@@ -27,7 +27,7 @@ public class OnlineResume {
         return name;
     }
 
-    public PersonInfomation getPersonInfo() {
+    public PersonInfo getPersonInfo() {
         return personInfo;
     }
 
@@ -51,7 +51,7 @@ public class OnlineResume {
         this.name = name;
     }
 
-    public void setPersonInfo(PersonInfomation personInfo) {
+    public void setPersonInfo(PersonInfo personInfo) {
         this.personInfo = personInfo;
     }
 

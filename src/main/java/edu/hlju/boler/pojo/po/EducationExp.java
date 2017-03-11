@@ -2,7 +2,7 @@ package edu.hlju.boler.pojo.po;
 
 import java.util.Date;
 
-public class EducationExperience {
+public class EducationExp {
     private Integer id;
 
     private Date startTime;

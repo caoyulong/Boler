@@ -28,6 +28,22 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
     
+    <select id="selectSplit" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from user_log
+    </select>
+    
+    <select id="selectSplitCondition" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from user_log
+        <where>
+            <if test="userLog.user != null">and user = #{userLog.user.id}</if>
+            <if test="userLog.ipAddress != null">and ip_address = #{userLog.ipAddress}</if>
+        </where>
+    </select>
+    
     <delete id="deleteById" parameterType="java.lang.Integer">
         delete from user_log
         where id = #{id,jdbcType=INTEGER}

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.hlju.boler.dao.IEducationExpDao">
 
-    <resultMap id="BaseResultMap" type="edu.hlju.boler.pojo.po.EducationExperience">
+    <resultMap id="BaseResultMap" type="edu.hlju.boler.pojo.po.EducationExp">
         <id column="id" jdbcType="INTEGER" property="id" />
         <result column="start_time" jdbcType="DATE" property="startTime" />
         <result column="end_time" jdbcType="DATE" property="endTime" />
@@ -26,7 +26,7 @@
         from education_exp
     </select>
     
-    <select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+    <select id="selectById" parameterType="java.lang.Integer"
         resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
@@ -34,12 +34,19 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
     
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <select id="selectByResume" parameterType="edu.hlju.boler.pojo.po.OnlineResume" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from education_exp
+        where resume = #{id,jdbcType=INTEGER}
+    </select>
+    
+    <delete id="deleteById" parameterType="java.lang.Integer">
         delete from education_exp
         where id = #{id,jdbcType=INTEGER}
     </delete>
     
-    <insert id="insert" parameterType="edu.hlju.boler.pojo.po.EducationExperience">
+    <insert id="insert" parameterType="edu.hlju.boler.pojo.po.EducationExp">
         insert into education_exp (
 	        id, start_time, end_time,
 	        school, degree, major,
@@ -57,7 +64,7 @@
         )
     </insert>
     
-    <insert id="insertSelective" parameterType="edu.hlju.boler.pojo.po.EducationExperience">
+    <insert id="insertSelective" parameterType="edu.hlju.boler.pojo.po.EducationExp">
         insert into education_exp
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -125,7 +132,7 @@
         </trim>
     </insert>
     
-    <update id="updateByPrimaryKeySelective" parameterType="edu.hlju.boler.pojo.po.EducationExperience">
+    <update id="updateByPrimaryKeySelective" parameterType="edu.hlju.boler.pojo.po.EducationExp">
         update education_exp
         <set>
             <if test="startTime != null">
@@ -159,7 +166,7 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
     
-    <update id="updateByPrimaryKey" parameterType="edu.hlju.boler.pojo.po.EducationExperience">
+    <update id="updateByPrimaryKey" parameterType="edu.hlju.boler.pojo.po.EducationExp">
         update 
             education_exp
         set 

@@ -31,6 +31,21 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
     
+    <select id="selectSplit" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from online_resume
+    </select>
+    
+    <select id="selectSplitCondition" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from online_resume
+        <where>
+            <if test="onlineResume.user != null">and user = #{onlineResume.user.id}</if>
+        </where>
+    </select>
+    
     <delete id="deleteById" parameterType="java.lang.Integer">
         delete from online_resume
         where id = #{id,jdbcType=INTEGER}

@@ -38,6 +38,23 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
     
+    <select id="selectSplit" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from recruitment
+    </select>
+    
+    <select id="selectSplitCondition" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from recruitment
+        <where>
+            <if test="recruitment.corparation != null">and corporation = #{recruitment.corporation}</if>
+            <if test="recruitment.jobName != null">and job_name = #{recruitment.jobName}</if>
+        </where>
+    </select>
+    
+    
     <delete id="deleteById" parameterType="java.lang.Integer">
         delete from recruitment
         where id = #{id,jdbcType=INTEGER}

@@ -21,7 +21,7 @@ public class RedisConfiguration {
      * @param rcf 在root-context.xml文件里配置的RedisConnectionFactory Bean
      * @return 通过@Bean注解注册到容器中
      */
-    @Bean
+    @Bean // 通过@Bean注解将方法返回的对象注册到Bean容器中
     @Resource(name = "jedisConnectionFactory")
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory rcf) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();

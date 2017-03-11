@@ -11,7 +11,7 @@ import edu.hlju.boler.core.interfaces.IMessageSender;
 import edu.hlju.boler.dao.IPersonInfoDao;
 import edu.hlju.boler.dao.IUserDao;
 import edu.hlju.boler.datadictory.UserDataDict;
-import edu.hlju.boler.pojo.po.PersonInfomation;
+import edu.hlju.boler.pojo.po.PersonInfo;
 import edu.hlju.boler.pojo.po.User;
 import edu.hlju.boler.pojo.po.UserLog;
 import edu.hlju.boler.pojo.vo.StateResponse;
@@ -29,7 +29,7 @@ public class EmployeeService implements IEmployeeService {
     private IMessageSender messageSender;
 
     @Override
-    public StateResponse savePersonInfo(HttpServletRequest request, PersonInfomation info) {
+    public StateResponse savePersonInfo(HttpServletRequest request, PersonInfo info) {
         Object obj = request.getSession().getAttribute(UserService.USER_OBJECT);
         if (obj != null) {
             User logined = (User) obj;

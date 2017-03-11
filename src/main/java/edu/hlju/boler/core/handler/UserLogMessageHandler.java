@@ -3,10 +3,13 @@ package edu.hlju.boler.core.handler;
 import javax.annotation.Resource;
 import javax.jms.Message;
 
+import org.springframework.stereotype.Component;
+
 import edu.hlju.boler.core.interfaces.IMessageHandler;
 import edu.hlju.boler.core.interfaces.IUserLogService;
 import edu.hlju.boler.pojo.po.UserLog;
 
+@Component
 public class UserLogMessageHandler implements IMessageHandler {
     @Resource(name = "userLogService")
     private IUserLogService userLogService;

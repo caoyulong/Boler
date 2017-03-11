@@ -3,6 +3,8 @@ package edu.hlju.boler.dao;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.cache.annotation.Cacheable;
+
 import edu.hlju.boler.pojo.po.ApplyState;
 
 public interface IApplyStateDao {
@@ -13,8 +15,10 @@ public interface IApplyStateDao {
 
     int insertSelective(ApplyState record) throws SQLException;
 
+    @Cacheable
     List<ApplyState> selectAll() throws SQLException;
 
+    @Cacheable
     ApplyState selectById(Integer id) throws SQLException;
 
     int updateById(ApplyState record) throws SQLException;

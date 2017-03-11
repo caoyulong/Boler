@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.hlju.boler.dao.IWorkExpDao">
 
-    <resultMap id="BaseResultMap" type="edu.hlju.boler.pojo.po.WorkExperience">
+    <resultMap id="BaseResultMap" type="edu.hlju.boler.pojo.po.WorkExp">
         <id column="id" jdbcType="INTEGER" property="id" />
         <result column="start_time" jdbcType="DATE" property="startTime" />
         <result column="end_time" jdbcType="DATE" property="endTime" />
@@ -37,12 +37,19 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
     
+    <select id="selectByResume" parameterType="edu.hlju.boler.pojo.po.OnlineResume" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from work_exp
+        where resume = #{id,jdbcType=INTEGER}
+    </select>
+    
     <delete id="deleteById" parameterType="java.lang.Integer">
         delete from work_exp
         where id = #{id,jdbcType=INTEGER}
     </delete>
     
-    <insert id="insert" parameterType="edu.hlju.boler.pojo.po.WorkExperience">
+    <insert id="insert" parameterType="edu.hlju.boler.pojo.po.WorkExp">
         insert into work_exp (
 	        id, start_time, end_time, corporation, scale, department,
 	        job, detail, resume, create_time, modify_time
@@ -61,7 +68,7 @@
         )
     </insert>
     
-    <insert id="insertSelective" parameterType="edu.hlju.boler.pojo.po.WorkExperience">
+    <insert id="insertSelective" parameterType="edu.hlju.boler.pojo.po.WorkExp">
         insert into work_exp
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -135,7 +142,7 @@
         </trim>
     </insert>
     
-    <update id="updateByIdSelective" parameterType="edu.hlju.boler.pojo.po.WorkExperience">
+    <update id="updateByIdSelective" parameterType="edu.hlju.boler.pojo.po.WorkExp">
         update work_exp
         <set>
             <if test="startTime != null">
@@ -172,7 +179,7 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
     
-    <update id="updateById" parameterType="edu.hlju.boler.pojo.po.WorkExperience">
+    <update id="updateById" parameterType="edu.hlju.boler.pojo.po.WorkExp">
         update 
             work_exp
         set 

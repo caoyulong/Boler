@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import edu.hlju.boler.pojo.po.Application;
@@ -22,6 +23,13 @@ public interface IApplicationDao {
 
     @Cacheable
     Application selectById(Integer id) throws SQLException;
+
+    @Cacheable
+    List<Application> selectSplit(@Param("pageNum") int pageNum, @Param("pageSize") int pageSize) throws SQLException;
+
+    @Cacheable
+    List<Application> selectSplitCondition(@Param("application") Application e, @Param("pageNum") int pageNum,
+            @Param("pageSize") int pageSize) throws SQLException;
 
     int updateById(Application record) throws SQLException;
 

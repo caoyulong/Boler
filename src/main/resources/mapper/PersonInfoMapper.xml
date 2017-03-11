@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.hlju.boler.dao.IPersonInfoDao">
 
-    <resultMap id="BaseResultMap" type="edu.hlju.boler.pojo.po.PersonInfomation">
+    <resultMap id="BaseResultMap" type="edu.hlju.boler.pojo.po.PersonInfo">
         <id column="id" jdbcType="INTEGER" property="id" />
         <result column="realname" jdbcType="VARCHAR" property="realname" />
         <result column="sex" jdbcType="CHAR" property="sex" />
@@ -39,7 +39,7 @@
         where id = #{id,jdbcType=INTEGER}
     </delete>
     
-    <insert id="insert" parameterType="edu.hlju.boler.pojo.po.PersonInfomation" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" parameterType="edu.hlju.boler.pojo.po.PersonInfo" useGeneratedKeys="true" keyProperty="id">
         insert into person_info (
             id, realname, sex, birthday, cellphone, profile, 
             avatar, address, create_time, modify_time
@@ -57,7 +57,7 @@
         )
     </insert>
     
-    <insert id="insertSelective" parameterType="edu.hlju.boler.pojo.po.PersonInfomation">
+    <insert id="insertSelective" parameterType="edu.hlju.boler.pojo.po.PersonInfo">
         insert into person_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -125,7 +125,7 @@
         </trim>
     </insert>
     
-    <update id="updateByIdSelective" parameterType="edu.hlju.boler.pojo.po.PersonInfomation">
+    <update id="updateByIdSelective" parameterType="edu.hlju.boler.pojo.po.PersonInfo">
         update person_info
         <set>
             <if test="realname != null">
@@ -159,7 +159,7 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
     
-    <update id="updateById" parameterType="edu.hlju.boler.pojo.po.PersonInfomation">
+    <update id="updateById" parameterType="edu.hlju.boler.pojo.po.PersonInfo">
         update 
             person_info
         set 

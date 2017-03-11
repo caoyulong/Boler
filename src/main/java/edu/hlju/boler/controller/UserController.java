@@ -20,11 +20,11 @@ import edu.hlju.boler.util.DateTimeUtil;
 @Controller
 @RequestMapping(value = "api/user")
 public class UserController {
+    private static Logger logger = LoggerFactory.getLogger(HomeController.class);
+    public static final String USER_LOG_FORMAT = "[%s] %s";
+
     @Resource(name = "userService")
     private IUserService userService;
-    private static Logger logger = LoggerFactory.getLogger(HomeController.class);
-
-    public static final String USER_LOG_FORMAT = "[%s] %s";
 
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)

@@ -4,11 +4,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Repository;
 
 import edu.hlju.boler.pojo.po.User;
 
-@Repository
 public interface IUserDao {
 
     int deleteById(Integer id) throws SQLException;

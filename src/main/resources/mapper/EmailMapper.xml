@@ -16,11 +16,6 @@
             select="edu.hlju.boler.dao.IUserDao.selectById" />
     </resultMap>
     
-    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs"
-        type="edu.hlju.boler.pojo.po.Email">
-        <result column="text" jdbcType="VARCHAR" property="text" />
-    </resultMap>
-    
     <sql id="Base_Column_List">
         id, user, from, to, subject, text, send_time, create_time, modify_time
     </sql>
@@ -31,12 +26,27 @@
         from email
     </select>
     
-    <select id="selectById" parameterType="java.lang.Integer"
-        resultMap="ResultMapWithBLOBs">
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
         from email
         where id = #{id,jdbcType=INTEGER}
+    </select>
+    
+    <select id="selectSplit" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from email
+    </select>
+    
+    <select id="selectSplitCondition" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from email
+        <where>
+            <if test="email.user != null">and user = #{email.user.id}</if>
+            <if test="email.from != null">and from = #{email.from}</if>
+        </where>
     </select>
     
     <delete id="deleteById" parameterType="java.lang.Integer">

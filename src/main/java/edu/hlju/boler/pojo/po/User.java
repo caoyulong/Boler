@@ -19,7 +19,7 @@ public class User {
     @Length(min = 8, max = 16)
     private String password;
 
-    private PersonInfomation personInfo;
+    private PersonInfo personInfo;
 
     private Date createTime;
 
@@ -45,7 +45,7 @@ public class User {
         return password;
     }
 
-    public PersonInfomation getPersonInfo() {
+    public PersonInfo getPersonInfo() {
         return personInfo;
     }
 
@@ -74,7 +74,7 @@ public class User {
         this.password = password;
     }
 
-    public void setPersonInfo(PersonInfomation personInfo) {
+    public void setPersonInfo(PersonInfo personInfo) {
         this.personInfo = personInfo;
     }
 
