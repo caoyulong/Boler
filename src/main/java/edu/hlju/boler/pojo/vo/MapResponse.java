@@ -3,18 +3,18 @@ package edu.hlju.boler.pojo.vo;
 import java.util.Map;
 
 public class MapResponse extends BaseResponse {
-    private Map<String, Object> map;
+    private Map<Object, Object> map;
 
-    public MapResponse(Map<String, Object> map) {
+    public MapResponse(Map<Object, Object> map) {
         super();
         this.map = map;
     }
 
-    public Map<String, Object> getMap() {
+    public Map<Object, Object> getMap() {
         return map;
     }
 
-    public void setMap(Map<String, Object> map) {
+    public void setMap(Map<Object, Object> map) {
         this.map = map;
     }
 

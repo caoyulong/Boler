@@ -1,20 +1,20 @@
 package edu.hlju.boler.pojo.vo;
 
-import com.mysql.cj.api.x.Collection;
+import java.util.Collection;
 
 public class CollectionResponse extends BaseResponse {
-    private Collection collection;
+    private Collection<Object> collection;
 
-    public CollectionResponse(Collection collection) {
+    public CollectionResponse(Collection<Object> collection) {
         super();
         this.collection = collection;
     }
 
-    public Collection getCollection() {
+    public Collection<Object> getCollection() {
         return collection;
     }
 
-    public void setCollection(Collection collection) {
+    public void setCollection(Collection<Object> collection) {
         this.collection = collection;
     }
 

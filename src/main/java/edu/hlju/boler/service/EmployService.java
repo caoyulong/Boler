@@ -5,6 +5,6 @@ import org.springframework.stereotype.Service;
 import edu.hlju.boler.service.interfaces.IEmployService;
 
 @Service("employService")
-public class EmployService implements IEmployService {
+public class EmployService extends BaseService implements IEmployService {
 
 }

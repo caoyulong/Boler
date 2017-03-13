@@ -12,10 +12,10 @@ public class StateResponse extends BaseResponse {
         this.message = message;
     }
 
-    public StateResponse(UserDataDict dataDict) {
+    public StateResponse(UserDataDict userDataDict) {
         super();
-        code = dataDict.getCode();
-        message = dataDict.getMessage();
+        code = userDataDict.getCode();
+        message = userDataDict.getMessage();
     }
 
     public int getCode() {

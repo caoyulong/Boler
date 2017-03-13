@@ -18,7 +18,7 @@ import edu.hlju.boler.pojo.vo.StateResponse;
 import edu.hlju.boler.service.interfaces.IEmployeeService;
 
 @Service("employeeService")
-public class EmployeeService implements IEmployeeService {
+public class EmployeeService extends BaseService implements IEmployeeService {
     @Resource
     private IPersonInfoDao personInfoDao;
 

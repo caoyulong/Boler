@@ -18,16 +18,16 @@ import edu.hlju.boler.service.interfaces.IUserService;
 import edu.hlju.boler.util.Encrytor;
 
 @Service("userService")
-public class UserService implements IUserService {
-    @Resource
-    private IUserDao userDao;
-    @Resource
-    private IMessageSender messageSender;
-
+public class UserService extends BaseService implements IUserService {
     public static final String USER_OBJECT = "user";
-
     public static final int MAX_ERROR_TIMES = 3;
 // private int errorTimes = 0;
+
+    @Resource
+    private IUserDao userDao;
+
+    @Resource
+    private IMessageSender messageSender;
 
     @Override
     public StateResponse login(HttpServletRequest request, User user) {
@@ -36,12 +36,12 @@ public class UserService implements IUserService {
             selected = userDao.selectByEmail(user.getEmail());
         } catch (SQLException e) {
             e.printStackTrace();
-            return new StateResponse(UserDataDict.REGISTER_FAILED);
+            return super.getResponse(UserDataDict.REGISTER_FAILED);
         }
 
         boolean isCorrect = selected != null && Encrytor.encrypt(user.getPassword()).equals(selected.getPassword());
         if (!isCorrect) {
-            return new StateResponse(UserDataDict.LOGIN_FAILED);
+            return super.getResponse(UserDataDict.LOGIN_FAILED);
         }
 
         HttpSession session = request.getSession();
@@ -50,7 +50,7 @@ public class UserService implements IUserService {
         UserDataDict state = UserDataDict.LOGIN_SUCCEED;
         UserLog log = new UserLog(request.getRemoteAddr(), selected, state.getMessage());
         messageSender.send(log);
-        return new StateResponse(state);
+        return super.getResponse(state);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class UserService implements IUserService {
             UserLog log = new UserLog(request.getRemoteAddr(), logined, state.getMessage());
             messageSender.send(log);
         }
-        return new StateResponse(state);
+        return super.getResponse(state);
     }
 
     @Override
@@ -81,13 +81,13 @@ public class UserService implements IUserService {
                     userDao.updateById(logined);
                     UserLog log = new UserLog(request.getRemoteAddr(), logined, "User modify password.");
                     messageSender.send(log);
-                    return new StateResponse(UserDataDict.MODIFY_PASSWD_SUCCEED);
+                    return super.getResponse(UserDataDict.MODIFY_PASSWD_SUCCEED);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
         }
-        return new StateResponse(UserDataDict.MODIFY_PASSWD_FAILED);
+        return super.getResponse(UserDataDict.MODIFY_PASSWD_FAILED);
     }
 
     @Override
@@ -95,11 +95,11 @@ public class UserService implements IUserService {
         try {
             user.setPassword(Encrytor.encrypt(user.getPassword()));
             userDao.insert(user);
-            return new StateResponse(UserDataDict.REGISTER_SUCCEED);
+            return super.getResponse(UserDataDict.REGISTER_SUCCEED);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return new StateResponse(UserDataDict.REGISTER_FAILED);
+        return super.getResponse(UserDataDict.REGISTER_FAILED);
 
     }
 
