@@ -28,6 +28,7 @@
         select
         <include refid="Base_Column_list" />
         from recruitment
+        order by modify_time desc
     </select>
     
     <select id="selectById" parameterType="java.lang.Integer"
@@ -36,12 +37,14 @@
         <include refid="Base_Column_List" />
         from recruitment
         where id = #{id,jdbcType=INTEGER}
+        order by modify_time desc
     </select>
     
     <select id="selectSplit" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
         from recruitment
+        order by modify_time desc
     </select>
     
     <select id="selectSplitCondition" resultMap="BaseResultMap">
@@ -52,6 +55,7 @@
             <if test="recruitment.corparation != null">and corporation = #{recruitment.corporation}</if>
             <if test="recruitment.jobName != null">and job_name = #{recruitment.jobName}</if>
         </where>
+        order by modify_time desc
     </select>
     
     

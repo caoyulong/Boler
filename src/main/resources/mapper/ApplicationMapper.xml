@@ -19,6 +19,7 @@
         select
         <include refid="Base_Column_list" />
         from application
+        order by modify_time desc
     </select>
     
     <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -26,17 +27,14 @@
         <include refid="Base_Column_List" />
         from application
         where id = #{id,jdbcType=INTEGER}
+        order by modify_time desc
     </select>
-    
-    <delete id="deleteById" parameterType="java.lang.Integer">
-        delete from application
-        where id = #{id,jdbcType=INTEGER}
-    </delete>
     
     <select id="selectSplit" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
         from application
+        order by modify_time desc
     </select>
     
     <select id="selectSplitCondition" resultMap="BaseResultMap">
@@ -47,7 +45,13 @@
             <if test="application.employ != null">and employ = #{application.employ.id}</if>
             <if test="application.employee != null">and employee = #{application.employee.id}</if>
         </where>
+        order by modify_time desc
     </select>
+    
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from application
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
     
     <insert id="insert" parameterType="edu.hlju.boler.pojo.po.Application">
         insert into application (
