@@ -20,7 +20,7 @@ import edu.hlju.boler.util.DateTimeUtil;
 @Controller
 @RequestMapping(value = "api/user")
 public class UserController {
-    private static Logger logger = LoggerFactory.getLogger(HomeController.class);
+    private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
     public static final String USER_LOG_FORMAT = "[%s] %s";
 
     @Resource(name = "userService")
@@ -49,7 +49,7 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public BaseResponse register(@RequestParam User user, @RequestParam Role role) {
+    public BaseResponse register(User user, Role role) {
         logger.info(USER_LOG_FORMAT, DateTimeUtil.now(), user.getId() + " register.");
         return userService.register(user);
     }

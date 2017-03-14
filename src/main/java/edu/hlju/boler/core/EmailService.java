@@ -4,11 +4,14 @@ import java.sql.SQLException;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
 import edu.hlju.boler.core.interfaces.IEmailService;
+import edu.hlju.boler.core.message.MessageSender;
 import edu.hlju.boler.dao.IEmailDao;
 import edu.hlju.boler.pojo.po.Email;
 import edu.hlju.boler.pojo.po.User;
@@ -16,6 +19,9 @@ import edu.hlju.boler.service.interfaces.IUserService;
 
 @Service("emailService")
 public class EmailService implements IEmailService {
+    private static final Logger logger = LoggerFactory.getLogger(MessageSender.class);
+
+    @Resource
     private IEmailDao emailDao;
 
     @Resource

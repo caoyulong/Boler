@@ -10,7 +10,9 @@ public enum UserDataDict {
     MODIFY_PASSWD_SUCCEED(106, "Modify password succeed."),
     MODIFY_PASSWD_FAILED(107, "Modify password failed."),
     SAVE_PERSON_INFO_SCCUCEED(108, "Save person info succeed."),
-    SAVE_PERSON_INFO_FAILED(109, "Save person info failed.");
+    SAVE_PERSON_INFO_FAILED(109, "Save person info failed."),
+    OPERATIING_SUCCEED(200, "Operating succeed."),
+    OPERATIING_FAILED(101, "Operating failed.");
 
     private int code;
 

@@ -16,7 +16,8 @@ import edu.hlju.boler.service.interfaces.IEmployService;
 @Controller
 @RequestMapping(value = "api/employ")
 public class EmployController {
-    private static Logger logger = LoggerFactory.getLogger(EmployController.class);
+    private static final Logger logger = LoggerFactory.getLogger(EmployController.class);
     @Resource
     private IEmployService employService;
+
 }
