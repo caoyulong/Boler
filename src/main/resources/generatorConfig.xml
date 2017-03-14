@@ -2,7 +2,7 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
 	<classPathEntry
-		location="D:\\SDK\\Maven\\localRepository\\mysql\\mysql-connector-java\\5.1.37\\mysql-connector-java-5.1.37.jar" />
+		location="/home/jingqingyun/.m2/repository/mysql/mysql-connector-java/5.1.37/mysql-connector-java-5.1.37.jar" />
 
 	<context id="context1">
 		<commentGenerator>
@@ -13,11 +13,11 @@
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/boler"
 			userId="root" password="root" />
 		<!-- 生成模型的包名和位置 -->
-		<javaModelGenerator targetPackage="edu.hlju.boler.pojo.po" targetProject="Boler/src/main/java" />
+		<javaModelGenerator targetPackage="temp" targetProject="Boler/src/main/java" />
 		<!-- 生成的映射文件报名和位置 -->
-		<sqlMapGenerator targetPackage="mapper" targetProject="Boler/src/main/resources" />
+		<sqlMapGenerator targetPackage="temp" targetProject="Boler/src/main/java" />
 		<!-- 生成DAO的包名和位置 -->
-		<javaClientGenerator targetPackage="edu.hlju.boler.dao" targetProject="Boler/src/main/java"
+		<javaClientGenerator targetPackage="temp" targetProject="Boler/src/main/java"
 			type="XMLMAPPER" />
 		<!-- 要生成的那些表(更改tableName 和domainObjectName 就可以了) -->
 		<table tableName="education_exp" domainObjectName="EducationExperience"

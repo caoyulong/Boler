@@ -12,16 +12,20 @@
         <result column="industry" jdbcType="VARCHAR" property="industry" />
         <result column="job_detail" jdbcType="VARCHAR" property="jobDetail" />
         <result column="requirement" jdbcType="VARCHAR" property="requirement" />
+        <result column="state" jdbcType="TINYINT" property="state" />
+        <result column="expire_date" jdbcType="DATE" property="expireDate" />
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
         <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
         
+        <association column="job_type" property="jobType" 
+            select="edu.hlju.boler.dao.IJobTypeDao.selectById" />
         <association column="user" property="user" 
             select="edu.hlju.boler.dao.IUserDao.selectById" />
     </resultMap>
     
     <sql id="Base_Column_List">
-        id, corporation, job_name, low_salary, high_salary, address, industry,
-        job_detail, requirement, user, create_time, modify_time
+        id, corporation, job_name, job_type, low_salary, high_salary, address, industry,
+        job_detail, requirement, user, state, expire_date, create_time, modify_time
     </sql>
     
     <select id="selectAll" resultMap="BaseResultMap">
@@ -54,6 +58,8 @@
         <where>
             <if test="recruitment.corparation != null">and corporation = #{recruitment.corporation}</if>
             <if test="recruitment.jobName != null">and job_name = #{recruitment.jobName}</if>
+            <if test="recruitment.state != null">and state = #{recruitment.state}</if>
+            <if test="recruitment.jobType != null">and job_type = #{recruitment.jobType.id}</if>
         </where>
         order by modify_time desc
     </select>
@@ -66,14 +72,16 @@
     
     <insert id="insert" parameterType="edu.hlju.boler.pojo.po.Recruitment">
         insert into recruitment (
-	        id, corporation, job_name,
+	        id, corporation, job_name, jot_type
 	        low_salary, high_salary, address,
 	        industry, job_detail, requirement,
-	        user, create_time, modify_time
+	        user, state, expire_date, 
+            create_time, modify_time
         ) values (
 	        #{id,jdbcType=INTEGER}, 
 	        #{corporation,jdbcType=VARCHAR},
 	        #{jobName,jdbcType=VARCHAR},
+            #{jobType.id,jdbcType=INTEGER},
 	        #{lowSalary,jdbcType=INTEGER}, 
 	        #{highSalary,jdbcType=INTEGER}, 
 	        #{address,jdbcType=VARCHAR},
@@ -81,6 +89,8 @@
 	        #{jobDetail,jdbcType=VARCHAR},
 	        #{requirement,jdbcType=VARCHAR},
 	        #{user.id,jdbcType=INTEGER}, 
+            #{state,jdbcType=TINYINT},
+            #{expireDate,jdbcType=DATE},
 	        #{createTime,jdbcType=TIMESTAMP},
             #{modifyTime,jdbcType=TIMESTAMP}
         )
@@ -97,6 +107,9 @@
             </if>
             <if test="jobName != null">
                 job_name,
+            </if>
+            <if test="jobType != null">
+                job_type,
             </if>
             <if test="lowSalary != null">
                 low_salary,
@@ -119,6 +132,12 @@
             <if test="user != null">
                 user,
             </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="expireDate != null">
+                expire_date,
+            </if>
             <if test="createTime != null">
                 create_time,
             </if>
@@ -135,6 +154,9 @@
             </if>
             <if test="jobName != null">
                 #{jobName,jdbcType=VARCHAR},
+            </if>
+            <if test="jobType != null">
+                #{jobType.id,jdbcType=INTEGER},
             </if>
             <if test="lowSalary != null">
                 #{lowSalary,jdbcType=INTEGER},
@@ -157,6 +179,12 @@
             <if test="user != null">
                 #{user.id,jdbcType=INTEGER},
             </if>
+            <if test="state != null">
+                #{state,jdbcType=TINYINT},
+            </if>
+            <if test="expireDate != null">
+                #{expireDate,jdbcType=DATE},
+            </if>
             <if test="createTime != null">
                 #{createTime,jdbcType=TIMESTAMP},
             </if>
@@ -174,6 +202,9 @@
             </if>
             <if test="jobName != null">
                 job_name = #{jobName,jdbcType=VARCHAR},
+            </if>
+            <if test="jobType != null">
+                job_type = #{jobType.id,jdbcType=INTEGER},
             </if>
             <if test="lowSalary != null">
                 low_salary = #{lowSalary,jdbcType=INTEGER},
@@ -196,6 +227,12 @@
             <if test="user != null">
                 user = #{user.id,jdbcType=INTEGER},
             </if>
+            <if test="state != null">
+                state = #{state,jdbcType=TINYINT},
+            </if>
+            <if test="expireDate != null">
+                expire_date = #{expireDate,jdbcType=DATE},
+            </if>
             <if test="createTime != null">
                 create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
@@ -212,6 +249,7 @@
         set 
             corporation = #{corporation,jdbcType=VARCHAR},
             job_name = #{jobName,jdbcType=VARCHAR},
+            job_type = #{jobType.id,jdbcType=INTEGER},
             low_salary = #{lowSalary,jdbcType=INTEGER},
             high_salary = #{highSalary,jdbcType=INTEGER},
             address = #{address,jdbcType=VARCHAR},
@@ -219,6 +257,8 @@
             job_detail = #{jobDetail,jdbcType=VARCHAR},
             requirement = #{requirement,jdbcType=VARCHAR},
             user = #{user.id,jdbcType=INTEGER},
+            state = #{state,jdbcType=TINYINT},
+            expire_date = #{expireDate,jdbcType=DATE},
             create_time = #{createTime,jdbcType=TIMESTAMP},
             modify_time = #{modifyTime,jdbcType=TIMESTAMP}
         where 

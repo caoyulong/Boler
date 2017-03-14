@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS `boler`;
+DROP DATABASE `BOLER`;
 CREATE DATABASE `boler` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `boler`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Linux (x86_64)
@@ -27,13 +27,15 @@ DROP TABLE IF EXISTS `application`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `application` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `employ` int(11) NOT NULL,
   `employee` int(11) NOT NULL,
   `state` tinyint(4) NOT NULL DEFAULT '0',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `FK_APP_EMPLOYEE_idx` (`employee`),
   KEY `FK_APP_EMPLOY_idx` (`employ`),
+  KEY `index4` (`state`),
   CONSTRAINT `FK_APP_EMPLOY` FOREIGN KEY (`employ`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_APP_EMPLOYEE` FOREIGN KEY (`employee`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -60,12 +62,16 @@ CREATE TABLE `education_exp` (
   `start_time` date NOT NULL,
   `end_time` date NOT NULL,
   `school` varchar(64) NOT NULL,
-  `degree` tinyint(4) NOT NULL,
+  `degree` tinyint(4) NOT NULL DEFAULT '0',
   `major` varchar(32) NOT NULL,
   `course` varchar(64) DEFAULT NULL,
   `resume` int(11) NOT NULL,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `FK_EE_RESUME_idx` (`resume`),
+  KEY `IDX_MAJOR` (`major`),
+  KEY `IDX_DEGREE` (`degree`),
   CONSTRAINT `FK_EE_RESUME` FOREIGN KEY (`resume`) REFERENCES `online_resume` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -93,11 +99,14 @@ CREATE TABLE `email` (
   `to` varchar(64) NOT NULL,
   `subject` varchar(64) NOT NULL,
   `text` varchar(2048) NOT NULL,
-  `send_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `send_time` datetime NOT NULL,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `FK_EMAIL_EMAILADDRESS_idx` (`from`),
+  KEY `FK_EMAIL_FROM_idx` (`from`),
+  KEY `IDX_EMAIL_USER` (`user`),
   CONSTRAINT `FK_EMAIL_EMAILADDRESS` FOREIGN KEY (`from`) REFERENCES `user` (`email`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_EMAIL_USER` FOREIGN KEY (`id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `FK_EMAIL_USERID` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -144,9 +153,9 @@ DROP TABLE IF EXISTS `online_resume`;
 CREATE TABLE `online_resume` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
-  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `person_info` int(11) NOT NULL,
   `user` int(11) NOT NULL,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `FK_OR_PERSONINFO_idx` (`person_info`),
@@ -181,7 +190,10 @@ CREATE TABLE `person_info` (
   `profile` varchar(128) DEFAULT NULL,
   `avatar` varchar(64) DEFAULT NULL,
   `address` varchar(64) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `iIDX_PERINFO_PHONE` (`cellphone`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -211,6 +223,8 @@ CREATE TABLE `project_exp` (
   `end_time` date NOT NULL,
   `detail` varchar(256) NOT NULL,
   `resume` int(11) NOT NULL,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `FK_PE_RESUME_idx` (`resume`),
   CONSTRAINT `FK_PE_RESUME` FOREIGN KEY (`resume`) REFERENCES `online_resume` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -248,13 +262,13 @@ CREATE TABLE `recruitment` (
   `state` tinyint(4) NOT NULL DEFAULT '0',
   `expire_date` date NOT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `FK_REQ_USER_idx` (`user`),
   KEY `IDX_REQ_JOBNAME` (`job_name`),
-  KEY `IDX_EXPIRE_DATE` (`expire_date`),
-  KEY `IDX_STATE` (`state`),
-  KEY `FK_REQ_JOB_TYPE_idx` (`job_type`),
-  CONSTRAINT `FK_REQ_JOB_TYPE` FOREIGN KEY (`job_type`) REFERENCES `job_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  KEY `IDX_REQ_JOBTYPE` (`job_type`),
+  KEY `IDX_REQ_STATE` (`state`),
+  CONSTRAINT `FK_REQ_JOBTYPE` FOREIGN KEY (`job_type`) REFERENCES `job_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_REQ_USER` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -354,8 +368,8 @@ CREATE TABLE `user` (
   `email` varchar(64) NOT NULL,
   `password` char(32) NOT NULL,
   `role` int(11) NOT NULL,
-  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `person_info` int(11) NOT NULL,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`),
@@ -384,9 +398,9 @@ DROP TABLE IF EXISTS `user_log`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `record_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `ip_address` varchar(15) NOT NULL,
   `user` int(11) NOT NULL,
+  `ip_address` varchar(15) NOT NULL,
+  `record_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `IDX_UL_USER` (`user`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
@@ -418,6 +432,8 @@ CREATE TABLE `work_exp` (
   `job` varchar(16) NOT NULL,
   `detail` varchar(256) NOT NULL,
   `resume` int(11) NOT NULL,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `FK_WE_RESUME_idx` (`resume`),
   CONSTRAINT `FK_WE_RESUME` FOREIGN KEY (`resume`) REFERENCES `online_resume` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -442,4 +458,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-14 16:17:41
+-- Dump completed on 2017-03-15  0:30:16

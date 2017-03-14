@@ -9,6 +9,8 @@ public class Recruitment {
 
     private String jobName;
 
+    private JobType jobType;
+
     private Integer lowSalary;
 
     private Integer highSalary;
@@ -22,6 +24,10 @@ public class Recruitment {
     private String requirement;
 
     private User user;
+
+    private Byte state;
+
+    private Date expireDate;
 
     private Date createTime;
 
@@ -37,6 +43,10 @@ public class Recruitment {
 
     public Date getCreateTime() {
         return createTime;
+    }
+
+    public Date getExpire_date() {
+        return expireDate;
     }
 
     public Integer getHighSalary() {
@@ -59,6 +69,10 @@ public class Recruitment {
         return jobName;
     }
 
+    public JobType getJobType() {
+        return jobType;
+    }
+
     public Integer getLowSalary() {
         return lowSalary;
     }
@@ -69,6 +83,10 @@ public class Recruitment {
 
     public String getRequirement() {
         return requirement;
+    }
+
+    public Byte getState() {
+        return state;
     }
 
     public User getUser() {
@@ -85,6 +103,10 @@ public class Recruitment {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public void setExpire_date(Date expire_date) {
+        this.expireDate = expire_date;
     }
 
     public void setHighSalary(Integer highSalary) {
@@ -107,6 +129,10 @@ public class Recruitment {
         this.jobName = jobName;
     }
 
+    public void setJobType(JobType jobType) {
+        this.jobType = jobType;
+    }
+
     public void setLowSalary(Integer lowSalary) {
         this.lowSalary = lowSalary;
     }
@@ -119,15 +145,20 @@ public class Recruitment {
         this.requirement = requirement;
     }
 
+    public void setState(Byte state) {
+        this.state = state;
+    }
+
     public void setUser(User user) {
         this.user = user;
     }
 
     @Override
     public String toString() {
-        return "Recruitment [id=" + id + ", corporation=" + corporation + ", jobName=" + jobName + ", lowSalary="
-                + lowSalary + ", highSalary=" + highSalary + ", address=" + address + ", industry=" + industry
-                + ", jobDetail=" + jobDetail + ", requirement=" + requirement + ", user=" + user + ", createTime="
-                + createTime + ", modifyTime=" + modifyTime + "]";
+        return "Recruitment [id=" + id + ", corporation=" + corporation + ", jobName=" + jobName + ", jobType="
+                + jobType + ", lowSalary=" + lowSalary + ", highSalary=" + highSalary + ", address=" + address
+                + ", industry=" + industry + ", jobDetail=" + jobDetail + ", requirement=" + requirement + ", user="
+                + user + ", state=" + state + ", expire_date=" + expireDate + ", createTime=" + createTime
+                + ", modifyTime=" + modifyTime + "]";
     }
 }

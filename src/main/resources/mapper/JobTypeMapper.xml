@@ -1,73 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="edu.hlju.boler.dao.IApplyStateDao">
+<mapper namespace="edu.hlju.boler.dao.IJobTypeDao">
 
-    <resultMap id="BaseResultMap" type="edu.hlju.boler.pojo.po.ApplyState">
+    <resultMap id="BaseResultMap" type="edu.hlju.boler.pojo.po.JobType">
         <id column="id" jdbcType="INTEGER" property="id" />
-        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="type" jdbcType="VARCHAR" property="type" />
     </resultMap>
     
     <sql id="Base_Column_List">
-        id, name
+        id, type
     </sql>
     
     <select id="selectAll" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_list" />
-        from apply_state
+        from job_type
     </select>
     
     <select id="selectById" parameterType="java.lang.Integer"
         resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from apply_state
+        from job_type
         where id = #{id,jdbcType=INTEGER}
     </select>
     
     <delete id="deleteById" parameterType="java.lang.Integer">
-        delete from apply_state
+        delete from job_type
         where id = #{id,jdbcType=INTEGER}
     </delete>
     
-    <insert id="insert" parameterType="edu.hlju.boler.pojo.po.ApplyState">
-        insert into apply_state (id, name)
-        values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR})
+    <insert id="insert" parameterType="edu.hlju.boler.pojo.po.JobType">
+        insert into job_type (id, type)
+        values (#{id,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR})
     </insert>
     
-    <insert id="insertSelective" parameterType="edu.hlju.boler.pojo.po.ApplyState">
-        insert into apply_state
+    <insert id="insertSelective" parameterType="edu.hlju.boler.pojo.po.JobType">
+        insert into job_type
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
             </if>
-            <if test="name != null">
-                name,
+            <if test="type != null">
+                type,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 #{id,jdbcType=INTEGER},
             </if>
-            <if test="name != null">
-                #{name,jdbcType=VARCHAR},
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
     
-    <update id="updateByIdSelective" parameterType="edu.hlju.boler.pojo.po.ApplyState">
-        update apply_state
+    <update id="updateByIdSelective" parameterType="edu.hlju.boler.pojo.po.JobType">
+        update job_type
         <set>
-            <if test="name != null">
-                name = #{name,jdbcType=VARCHAR},
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
     
-    <update id="updateById" parameterType="edu.hlju.boler.pojo.po.ApplyState">
-        update apply_state
-        set name = #{name,jdbcType=VARCHAR}
+    <update id="updateById" parameterType="edu.hlju.boler.pojo.po.JobType">
+        update job_type
+        set type = #{type,jdbcType=VARCHAR}
         where id = #{id,jdbcType=INTEGER}
     </update>
     
