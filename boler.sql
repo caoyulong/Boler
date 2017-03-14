@@ -30,6 +30,7 @@ CREATE TABLE `application` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `employ` int(11) NOT NULL,
   `employee` int(11) NOT NULL,
+  `state` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `FK_APP_EMPLOYEE_idx` (`employee`),
   KEY `FK_APP_EMPLOY_idx` (`employ`),
@@ -45,56 +46,6 @@ CREATE TABLE `application` (
 LOCK TABLES `application` WRITE;
 /*!40000 ALTER TABLE `application` DISABLE KEYS */;
 /*!40000 ALTER TABLE `application` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `application_state`
---
-
-DROP TABLE IF EXISTS `application_state`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `application_state` (
-  `application` int(11) NOT NULL,
-  `state` int(11) NOT NULL,
-  PRIMARY KEY (`application`,`state`),
-  KEY `FK_AS_APPLICATION_idx` (`application`),
-  KEY `FK_AS_STATE_idx` (`state`),
-  CONSTRAINT `FK_AS_APPLICATION` FOREIGN KEY (`application`) REFERENCES `application` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_AS_STATE` FOREIGN KEY (`state`) REFERENCES `apply_state` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `application_state`
---
-
-LOCK TABLES `application_state` WRITE;
-/*!40000 ALTER TABLE `application_state` DISABLE KEYS */;
-/*!40000 ALTER TABLE `application_state` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `apply_state`
---
-
-DROP TABLE IF EXISTS `apply_state`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `apply_state` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(16) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `apply_state`
---
-
-LOCK TABLES `apply_state` WRITE;
-/*!40000 ALTER TABLE `apply_state` DISABLE KEYS */;
-/*!40000 ALTER TABLE `apply_state` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -491,4 +442,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-14 15:18:51
+-- Dump completed on 2017-03-14 16:17:41
