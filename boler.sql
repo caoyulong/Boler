@@ -1,5 +1,5 @@
-DROP DATABASE IF NOT EXISTS `boler`;
-CREATE DATABASE `boler`;
+DROP DATABASE IF EXISTS `boler`;
+CREATE DATABASE `boler` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `boler`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Linux (x86_64)
 --
@@ -160,6 +160,30 @@ LOCK TABLES `email` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `job_type`
+--
+
+DROP TABLE IF EXISTS `job_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `job_type` (
+  `id` int(11) NOT NULL,
+  `type` varchar(16) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `type_UNIQUE` (`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `job_type`
+--
+
+LOCK TABLES `job_type` WRITE;
+/*!40000 ALTER TABLE `job_type` DISABLE KEYS */;
+/*!40000 ALTER TABLE `job_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `online_resume`
 --
 
@@ -262,6 +286,7 @@ CREATE TABLE `recruitment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `corporation` varchar(32) NOT NULL,
   `job_name` varchar(16) NOT NULL,
+  `job_type` int(11) NOT NULL,
   `low_salary` int(11) NOT NULL,
   `high_salary` int(11) NOT NULL,
   `address` varchar(32) NOT NULL,
@@ -269,10 +294,16 @@ CREATE TABLE `recruitment` (
   `job_detail` varchar(128) NOT NULL,
   `requirement` varchar(128) NOT NULL,
   `user` int(11) NOT NULL,
+  `state` tinyint(4) NOT NULL DEFAULT '0',
+  `expire_date` date NOT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `FK_REQ_USER_idx` (`user`),
   KEY `IDX_REQ_JOBNAME` (`job_name`),
+  KEY `IDX_EXPIRE_DATE` (`expire_date`),
+  KEY `IDX_STATE` (`state`),
+  KEY `FK_REQ_JOB_TYPE_idx` (`job_type`),
+  CONSTRAINT `FK_REQ_JOB_TYPE` FOREIGN KEY (`job_type`) REFERENCES `job_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_REQ_USER` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -460,4 +491,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-06 11:03:17
+-- Dump completed on 2017-03-14 15:18:51
