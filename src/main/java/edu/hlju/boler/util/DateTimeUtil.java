@@ -1,18 +1,17 @@
 package edu.hlju.boler.util;
 
-import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 public class DateTimeUtil {
-    private DateTimeUtil() {
+    public static final String LOCAL_DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+	private DateTimeUtil() {
     }
 
     public static String now() {
-        Date date = new Date();
-        Locale locale = new Locale("zh");
-        DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-        return dateFormat.format(date);
+        SimpleDateFormat sdf = new SimpleDateFormat(LOCAL_DATETIME_FORMAT);  //2016-9-46 15:30:49
+        return sdf.format(new Date());  //将Date实例转换成String
     }
 
 }
