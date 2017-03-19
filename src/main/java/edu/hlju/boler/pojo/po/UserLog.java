@@ -11,9 +11,6 @@ public class UserLog {
 
     private Date recordTime;
 
-    public UserLog() {
-    }
-
     public UserLog(String ipAddress, User user, String message) {
     }
 
@@ -48,4 +45,10 @@ public class UserLog {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "UserLog [id=" + id + ", user=" + user + ", ipAddress=" + ipAddress + ", recordTime=" + recordTime + "]";
+    }
+
 }

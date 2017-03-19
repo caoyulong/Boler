@@ -1,4 +1,4 @@
-DROP DATABASE `BOLER`;
+DROP DATABASE IF EXISTS `boler`;
 CREATE DATABASE `boler` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `boler`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Linux (x86_64)
