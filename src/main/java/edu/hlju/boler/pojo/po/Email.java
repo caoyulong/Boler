@@ -1,10 +1,13 @@
 package edu.hlju.boler.pojo.po;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import org.springframework.mail.SimpleMailMessage;
 
-public class Email {
+public class Email implements Serializable {
+    private static final long serialVersionUID = 7423516707263043690L;
+
     private SimpleMailMessage mail;
 
     private Integer id;

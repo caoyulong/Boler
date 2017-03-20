@@ -1,7 +1,6 @@
 package edu.hlju.boler.core.handler;
 
 import javax.annotation.Resource;
-import javax.jms.Message;
 
 import org.springframework.stereotype.Component;
 
@@ -15,7 +14,7 @@ public class EmailMessageHandler implements IMessageHandler {
     private IEmailService emailService;
 
     @Override
-    public void handle(Message message) {
+    public void handle(Object message) {
         if (message instanceof Email) {
             emailService.send((Email) message);
         }

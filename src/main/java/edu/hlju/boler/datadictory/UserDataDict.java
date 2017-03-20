@@ -12,7 +12,7 @@ public enum UserDataDict {
     SAVE_PERSON_INFO_SCCUCEED(108, "Save person info succeed."),
     SAVE_PERSON_INFO_FAILED(109, "Save person info failed."),
     OPERATIING_SUCCEED(200, "Operating succeed."),
-    OPERATIING_FAILED(101, "Operating failed.");
+    OPERATIING_FAILED(201, "Operating failed.");
 
     private int code;
 

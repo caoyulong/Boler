@@ -22,7 +22,7 @@
         <property name="messageConverter" ref="messageConvert" />
     </bean>
     <!-- 消息转换器 -->
-    <bean id="messageConvert" class="org.springframework.jms.support.converter.MappingJackson2MessageConverter" />
+    <bean id="messageConvert" class="org.springframework.jms.support.converter.SimpleMessageConverter" />
     <!-- JMS消息监听器 -->
     <jms:listener-container connection-factory="connectionFactory">
         <jms:listener destination="message_queue" ref="messageReceiver"/>

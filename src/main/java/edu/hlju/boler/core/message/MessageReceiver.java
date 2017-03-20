@@ -3,6 +3,7 @@ package edu.hlju.boler.core.message;
 import javax.annotation.Resource;
 import javax.jms.Message;
 import javax.jms.MessageListener;
+import javax.jms.ObjectMessage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,9 +24,10 @@ public class MessageReceiver implements MessageListener {
 
     @Override
     public void onMessage(Message message) {
-        logger.info(DateTimeUtil.now(), "Receive a message.");
-        emailMessageHandler.handle(message);
-        userLogMessageHandler.handle(message);
+        ObjectMessage objectMessage = (ObjectMessage) message;
+        logger.info("[{}] {}", DateTimeUtil.now(), "Receive a message.");
+        emailMessageHandler.handle(objectMessage);
+        userLogMessageHandler.handle(objectMessage);
     }
 
 }

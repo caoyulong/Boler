@@ -1,8 +1,11 @@
 package edu.hlju.boler.pojo.po;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class UserLog {
+public class UserLog implements Serializable {
+    private static final long serialVersionUID = 2195719684454925652L;
+
     private Integer id;
 
     private User user;

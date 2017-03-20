@@ -20,7 +20,7 @@ public class MessageSender implements IMessageSender {
     @Override
     public void send(Object obj) {
         jmsQueueTemplate.convertAndSend(obj);
-        logger.info(DateTimeUtil.now() + " Message sent.");
+        logger.info("[{}] {}", DateTimeUtil.now(), "Message sent.");
     }
 
 }
