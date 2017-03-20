@@ -30,7 +30,7 @@
     
     <select id="selectAll" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_list" />
+        <include refid="Base_Column_List" />
         from recruitment
         order by modify_time desc
     </select>

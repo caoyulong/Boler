@@ -20,7 +20,7 @@
     
     <select id="selectAll" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_list" />
+        <include refid="Base_Column_List" />
         from online_resume
     </select>
     
