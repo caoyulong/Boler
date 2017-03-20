@@ -1,10 +1,12 @@
 package edu.hlju.boler.pojo.vo;
 
-public class ValueResponse extends BaseResponse {
+import edu.hlju.boler.datadictory.UserDataDict;
+
+public class ValueResponse extends StateResponse {
     private Object value;
 
     public ValueResponse(Object value) {
-        super();
+        super(UserDataDict.OPERATIING_SUCCEED);
         this.value = value;
     }
 

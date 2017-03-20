@@ -2,11 +2,13 @@ package edu.hlju.boler.pojo.vo;
 
 import java.util.List;
 
-public class ListResponse extends BaseResponse {
+import edu.hlju.boler.datadictory.UserDataDict;
+
+public class ListResponse extends StateResponse {
     private List<? extends Object> list;
 
     public ListResponse(List<? extends Object> list) {
-        super();
+        super(UserDataDict.OPERATIING_SUCCEED);
         this.list = list;
     }
 

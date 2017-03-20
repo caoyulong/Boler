@@ -2,11 +2,13 @@ package edu.hlju.boler.pojo.vo;
 
 import java.util.Map;
 
-public class MapResponse extends BaseResponse {
+import edu.hlju.boler.datadictory.UserDataDict;
+
+public class MapResponse extends StateResponse {
     private Map<? extends Object, ? extends Object> map;
 
     public MapResponse(Map<? extends Object, ? extends Object> map) {
-        super();
+        super(UserDataDict.OPERATIING_SUCCEED);
         this.map = map;
     }
 
