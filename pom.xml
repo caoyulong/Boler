@@ -16,12 +16,14 @@
         <mybatis-version>3.4.1</mybatis-version>
         <mybatis-spring.version>1.3.0</mybatis-spring.version>
         <c3p0-version>0.9.1.2</c3p0-version>
-        <mysql-version>6.0.2</mysql-version>
+        <mysql-version>5.1.37</mysql-version>
         <log4j2-version>2.7</log4j2-version>
         <activemq-version>5.11.3</activemq-version>
         <jackson-version>2.8.5</jackson-version>
         <redis-version>2.9.0</redis-version>
         <hibernate-version>5.4.0.Final</hibernate-version>
+        <druid-version>1.0.19</druid-version>
+        <fastjson-version>1.2.29</fastjson-version>
     </properties>
     <dependencies>
         <!-- Spring -->
@@ -235,6 +237,19 @@
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper</artifactId>
             <version>5.0.0</version>
+        </dependency>
+        <!-- Alibaba Druid -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${druid-version}</version>
+        </dependency>
+        
+        <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson-version}</version>
         </dependency>
                 
     </dependencies>
