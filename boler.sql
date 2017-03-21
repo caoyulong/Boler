@@ -1,5 +1,4 @@
-DROP DATABASE IF EXISTS `boler`;
-CREATE DATABASE `boler` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE  IF NOT EXISTS `boler` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `boler`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Linux (x86_64)
 --
@@ -29,15 +28,18 @@ CREATE TABLE `application` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employ` int(11) NOT NULL,
   `employee` int(11) NOT NULL,
+  `recruitment` int(11) NOT NULL,
   `state` tinyint(4) NOT NULL DEFAULT '0',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `FK_APP_EMPLOYEE_idx` (`employee`),
-  KEY `FK_APP_EMPLOY_idx` (`employ`),
-  KEY `index4` (`state`),
+  KEY `FK_APP_STATE` (`state`),
+  KEY `FK_APP_RECRUITMENT` (`recruitment`),
+  KEY `FK_APP_EMPLOYEE` (`employee`),
+  KEY `FK_APP_EMPLOY` (`employ`),
   CONSTRAINT `FK_APP_EMPLOY` FOREIGN KEY (`employ`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_APP_EMPLOYEE` FOREIGN KEY (`employee`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `FK_APP_EMPLOYEE` FOREIGN KEY (`employee`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_APP_RECRUITMENT` FOREIGN KEY (`recruitment`) REFERENCES `recruitment` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -69,9 +71,9 @@ CREATE TABLE `education_exp` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `FK_EE_RESUME_idx` (`resume`),
   KEY `IDX_MAJOR` (`major`),
   KEY `IDX_DEGREE` (`degree`),
+  KEY `FK_EE_RESUME` (`resume`),
   CONSTRAINT `FK_EE_RESUME` FOREIGN KEY (`resume`) REFERENCES `online_resume` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -103,8 +105,8 @@ CREATE TABLE `email` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `FK_EMAIL_FROM_idx` (`from`),
   KEY `IDX_EMAIL_USER` (`user`),
+  KEY `FK_EMAIL_FROM` (`from`),
   CONSTRAINT `FK_EMAIL_EMAILADDRESS` FOREIGN KEY (`from`) REFERENCES `user` (`email`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_EMAIL_USERID` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -156,10 +158,10 @@ CREATE TABLE `online_resume` (
   `person_info` int(11) NOT NULL,
   `user` int(11) NOT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `FK_OR_PERSONINFO_idx` (`person_info`),
-  KEY `FK_OR_USER_idx` (`user`),
+  KEY `FK_OR_PERSONINFO` (`person_info`),
+  KEY `FK_OR_USER` (`user`),
   CONSTRAINT `FK_OR_PERSONINFO` FOREIGN KEY (`person_info`) REFERENCES `person_info` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_OR_USER` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -226,7 +228,7 @@ CREATE TABLE `project_exp` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `FK_PE_RESUME_idx` (`resume`),
+  KEY `FK_PE_RESUME` (`resume`),
   CONSTRAINT `FK_PE_RESUME` FOREIGN KEY (`resume`) REFERENCES `online_resume` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -264,10 +266,10 @@ CREATE TABLE `recruitment` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `FK_REQ_USER_idx` (`user`),
   KEY `IDX_REQ_JOBNAME` (`job_name`),
   KEY `IDX_REQ_JOBTYPE` (`job_type`),
   KEY `IDX_REQ_STATE` (`state`),
+  KEY `FK_REQ_USER` (`user`),
   CONSTRAINT `FK_REQ_JOBTYPE` FOREIGN KEY (`job_type`) REFERENCES `job_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_REQ_USER` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -293,7 +295,7 @@ CREATE TABLE `resume_skill` (
   `resume` int(11) NOT NULL,
   `skill` int(11) NOT NULL,
   PRIMARY KEY (`resume`,`skill`),
-  KEY `FK_RS_SKILL_idx` (`skill`),
+  KEY `FK_RS_SKILL` (`skill`),
   CONSTRAINT `FK_RS_RESUME` FOREIGN KEY (`resume`) REFERENCES `online_resume` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_RS_SKILL` FOREIGN KEY (`skill`) REFERENCES `skill` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -368,13 +370,13 @@ CREATE TABLE `user` (
   `email` varchar(64) NOT NULL,
   `password` char(32) NOT NULL,
   `role` int(11) NOT NULL,
-  `person_info` int(11) NOT NULL,
+  `person_info` int(11) DEFAULT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`),
-  KEY `FK_USER_PERSON_INFO_idx` (`person_info`),
-  KEY `FK_USER_ROLE_idx` (`role`),
+  KEY `FK_USER_PERSON_INFO` (`person_info`),
+  KEY `FK_USER_ROLE` (`role`),
   CONSTRAINT `FK_USER_PERSON_INFO` FOREIGN KEY (`person_info`) REFERENCES `person_info` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_USER_ROLE` FOREIGN KEY (`role`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -435,7 +437,7 @@ CREATE TABLE `work_exp` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `FK_WE_RESUME_idx` (`resume`),
+  KEY `FK_WE_RESUME` (`resume`),
   CONSTRAINT `FK_WE_RESUME` FOREIGN KEY (`resume`) REFERENCES `online_resume` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -458,4 +460,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-15  0:30:16
+-- Dump completed on 2017-03-21 23:31:20

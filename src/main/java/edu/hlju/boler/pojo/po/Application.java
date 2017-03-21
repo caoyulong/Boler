@@ -9,6 +9,8 @@ public class Application {
 
     private User employee;
 
+    private Recruitment recruitment;
+
     private Byte state;
 
     private Date createTime;
@@ -35,6 +37,10 @@ public class Application {
         return modifyTime;
     }
 
+    public Recruitment getRecruitment() {
+        return recruitment;
+    }
+
     public Byte getState() {
         return state;
     }
@@ -59,13 +65,17 @@ public class Application {
         this.modifyTime = modifyTime;
     }
 
+    public void setRecruitment(Recruitment recruitment) {
+        this.recruitment = recruitment;
+    }
+
     public void setState(Byte state) {
         this.state = state;
     }
 
     @Override
     public String toString() {
-        return "Application [id=" + id + ", employ=" + employ + ", employee=" + employee + ", createTime=" + createTime
-                + ", modifyTime=" + modifyTime + ", state=" + state + "]";
+        return "Application [id=" + id + ", employ=" + employ + ", employee=" + employee + ", recruitment="
+                + recruitment + ", state=" + state + ", createTime=" + createTime + ", modifyTime=" + modifyTime + "]";
     }
 }
