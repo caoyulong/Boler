@@ -5,18 +5,18 @@ import java.util.Map;
 import edu.hlju.boler.datadictory.UserDataDict;
 
 public class MapResponse extends StateResponse {
-    private Map<? extends Object, ? extends Object> map;
+    private Map<Object, Object> map;
 
-    public MapResponse(Map<? extends Object, ? extends Object> map) {
+    public MapResponse(Map<Object, Object> map) {
         super(UserDataDict.OPERATIING_SUCCEED);
         this.map = map;
     }
 
-    public Map<? extends Object, ? extends Object> getMap() {
+    public Map<Object, Object> getMap() {
         return map;
     }
 
-    public void setMap(Map<? extends Object, ? extends Object> map) {
+    public void setMap(Map<Object, Object> map) {
         this.map = map;
     }
 

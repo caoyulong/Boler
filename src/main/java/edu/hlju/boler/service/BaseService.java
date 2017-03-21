@@ -23,11 +23,11 @@ public abstract class BaseService {
     @Resource
     private MessageSender messageSender;
 
-    protected ListResponse getResponse(List<? extends Object> list) {
+    protected ListResponse getResponse(List<Object> list) {
         return responseFactory.getResponse(list);
     }
 
-    protected MapResponse getResponse(Map<? extends Object, ? extends Object> map) {
+    protected MapResponse getResponse(Map<Object, Object> map) {
         return responseFactory.getResponse(map);
     }
 

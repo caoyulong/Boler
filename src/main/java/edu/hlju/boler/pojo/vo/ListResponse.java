@@ -5,18 +5,18 @@ import java.util.List;
 import edu.hlju.boler.datadictory.UserDataDict;
 
 public class ListResponse extends StateResponse {
-    private List<? extends Object> list;
+    private List<Object> list;
 
-    public ListResponse(List<? extends Object> list) {
+    public ListResponse(List<Object> list) {
         super(UserDataDict.OPERATIING_SUCCEED);
         this.list = list;
     }
 
-    public List<? extends Object> getList() {
+    public List<Object> getList() {
         return list;
     }
 
-    public void setList(List<? extends Object> list) {
+    public void setList(List<Object> list) {
         this.list = list;
     }
 

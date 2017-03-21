@@ -14,11 +14,11 @@ import edu.hlju.boler.pojo.vo.ValueResponse;
 @Component
 public class ResponseFactory {
 
-    public ListResponse getResponse(List<? extends Object> list) {
+    public ListResponse getResponse(List<Object> list) {
         return new ListResponse(list);
     }
 
-    public MapResponse getResponse(Map<? extends Object, ? extends Object> map) {
+    public MapResponse getResponse(Map<Object, Object> map) {
         return new MapResponse(map);
     }
 
