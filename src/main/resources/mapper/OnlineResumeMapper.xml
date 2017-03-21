@@ -54,7 +54,7 @@
     <insert id="insert" parameterType="edu.hlju.boler.pojo.po.OnlineResume">
         insert into online_resume (
             id, name, create_time,
-        	person_info, user, update_tmie
+        	person_info, user, modify_time
         ) values (
         	#{id,jdbcType=INTEGER}, 
         	#{name,jdbcType=VARCHAR},
@@ -84,7 +84,7 @@
                 user,
             </if>
             <if test="modifyTime != null">
-                update_tmie,
+                modify_time,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -125,7 +125,7 @@
                 user = #{user.id,jdbcType=INTEGER},
             </if>
             <if test="modifyTime != null">
-                update_tmie = #{modifyTime,jdbcType=TIMESTAMP},
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
@@ -139,7 +139,7 @@
             create_time = #{createTime,jdbcType=TIMESTAMP},
             person_info = #{personInfo.id,jdbcType=INTEGER},
             user = #{user.id,jdbcType=INTEGER},
-            update_tmie = #{modifyTime,jdbcType=TIMESTAMP}
+            modify_time = #{modifyTime,jdbcType=TIMESTAMP}
         where 
             id = #{id,jdbcType=INTEGER}
     </update>

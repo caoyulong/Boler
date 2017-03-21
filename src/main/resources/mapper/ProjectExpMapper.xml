@@ -95,7 +95,7 @@
                 detail,
             </if>
             <if test="resume != null">
-                resume.id,
+                resume,
             </if>
             <if test="createTime != null">
                 create_time,

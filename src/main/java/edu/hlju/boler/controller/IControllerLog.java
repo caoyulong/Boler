@@ -1,4 +1,4 @@
-package edu.hlju.boler.core.interfaces;
+package edu.hlju.boler.controller;
 
 public interface IControllerLog {
 

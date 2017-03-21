@@ -77,7 +77,10 @@ public class EmployeeService extends BaseService implements IEmployeeService {
         Object obj = request.getSession().getAttribute(UserService.USER_OBJECT);
         if (obj != null) {
             try {
-                List<Application> result = applicationDao.selectSplit(pageNum, pageSize);
+                User user = (User) obj;
+                Application application = new Application();  // 用于保存查询条件，需要查询的设值，不需要的设null
+                application.setEmployee(user);
+                List<Application> result = applicationDao.selectSplitCondition(application, pageNum, pageSize);
                 this.saveUserLog(request, "Querying all applications.");
                 return this.getResponse(result);
             } catch (SQLException e) {

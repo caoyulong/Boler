@@ -77,7 +77,7 @@
                 id,
             </if>
             <if test="user != null">
-                user.id,
+                user,
             </if>
             <if test="from != null">
                 from,
