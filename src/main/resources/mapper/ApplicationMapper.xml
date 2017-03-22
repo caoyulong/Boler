@@ -8,13 +8,12 @@
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
         <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
         
-        <association column="employ" property="employ" select="edu.hlju.boler.dao.IUserDao.selectById" />
         <association column="employee" property="employee" select="edu.hlju.boler.dao.IUserDao.selectById" />
         <association column="recruitment" property="recruitment" select="edu.hlju.boler.dao.IRecruitmentDao.selectById" />
     </resultMap>
     
     <sql id="Base_Column_List">
-        id, employ, employee, recruitment, state, create_time, modify_time
+        id, employee, recruitment, state, create_time, modify_time
     </sql>
     
     <select id="selectAll" resultMap="BaseResultMap">
@@ -44,7 +43,6 @@
         <include refid="Base_Column_List" />
         from application
         <where>
-            <if test="application.employ != null">and employ = #{application.employ.id}</if>
             <if test="application.employee != null">and employee = #{application.employee.id}</if>
             <if test="application.recruitment != null">and recruitment = #{application.recruitment.id}</if>
             <if test="application.state != null">and state = #{application.state}</if>
@@ -59,10 +57,9 @@
     
     <insert id="insert" parameterType="edu.hlju.boler.pojo.po.Application">
         insert into application (
-            id, employ, employee, create_time, modify_time
+            id, employee, create_time, modify_time
         ) values (
             #{id,jdbcType=INTEGER}, 
-	        #{employ.id,jdbcType=INTEGER},
 	        #{employee.id,jdbcType=INTEGER},
             #{recruitment.id,jdbcType=INTEGER},
             #{state,jdbcType=TINYINT},
@@ -76,9 +73,6 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
-            </if>
-            <if test="employ != null">
-                employ,
             </if>
             <if test="employee != null">
                 employee,
@@ -99,9 +93,6 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 #{id,jdbcType=INTEGER},
-            </if>
-            <if test="employ != null">
-                #{employ.id,jdbcType=INTEGER},
             </if>
             <if test="employee != null">
                 #{employee.id,jdbcType=INTEGER},
@@ -124,9 +115,6 @@
     <update id="updateByIdSelective" parameterType="edu.hlju.boler.pojo.po.Application">
         update application
         <set>
-            <if test="employ != null">
-                employ = #{employ.id,jdbcType=INTEGER},
-            </if>
             <if test="employee != null">
                 employee = #{employee.id,jdbcType=INTEGER},
             </if>
@@ -150,7 +138,6 @@
         update 
             application
         set 
-            employ = #{employ.id,jdbcType=INTEGER},
             employee = #{employee.id,jdbcType=INTEGER},
             recruitment = #{recruitment.id,jdbcType=INTEGER},
             state = #{state,jdbcType=TINYINT},

@@ -1,8 +1,5 @@
 package edu.hlju.boler.service;
 
-import java.util.List;
-import java.util.Map;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,8 +8,6 @@ import edu.hlju.boler.core.message.MessageSender;
 import edu.hlju.boler.datadictory.UserDataDict;
 import edu.hlju.boler.pojo.po.User;
 import edu.hlju.boler.pojo.po.UserLog;
-import edu.hlju.boler.pojo.vo.ListResponse;
-import edu.hlju.boler.pojo.vo.MapResponse;
 import edu.hlju.boler.pojo.vo.StateResponse;
 import edu.hlju.boler.pojo.vo.ValueResponse;
 
@@ -22,14 +17,6 @@ public abstract class BaseService {
 
     @Resource
     private MessageSender messageSender;
-
-    protected ListResponse getResponse(List<Object> list) {
-        return responseFactory.getResponse(list);
-    }
-
-    protected MapResponse getResponse(Map<Object, Object> map) {
-        return responseFactory.getResponse(map);
-    }
 
     protected ValueResponse getResponse(Object value) {
         return responseFactory.getResponse(value);

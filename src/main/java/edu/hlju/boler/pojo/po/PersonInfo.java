@@ -18,6 +18,8 @@ public class PersonInfo {
 
     private String profile;
 
+    private String speciality;
+
     private String avatar;
 
     private String address;
@@ -66,6 +68,10 @@ public class PersonInfo {
         return sex;
     }
 
+    public String getSpeciality() {
+        return speciality;
+    }
+
     public void setAddress(String address) {
         this.address = address;
     }
@@ -106,10 +112,14 @@ public class PersonInfo {
         this.sex = sex;
     }
 
+    public void setSpeciality(String speciality) {
+        this.speciality = speciality;
+    }
+
     @Override
     public String toString() {
-        return "PersonInfomation [id=" + id + ", realname=" + realname + ", sex=" + sex + ", birthday=" + birthday
-                + ", cellphone=" + cellphone + ", profile=" + profile + ", avatar=" + avatar + ", address=" + address
-                + ", createTime=" + createTime + ", modifyTime=" + modifyTime + "]";
+        return "PersonInfo [id=" + id + ", realname=" + realname + ", sex=" + sex + ", birthday=" + birthday
+                + ", cellphone=" + cellphone + ", profile=" + profile + ", speciality=" + speciality + ", avatar="
+                + avatar + ", address=" + address + ", createTime=" + createTime + ", modifyTime=" + modifyTime + "]";
     }
 }

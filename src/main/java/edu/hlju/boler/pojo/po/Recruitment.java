@@ -23,7 +23,7 @@ public class Recruitment {
 
     private String requirement;
 
-    private User user;
+    private User employ;
 
     private Byte state;
 
@@ -45,7 +45,11 @@ public class Recruitment {
         return createTime;
     }
 
-    public Date getExpire_date() {
+    public User getEmploy() {
+        return employ;
+    }
+
+    public Date getExpireDate() {
         return expireDate;
     }
 
@@ -89,10 +93,6 @@ public class Recruitment {
         return state;
     }
 
-    public User getUser() {
-        return user;
-    }
-
     public void setAddress(String address) {
         this.address = address;
     }
@@ -105,8 +105,12 @@ public class Recruitment {
         this.createTime = createTime;
     }
 
-    public void setExpire_date(Date expire_date) {
-        this.expireDate = expire_date;
+    public void setEmploy(User employ) {
+        this.employ = employ;
+    }
+
+    public void setExpireDate(Date expireDate) {
+        this.expireDate = expireDate;
     }
 
     public void setHighSalary(Integer highSalary) {
@@ -149,16 +153,13 @@ public class Recruitment {
         this.state = state;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     @Override
     public String toString() {
         return "Recruitment [id=" + id + ", corporation=" + corporation + ", jobName=" + jobName + ", jobType="
                 + jobType + ", lowSalary=" + lowSalary + ", highSalary=" + highSalary + ", address=" + address
-                + ", industry=" + industry + ", jobDetail=" + jobDetail + ", requirement=" + requirement + ", user="
-                + user + ", state=" + state + ", expire_date=" + expireDate + ", createTime=" + createTime
+                + ", industry=" + industry + ", jobDetail=" + jobDetail + ", requirement=" + requirement + ", employ="
+                + employ + ", state=" + state + ", expireDate=" + expireDate + ", createTime=" + createTime
                 + ", modifyTime=" + modifyTime + "]";
     }
+
 }

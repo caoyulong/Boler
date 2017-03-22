@@ -9,6 +9,7 @@
         <result column="birthday" jdbcType="DATE" property="birthday" />
         <result column="cellphone" jdbcType="VARCHAR" property="cellphone" />
         <result column="profile" jdbcType="VARCHAR" property="profile" />
+        <result column="speciality" jdbcType="VARCHAR" property="speciality" />
         <result column="avatar" jdbcType="VARCHAR" property="avatar" />
         <result column="address" jdbcType="VARCHAR" property="address" />
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -16,7 +17,7 @@
     </resultMap>
     
     <sql id="Base_Column_List">
-        id, realname, sex, birthday, cellphone, profile, 
+        id, realname, sex, birthday, cellphone, profile, speciality
         ]avatar, address, create_time, modify_time
     </sql>
     
@@ -41,7 +42,7 @@
     
     <insert id="insert" parameterType="edu.hlju.boler.pojo.po.PersonInfo" useGeneratedKeys="true" keyProperty="id">
         insert into person_info (
-            id, realname, sex, birthday, cellphone, profile, 
+            id, realname, sex, birthday, cellphone, profile, speciality
             avatar, address, create_time, modify_time
         ) values (
 	        #{id,jdbcType=INTEGER}, 
@@ -50,6 +51,7 @@
 	        #{birthday,jdbcType=DATE}, 
 	        #{cellphone,jdbcType=VARCHAR}, 
 	        #{profile,jdbcType=VARCHAR},
+            #{speciality,jdbcType=VARCHAR},
 	        #{avatar,jdbcType=VARCHAR},
 	        #{address,jdbcType=VARCHAR},
             #{createTime,jdbcType=TIMESTAMP},
@@ -77,6 +79,9 @@
             </if>
             <if test="profile != null">
                 profile,
+            </if>
+            <if test="speciality != null">
+                speciality,
             </if>
             <if test="avatar != null">
                 avatar,
@@ -109,6 +114,9 @@
             </if>
             <if test="profile != null">
                 #{profile,jdbcType=VARCHAR},
+            </if>
+            <if test="speciality != null">
+                #{speciality,jdbcType=VARCHAR},
             </if>
             <if test="avatar != null">
                 #{avatar,jdbcType=VARCHAR},
@@ -143,6 +151,9 @@
             <if test="profile != null">
                 profile = #{profile,jdbcType=VARCHAR},
             </if>
+            <if test="speciality != null">
+                speciality = #{speciality,jdbcType=VARCHAR},
+            </if>
             <if test="avatar != null">
                 avatar = #{avatar,jdbcType=VARCHAR},
             </if>
@@ -168,6 +179,7 @@
             birthday = #{birthday,jdbcType=DATE},
             cellphone = #{cellphone,jdbcType=VARCHAR},
             profile = #{profile,jdbcType=VARCHAR},
+            speciality = #{speciality,jdbcType=VARCHAR},
             avatar = #{avatar,jdbcType=VARCHAR},
             address = #{address,jdbcType=VARCHAR},
             create_time = #{createTime,jdbcType=TIMESTAMP},

@@ -59,7 +59,7 @@ public class EmployeeController implements IControllerLog {
     @ResponseBody
     @RequestMapping(value = "/all_recruitments")
     public BaseResponse queryAllRecruitments(HttpServletRequest request, int pageNum, int pageSize) {
-        this.logging("Queru all recruitments.");
+        this.logging("Query all recruitments.");
         return employeeService.queryAllRecruitments(request, pageNum, pageSize);
     }
 

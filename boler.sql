@@ -1,4 +1,5 @@
-CREATE DATABASE  IF NOT EXISTS `boler` /*!40100 DEFAULT CHARACTER SET utf8 */;
+DROP DATABASE IF EXISTS `boler`;
+CREATE DATABASE `boler` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `boler`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Linux (x86_64)
 --
@@ -26,7 +27,6 @@ DROP TABLE IF EXISTS `application`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `application` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `employ` int(11) NOT NULL,
   `employee` int(11) NOT NULL,
   `recruitment` int(11) NOT NULL,
   `state` tinyint(4) NOT NULL DEFAULT '0',
@@ -36,8 +36,6 @@ CREATE TABLE `application` (
   KEY `FK_APP_STATE` (`state`),
   KEY `FK_APP_RECRUITMENT` (`recruitment`),
   KEY `FK_APP_EMPLOYEE` (`employee`),
-  KEY `FK_APP_EMPLOY` (`employ`),
-  CONSTRAINT `FK_APP_EMPLOY` FOREIGN KEY (`employ`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_APP_EMPLOYEE` FOREIGN KEY (`employee`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_APP_RECRUITMENT` FOREIGN KEY (`recruitment`) REFERENCES `recruitment` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -190,8 +188,9 @@ CREATE TABLE `person_info` (
   `birthday` date NOT NULL,
   `cellphone` varchar(11) NOT NULL,
   `profile` varchar(128) DEFAULT NULL,
+  `speciality` varchar(64) DEFAULT NULL,
   `avatar` varchar(64) DEFAULT NULL,
-  `address` varchar(64) DEFAULT NULL,
+  `address` varchar(64) NOT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -260,7 +259,7 @@ CREATE TABLE `recruitment` (
   `industry` varchar(32) NOT NULL,
   `job_detail` varchar(128) NOT NULL,
   `requirement` varchar(128) NOT NULL,
-  `user` int(11) NOT NULL,
+  `employ` int(11) NOT NULL,
   `state` tinyint(4) NOT NULL DEFAULT '0',
   `expire_date` date NOT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -269,9 +268,9 @@ CREATE TABLE `recruitment` (
   KEY `IDX_REQ_JOBNAME` (`job_name`),
   KEY `IDX_REQ_JOBTYPE` (`job_type`),
   KEY `IDX_REQ_STATE` (`state`),
-  KEY `FK_REQ_USER` (`user`),
+  KEY `FK_REQ_USER` (`employ`),
   CONSTRAINT `FK_REQ_JOBTYPE` FOREIGN KEY (`job_type`) REFERENCES `job_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_REQ_USER` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `FK_REQ_USER` FOREIGN KEY (`employ`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -282,32 +281,6 @@ CREATE TABLE `recruitment` (
 LOCK TABLES `recruitment` WRITE;
 /*!40000 ALTER TABLE `recruitment` DISABLE KEYS */;
 /*!40000 ALTER TABLE `recruitment` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `resume_skill`
---
-
-DROP TABLE IF EXISTS `resume_skill`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `resume_skill` (
-  `resume` int(11) NOT NULL,
-  `skill` int(11) NOT NULL,
-  PRIMARY KEY (`resume`,`skill`),
-  KEY `FK_RS_SKILL` (`skill`),
-  CONSTRAINT `FK_RS_RESUME` FOREIGN KEY (`resume`) REFERENCES `online_resume` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_RS_SKILL` FOREIGN KEY (`skill`) REFERENCES `skill` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `resume_skill`
---
-
-LOCK TABLES `resume_skill` WRITE;
-/*!40000 ALTER TABLE `resume_skill` DISABLE KEYS */;
-/*!40000 ALTER TABLE `resume_skill` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -333,29 +306,6 @@ LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
 INSERT INTO `role` VALUES (1,'employ'),(2,'employee');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `skill`
---
-
-DROP TABLE IF EXISTS `skill`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `skill` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(16) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `skill`
---
-
-LOCK TABLES `skill` WRITE;
-/*!40000 ALTER TABLE `skill` DISABLE KEYS */;
-/*!40000 ALTER TABLE `skill` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -460,4 +410,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-21 23:31:20
+-- Dump completed on 2017-03-23  0:22:53

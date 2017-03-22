@@ -19,13 +19,13 @@
         
         <association column="job_type" property="jobType" 
             select="edu.hlju.boler.dao.IJobTypeDao.selectById" />
-        <association column="user" property="user" 
+        <association column="employ" property="employ" 
             select="edu.hlju.boler.dao.IUserDao.selectById" />
     </resultMap>
     
     <sql id="Base_Column_List">
         id, corporation, job_name, job_type, low_salary, high_salary, address, industry,
-        job_detail, requirement, user, state, expire_date, create_time, modify_time
+        job_detail, requirement, employ, state, expire_date, create_time, modify_time
     </sql>
     
     <select id="selectAll" resultMap="BaseResultMap">
@@ -60,6 +60,7 @@
             <if test="recruitment.jobName != null">and job_name = #{recruitment.jobName}</if>
             <if test="recruitment.state != null">and state = #{recruitment.state}</if>
             <if test="recruitment.jobType != null">and job_type = #{recruitment.jobType.id}</if>
+            <if test="recruitment.employ != null">and employ = #{recruitment.employ.id}</if>
         </where>
         order by modify_time desc
     </select>
@@ -75,7 +76,7 @@
 	        id, corporation, job_name, jot_type
 	        low_salary, high_salary, address,
 	        industry, job_detail, requirement,
-	        user, state, expire_date, 
+	        employ, state, expire_date, 
             create_time, modify_time
         ) values (
 	        #{id,jdbcType=INTEGER}, 
@@ -88,7 +89,7 @@
 	        #{industry,jdbcType=VARCHAR}, 
 	        #{jobDetail,jdbcType=VARCHAR},
 	        #{requirement,jdbcType=VARCHAR},
-	        #{user.id,jdbcType=INTEGER}, 
+	        #{employ.id,jdbcType=INTEGER}, 
             #{state,jdbcType=TINYINT},
             #{expireDate,jdbcType=DATE},
 	        #{createTime,jdbcType=TIMESTAMP},
@@ -129,8 +130,8 @@
             <if test="requirement != null">
                 requirement,
             </if>
-            <if test="user != null">
-                user,
+            <if test="employ != null">
+                employ,
             </if>
             <if test="state != null">
                 state,
@@ -176,8 +177,8 @@
             <if test="requirement != null">
                 #{requirement,jdbcType=VARCHAR},
             </if>
-            <if test="user != null">
-                #{user.id,jdbcType=INTEGER},
+            <if test="employ != null">
+                #{employ.id,jdbcType=INTEGER},
             </if>
             <if test="state != null">
                 #{state,jdbcType=TINYINT},
@@ -224,8 +225,8 @@
             <if test="requirement != null">
                 requirement = #{requirement,jdbcType=VARCHAR},
             </if>
-            <if test="user != null">
-                user = #{user.id,jdbcType=INTEGER},
+            <if test="employ != null">
+                employ = #{employ.id,jdbcType=INTEGER},
             </if>
             <if test="state != null">
                 state = #{state,jdbcType=TINYINT},
@@ -256,7 +257,7 @@
             industry = #{industry,jdbcType=VARCHAR},
             job_detail = #{jobDetail,jdbcType=VARCHAR},
             requirement = #{requirement,jdbcType=VARCHAR},
-            user = #{user.id,jdbcType=INTEGER},
+            employ = #{employ.id,jdbcType=INTEGER},
             state = #{state,jdbcType=TINYINT},
             expire_date = #{expireDate,jdbcType=DATE},
             create_time = #{createTime,jdbcType=TIMESTAMP},

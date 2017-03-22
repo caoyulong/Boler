@@ -5,8 +5,6 @@ import java.util.Date;
 public class Application {
     private Integer id;
 
-    private User employ;
-
     private User employee;
 
     private Recruitment recruitment;
@@ -19,10 +17,6 @@ public class Application {
 
     public Date getCreateTime() {
         return createTime;
-    }
-
-    public User getEmploy() {
-        return employ;
     }
 
     public User getEmployee() {
@@ -49,10 +43,6 @@ public class Application {
         this.createTime = createTime;
     }
 
-    public void setEmploy(User employ) {
-        this.employ = employ;
-    }
-
     public void setEmployee(User employee) {
         this.employee = employee;
     }
@@ -75,7 +65,7 @@ public class Application {
 
     @Override
     public String toString() {
-        return "Application [id=" + id + ", employ=" + employ + ", employee=" + employee + ", recruitment="
-                + recruitment + ", state=" + state + ", createTime=" + createTime + ", modifyTime=" + modifyTime + "]";
+        return "Application [id=" + id + ", employee=" + employee + ", recruitment=" + recruitment + ", state=" + state
+                + ", createTime=" + createTime + ", modifyTime=" + modifyTime + "]";
     }
 }
