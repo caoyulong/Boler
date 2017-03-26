@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
@@ -13,18 +12,15 @@ import edu.hlju.boler.dao.IOnlineResumeDao;
 import edu.hlju.boler.dao.IPersonInfoDao;
 import edu.hlju.boler.dao.IRecruitmentDao;
 import edu.hlju.boler.dao.IUserDao;
-import edu.hlju.boler.datadictory.UserDataDict;
 import edu.hlju.boler.pojo.po.Application;
 import edu.hlju.boler.pojo.po.OnlineResume;
 import edu.hlju.boler.pojo.po.PersonInfo;
 import edu.hlju.boler.pojo.po.Recruitment;
 import edu.hlju.boler.pojo.po.User;
-import edu.hlju.boler.pojo.vo.BaseResponse;
-import edu.hlju.boler.pojo.vo.StateResponse;
 import edu.hlju.boler.service.interfaces.IEmployeeService;
 
 @Service("employeeService")
-public class EmployeeService extends BaseService implements IEmployeeService {
+public class EmployeeService implements IEmployeeService {
     @Resource
     private IPersonInfoDao personInfoDao;
 
@@ -41,162 +37,129 @@ public class EmployeeService extends BaseService implements IEmployeeService {
     private IRecruitmentDao recruitmentDao;
 
     @Override
-    public BaseResponse addApplication(HttpServletRequest request, Application application) {
-        Object obj = request.getSession().getAttribute(UserService.USER_OBJECT);
-        if (obj != null) {
-            User user = (User) obj;
-            application.setEmployee(user);
-            try {
-                applicationDao.insert(application);
-                this.saveUserLog(request, "Add application");
-                return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+    public boolean delOnlineResume(int id) {
+        try {
+            resumeDao.deleteById(id);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return this.getResponse(UserDataDict.OPERATIING_FAILED);
+        return false;
     }
 
     @Override
-    public BaseResponse delOnlineResume(HttpServletRequest request, int id) {
-        Object obj = request.getSession().getAttribute(UserService.USER_OBJECT);
-        if (obj != null) {
+    public List<Application> queryAllApps(User user, int pageNum, int pageSize) {
+        if (user != null) {
             try {
-                resumeDao.deleteById(id);
-                this.saveUserLog(request, "Delete online resume.");
-                return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return this.getResponse(UserDataDict.OPERATIING_FAILED);
-    }
-
-    @Override
-    public BaseResponse queryAllApps(HttpServletRequest request, int pageNum, int pageSize) {
-        Object obj = request.getSession().getAttribute(UserService.USER_OBJECT);
-        if (obj != null) {
-            try {
-                User user = (User) obj;
                 Application application = new Application();  // 用于保存查询条件，需要查询的设值，不需要的设null
                 application.setEmployee(user);
-                List<Application> result = applicationDao.selectSplitCondition(application, pageNum, pageSize);
-                this.saveUserLog(request, "Querying all applications.");
-                return this.getResponse(result);
+                return applicationDao.selectSplitCondition(application, pageNum, pageSize);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        return this.getResponse(UserDataDict.OPERATIING_FAILED);
+        return null;
     }
 
     @Override
-    public BaseResponse queryAllRecruitments(HttpServletRequest request, int pageNum, int pageSize) {
-        Object obj = request.getSession().getAttribute(UserService.USER_OBJECT);
-        if (obj != null) {
-            try {
-                List<Recruitment> result = recruitmentDao.selectSplit(pageNum, pageSize);
-                this.saveUserLog(request, "Querying all recruitments.");
-                return this.getResponse(result);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+    public List<Recruitment> queryAllRecruitments(int pageNum, int pageSize) {
+        try {
+            return recruitmentDao.selectSplit(pageNum, pageSize);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return this.getResponse(UserDataDict.OPERATIING_FAILED);
+        return null;
     }
 
     @Override
-    public BaseResponse queryPersonInfo(HttpServletRequest request) {
-        Object obj = request.getSession().getAttribute(UserService.USER_OBJECT);
-        if (obj != null) {
-            User user = (User) obj;
-            this.saveUserLog(request, "Query personnal information.");
-            return this.getResponse(user.getPersonInfo());
-        }
-        return this.getResponse(UserDataDict.OPERATIING_FAILED);
-    }
-
-    @Override
-    public BaseResponse queryUserOnlineResumes(HttpServletRequest request) {
-        Object obj = request.getSession().getAttribute(UserService.USER_OBJECT);
-        if (obj != null) {
-            User user = (User) obj;
+    public List<OnlineResume> queryUserOnlineResumes(User employee) {
+        if (employee != null) {
             OnlineResume resume = new OnlineResume();
-            resume.setUser(user);
+            resume.setUser(employee);
             try {
-                List<OnlineResume> result = resumeDao.selectSplitCondition(resume, 0, 0);
-                this.saveUserLog(request, "Querying user's online resumes.");
-                return this.getResponse(result);
+                return resumeDao.selectSplitCondition(resume, 0, 0);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        return this.getResponse(UserDataDict.OPERATIING_FAILED);
+        return null;
     }
 
     @Override
-    public BaseResponse saveOnlineResume(HttpServletRequest request, OnlineResume onlineResume) {
-        Object obj = request.getSession().getAttribute(UserService.USER_OBJECT);
-        if (obj != null) {
-            User user = (User) obj;
-            onlineResume.setUser(user);
+    public boolean saveApplication(Application application) {
+        if (application != null) {
+            try {
+                applicationDao.insert(application);
+                return true;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean saveOnlineResume(OnlineResume onlineResume) {
+        if (onlineResume != null) {
             try {
                 resumeDao.insert(onlineResume);
-                this.saveUserLog(request, "Save a online reume.");
-                return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
+                return true;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        return this.getResponse(UserDataDict.OPERATIING_FAILED);
+        return false;
     }
 
     @Override
-    public StateResponse savePersonInfo(HttpServletRequest request, PersonInfo info) {
-        Object obj = request.getSession().getAttribute(UserService.USER_OBJECT);
-        if (obj != null) {
-            User logined = (User) obj;
+    public int savePersonInfo(PersonInfo info) {
+        if (info != null) {
             try {
-                personInfoDao.insert(info);
-                logined.setPersonInfo(info);
-                userDao.updateById(logined);
-                this.saveUserLog(request, "Save peronnal information.");
-                return this.getResponse(UserDataDict.SAVE_PERSON_INFO_SCCUCEED);
+                return personInfoDao.insert(info);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        return this.getResponse(UserDataDict.SAVE_PERSON_INFO_FAILED);
+        return -1;
     }
 
     @Override
-    public BaseResponse updateOnlineResume(HttpServletRequest request, OnlineResume resume) {
-        Object obj = request.getAttribute(UserService.USER_OBJECT);
-        if (obj != null) {
+    public boolean updateEmployee(User employee) {
+        if (employee != null) {
             try {
-                resumeDao.updateById(resume);
-                this.saveUserLog(request, "Update user's online resume.");
-                return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
+                userDao.updateByIdSelective(employee);
+                return true;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        return this.getResponse(UserDataDict.OPERATIING_FAILED);
+        return false;
     }
 
     @Override
-    public BaseResponse updatePersonInfo(HttpServletRequest request, PersonInfo info) {
-        Object obj = request.getSession().getAttribute(UserService.USER_OBJECT);
-        if (obj != null) {
+    public boolean updateOnlineResume(OnlineResume resume) {
+        if (resume != null) {
             try {
-                personInfoDao.updateById(info);
-                this.saveUserLog(request, "Update user's personal information.");
-                this.getResponse(UserDataDict.OPERATIING_SUCCEED);
+                resumeDao.updateByIdSelective(resume);
+                return true;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        return this.getResponse(UserDataDict.OPERATIING_FAILED);
+        return false;
+    }
+
+    @Override
+    public boolean updatePersonInfo(PersonInfo info) {
+        if (info != null) {
+            try {
+                personInfoDao.updateByIdSelective(info);
+                return true;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
     }
 
 }

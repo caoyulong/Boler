@@ -1,33 +1,33 @@
 package edu.hlju.boler.service.interfaces;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 import edu.hlju.boler.pojo.po.Application;
 import edu.hlju.boler.pojo.po.OnlineResume;
 import edu.hlju.boler.pojo.po.PersonInfo;
-import edu.hlju.boler.pojo.vo.BaseResponse;
-import edu.hlju.boler.pojo.vo.StateResponse;
+import edu.hlju.boler.pojo.po.Recruitment;
+import edu.hlju.boler.pojo.po.User;
 
 public interface IEmployeeService {
 
-    BaseResponse addApplication(HttpServletRequest request, Application application);
+    boolean delOnlineResume(int id);
 
-    BaseResponse delOnlineResume(HttpServletRequest request, int id);
+    List<Application> queryAllApps(User employee, int pageNum, int pageSize);
 
-    BaseResponse queryAllApps(HttpServletRequest request, int pageNum, int pageSize);
+    List<Recruitment> queryAllRecruitments(int pageNum, int pageSize);
 
-    BaseResponse queryAllRecruitments(HttpServletRequest request, int pageNum, int pageSize);
+    List<OnlineResume> queryUserOnlineResumes(User employee);
 
-    BaseResponse queryPersonInfo(HttpServletRequest request);
+    boolean saveApplication(Application application);
 
-    BaseResponse queryUserOnlineResumes(HttpServletRequest request);
+    boolean saveOnlineResume(OnlineResume onlineResume);
 
-    BaseResponse saveOnlineResume(HttpServletRequest request, OnlineResume onlineResume);
+    int savePersonInfo(PersonInfo info);
 
-    StateResponse savePersonInfo(HttpServletRequest request, PersonInfo info);
+    boolean updateEmployee(User employee);
 
-    BaseResponse updateOnlineResume(HttpServletRequest request, OnlineResume resume);
+    boolean updateOnlineResume(OnlineResume resume);
 
-    BaseResponse updatePersonInfo(HttpServletRequest request, PersonInfo info);
+    boolean updatePersonInfo(PersonInfo info);
 
 }

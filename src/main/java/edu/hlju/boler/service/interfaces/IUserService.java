@@ -1,21 +1,20 @@
 package edu.hlju.boler.service.interfaces;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
+import edu.hlju.boler.pojo.po.Role;
 import edu.hlju.boler.pojo.po.User;
-import edu.hlju.boler.pojo.vo.BaseResponse;
-import edu.hlju.boler.pojo.vo.StateResponse;
 
 public interface IUserService {
 
-    BaseResponse queryAllRoles();
+    boolean hasRegisterd(String id);
 
-    StateResponse login(HttpServletRequest reqeuest, User user);
+    User login(User user);
 
-    StateResponse logout(HttpServletRequest request);
+    boolean modifyPassword(User logined, String oldPasswd, String newPasswd);
 
-    StateResponse modifyPassword(HttpServletRequest request, User user, String newPasswd);
+    List<Role> queryAllRoles();
 
-    StateResponse register(User user);
+    boolean register(User user);
 
 }

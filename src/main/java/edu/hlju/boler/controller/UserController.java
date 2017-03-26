@@ -1,5 +1,7 @@
 package edu.hlju.boler.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import edu.hlju.boler.datadictory.UserDataDict;
 import edu.hlju.boler.pojo.po.Role;
 import edu.hlju.boler.pojo.po.User;
 import edu.hlju.boler.pojo.vo.BaseResponse;
@@ -19,8 +22,9 @@ import edu.hlju.boler.util.DateTimeUtil;
 
 @Controller
 @RequestMapping(value = "api/user")
-public class UserController implements IControllerLog {
-    private static final String LOG_FORMAT = "[{}] {}";
+public class UserController extends BaseController {
+    public static final String LOG_FORMAT = "[{}] {}";
+    public static final String USER_OBJECT = "userObject";
     private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     @Resource(name = "userService")
@@ -30,7 +34,17 @@ public class UserController implements IControllerLog {
     @RequestMapping(value = "/all_roles")
     public BaseResponse getAllRoles() {
         this.logging("Querying all roles.");
-        return userService.queryAllRoles();
+        List<Role> result = userService.queryAllRoles();
+        if (result != null) {
+            return this.getResponse(result);
+        }
+        return this.getResponse(UserDataDict.OPERATIING_FAILED);
+    }
+
+    @ResponseBody
+    @RequestMapping("/has_registered")
+    public BaseResponse hasrRegistered(String id) {
+        return this.getResponse(userService.hasRegisterd(id));
     }
 
     @Override
@@ -40,30 +54,53 @@ public class UserController implements IControllerLog {
 
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public BaseResponse login(HttpServletRequest request, @RequestParam User user, Role role) {
-        this.logging("login.");
-        return userService.login(request, user);
+    public BaseResponse login(HttpServletRequest request, @RequestParam User user) {
+        User login = userService.login(user);
+        if (login != null) {
+            request.getSession().setAttribute(USER_OBJECT, login);
+            this.userLogging(request, "User login.");
+            return this.getResponse(UserDataDict.LOGIN_SUCCEED);
+        }
+        return this.getResponse(UserDataDict.LOGIN_FAILED);
     }
 
     @ResponseBody
     @RequestMapping(value = "/logout")
     public BaseResponse logout(HttpServletRequest request) {
-        this.logging("User logout.");
-        return userService.logout(request);
+        request.getSession().removeAttribute(USER_OBJECT);
+        this.userLogging(request, "User logout.");
+        return this.getResponse(UserDataDict.LOGOUT_SUCCEED);
     }
 
     @ResponseBody
     @RequestMapping(value = "/modify_password", method = RequestMethod.POST)
-    public BaseResponse modifyPasswd(HttpServletRequest request, User user, String newPasswd) {
-        this.logging("User modify password.");
-        return userService.modifyPassword(request, user, newPasswd);
+    public BaseResponse modifyPasswd(HttpServletRequest request, String oldPasswd, String newPasswd) {
+        Object obj = request.getSession().getAttribute(USER_OBJECT);
+        if (obj != null) {
+            User logined = (User) obj;
+            if (userService.modifyPassword(logined, oldPasswd, newPasswd)) {
+                this.logging("User modify password.");
+                return this.getResponse(UserDataDict.MODIFY_PASSWD_SUCCEED);
+            }
+        }
+        this.logout(request);  // 修改密码后自动注销登录
+        return this.getResponse(UserDataDict.MODIFY_PASSWD_FAILED);
     }
 
     @ResponseBody
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public BaseResponse register(User user, Role role) {
+    public BaseResponse register(User user) {
         this.logging("Register.");
-        return userService.register(user);
+        if (userService.register(user)) {
+            return this.getResponse(UserDataDict.REGISTER_SUCCEED);
+        }
+        return this.getResponse(UserDataDict.REGISTER_FAILED);
+    }
+
+    @Override
+    protected void userLogging(HttpServletRequest request, String message) {
+        this.logging(message);
+        this.saveUserLog(request, message);
     }
 
 }

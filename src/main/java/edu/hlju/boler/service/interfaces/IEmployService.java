@@ -1,23 +1,24 @@
 package edu.hlju.boler.service.interfaces;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 import edu.hlju.boler.pojo.po.Application;
+import edu.hlju.boler.pojo.po.JobType;
 import edu.hlju.boler.pojo.po.Recruitment;
-import edu.hlju.boler.pojo.vo.BaseResponse;
+import edu.hlju.boler.pojo.po.User;
 
 public interface IEmployService {
 
-    BaseResponse changeAppState(HttpServletRequest request, Application application);
+    boolean publishRecruitment(Recruitment recruitment);
 
-    BaseResponse publishRecruitment(HttpServletRequest request, Recruitment recruitment);
+    List<Application> queryAllApplications(User employ, int pageNum, int pageSize);
 
-    BaseResponse queryAllJobTypes();
+    List<JobType> queryAllJobTypes();
 
-    BaseResponse queryAllRecuitments(HttpServletRequest request);
+    List<Recruitment> queryAllRecuitments(Recruitment recruitment, int pageNum, int pageSize);
 
-    BaseResponse queryAllApplications(HttpServletRequest request);
+    boolean updateApplication(Application application);
 
-    BaseResponse updateRecruitment(HttpServletRequest request, Recruitment recruitment);
+    boolean updateRecruitment(Recruitment recruitment);
 
 }

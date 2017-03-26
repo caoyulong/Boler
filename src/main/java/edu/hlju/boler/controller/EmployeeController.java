@@ -1,5 +1,7 @@
 package edu.hlju.boler.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,9 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import edu.hlju.boler.datadictory.UserDataDict;
 import edu.hlju.boler.pojo.po.Application;
 import edu.hlju.boler.pojo.po.OnlineResume;
 import edu.hlju.boler.pojo.po.PersonInfo;
+import edu.hlju.boler.pojo.po.Recruitment;
+import edu.hlju.boler.pojo.po.User;
 import edu.hlju.boler.pojo.vo.BaseResponse;
 import edu.hlju.boler.service.interfaces.IEmployeeService;
 import edu.hlju.boler.util.DateTimeUtil;
@@ -23,8 +28,7 @@ import edu.hlju.boler.util.DateTimeUtil;
  */
 @Controller
 @RequestMapping(value = "api/employee")
-public class EmployeeController implements IControllerLog {
-    private static final String LOG_FORMAT = "[{}] {}";
+public class EmployeeController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
 
     @Resource
@@ -33,13 +37,17 @@ public class EmployeeController implements IControllerLog {
     @ResponseBody
     @RequestMapping(value = "/del_resume")
     public BaseResponse delOnlineResume(HttpServletRequest request, int id) {
-        this.logging("Delete a online resume.");
-        return employeeService.delOnlineResume(request, id);
+        Object obj = request.getSession().getAttribute(UserController.USER_OBJECT);
+        if (obj != null && employeeService.delOnlineResume(id)) {
+            this.userLogging(request, "Delete a online resume.");
+            return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
+        }
+        return this.getResponse(UserDataDict.OPERATIING_FAILED);
     }
 
     @Override
     public void logging(String log) {
-        logger.info(LOG_FORMAT, DateTimeUtil.now(), log);
+        logger.info(UserController.LOG_FORMAT, DateTimeUtil.now(), log);
     }
 
     /**
@@ -52,64 +60,131 @@ public class EmployeeController implements IControllerLog {
     @ResponseBody
     @RequestMapping(value = "/all_apps")
     public BaseResponse queryAllApps(HttpServletRequest request, int pageNum, int pageSize) {
-        this.logging("Query all applications.");
-        return employeeService.queryAllApps(request, pageNum, pageSize);
+        Object obj = request.getSession().getAttribute(UserController.USER_OBJECT);
+        if (obj != null) {
+            User employee = (User) obj;
+            List<Application> result = employeeService.queryAllApps(employee, pageNum, pageSize);
+            if (result != null) {
+                this.userLogging(request, "Query all applications.");
+                return this.getResponse(result);
+            }
+        }
+        return this.getResponse(UserDataDict.OPERATIING_FAILED);
     }
 
     @ResponseBody
     @RequestMapping(value = "/all_recruitments")
     public BaseResponse queryAllRecruitments(HttpServletRequest request, int pageNum, int pageSize) {
-        this.logging("Query all recruitments.");
-        return employeeService.queryAllRecruitments(request, pageNum, pageSize);
+        Object obj = request.getSession().getAttribute(UserController.USER_OBJECT);
+        if (obj != null) {
+            List<Recruitment> result = employeeService.queryAllRecruitments(pageNum, pageSize);
+            if (result != null) {
+                this.userLogging(request, "Query all recruitments.");
+                return this.getResponse(result);
+            }
+        }
+        return this.getResponse(UserDataDict.OPERATIING_FAILED);
     }
 
     @ResponseBody
     @RequestMapping(value = "/person_info")
     public BaseResponse queryPersonInfo(HttpServletRequest request) {
-        this.logging("Query user's personal information.");
-        return employeeService.queryPersonInfo(request);
+        Object obj = request.getAttribute(UserController.USER_OBJECT);
+        if (obj != null) {
+            User employee = (User) obj;
+            return this.getResponse(employee.getPersonInfo());
+        }
+        return this.getResponse(UserDataDict.OPERATIING_FAILED);
     }
 
     @ResponseBody
     @RequestMapping(value = "/all_resumes")
     public BaseResponse queryUserOnlineResumes(HttpServletRequest request) {
-        this.logging("Query user's online resumes.");
-        return employeeService.queryUserOnlineResumes(request);
+        Object obj = request.getSession().getAttribute(UserController.USER_OBJECT);
+        if (obj != null) {
+            User employee = (User) obj;
+            List<OnlineResume> result = employeeService.queryUserOnlineResumes(employee);
+            if (result != null) {
+                this.userLogging(request, "Query user's online resumes.");
+                return this.getResponse(result);
+            }
+        }
+        return this.getResponse(UserDataDict.OPERATIING_FAILED);
     }
 
     @ResponseBody
     @RequestMapping(value = "/save_app", method = RequestMethod.POST)
     public BaseResponse saveApplication(HttpServletRequest request, Application application) {
-        this.logging("Save an application.");
-        return employeeService.addApplication(request, application);
+        Object obj = request.getSession().getAttribute(UserController.USER_OBJECT);
+        if (obj != null) {
+            User employee = (User) obj;
+            application.setEmployee(employee);
+            if (employeeService.saveApplication(application)) {
+                this.userLogging(request, "Save an application.");
+                return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
+            }
+        }
+        return this.getResponse(UserDataDict.OPERATIING_FAILED);
     }
 
     @ResponseBody
     @RequestMapping(value = "/save_resume", method = RequestMethod.POST)
     public BaseResponse saveOnlineResume(HttpServletRequest request, OnlineResume onlineResume) {
-        this.logging("Save a online resume.");
-        return employeeService.saveOnlineResume(request, onlineResume);
+        Object obj = request.getSession().getAttribute(UserController.USER_OBJECT);
+        if (obj != null) {
+            User employee = (User) obj;
+            onlineResume.setUser(employee);
+            if (employeeService.saveOnlineResume(onlineResume)) {
+                this.userLogging(request, "Save a online resume.");
+                return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
+            }
+        }
+        return this.getResponse(UserDataDict.OPERATIING_FAILED);
     }
 
     @ResponseBody
     @RequestMapping(value = "/save_person_info", method = RequestMethod.POST)
     public BaseResponse savePersonInfo(HttpServletRequest request, PersonInfo info) {
-        this.logging("Save personnal information.");
-        return employeeService.savePersonInfo(request, info);
+        Object obj = request.getSession().getAttribute(UserController.USER_OBJECT);
+        if (obj != null && employeeService.savePersonInfo(info) != -1) {
+            User employee = (User) obj;
+            User user = new User();
+            user.setId(employee.getId());
+            user.setPersonInfo(info);
+            if (employeeService.updateEmployee(user)) {
+                this.logging("Save personnal information.");
+                return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
+            }
+        }
+        return this.getResponse(UserDataDict.MODIFY_PASSWD_FAILED);
     }
 
     @ResponseBody
     @RequestMapping(value = "/update_resume", method = RequestMethod.POST)
     public BaseResponse updateOnlineResume(HttpServletRequest request, OnlineResume resume) {
-        this.logging("Update a online resume.");
-        return employeeService.updateOnlineResume(request, resume);
+        Object obj = request.getSession().getAttribute(UserController.USER_OBJECT);
+        if (obj != null && employeeService.updateOnlineResume(resume)) {
+            this.userLogging(request, "Update a online resume.");
+            return this.getResponse(UserDataDict.LOGIN_SUCCEED);
+        }
+        return this.getResponse(UserDataDict.OPERATIING_FAILED);
     }
 
     @ResponseBody
     @RequestMapping(value = "/update_person_info", method = RequestMethod.POST)
     public BaseResponse updatePersonInfo(HttpServletRequest request, PersonInfo info) {
-        this.logging("Update user's personal information.");
-        return employeeService.updatePersonInfo(request, info);
+        Object obj = request.getSession().getAttribute(UserController.USER_OBJECT);
+        if (obj != null && employeeService.updatePersonInfo(info)) {
+            this.logging("Update user's personal information.");
+            return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
+        }
+        return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
+    }
+
+    @Override
+    protected void userLogging(HttpServletRequest request, String message) {
+        this.logging(message);
+        this.userLogging(request, message);
     }
 
 }

@@ -4,41 +4,101 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
+import edu.hlju.boler.dao.IApplicationDao;
 import edu.hlju.boler.dao.IJobTypeDao;
-import edu.hlju.boler.datadictory.UserDataDict;
+import edu.hlju.boler.dao.IRecruitmentDao;
+import edu.hlju.boler.pojo.po.Application;
 import edu.hlju.boler.pojo.po.JobType;
 import edu.hlju.boler.pojo.po.Recruitment;
-import edu.hlju.boler.pojo.vo.BaseResponse;
+import edu.hlju.boler.pojo.po.User;
 import edu.hlju.boler.service.interfaces.IEmployService;
 
 @Service("employService")
-public class EmployService extends BaseService implements IEmployService {
+public class EmployService implements IEmployService {
+    @Resource
+    private IApplicationDao appDao;
+
     @Resource
     private IJobTypeDao jobDao;
 
+    @Resource
+    private IRecruitmentDao recruitDao;
+
+    @Resource
+    private IApplicationDao applicationDao;
+
     @Override
-    public BaseResponse publishRecruitment(HttpServletRequest request, Recruitment recruitment) {
+    public boolean publishRecruitment(Recruitment recruitment) {
+        if (recruitment != null) {
+            try {
+                recruitDao.insert(recruitment);
+                return true;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public List<Application> queryAllApplications(User employ, int pageNum, int pageSize) {
+        if (employ != null) {
+            try {
+                return applicationDao.selectByEmploy(employ, pageNum, pageSize);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
         return null;
     }
 
     @Override
-    public BaseResponse queryAllJobTypes() {
+    public List<JobType> queryAllJobTypes() {
         try {
-            List<JobType> result = jobDao.selectAll();
-            return this.getResponse(result);
+            return jobDao.selectAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return this.getResponse(UserDataDict.OPERATIING_FAILED);
+        return null;
     }
 
     @Override
-    public BaseResponse queryAllApplications(HttpServletRequest request) {
+    public List<Recruitment> queryAllRecuitments(Recruitment recruitment, int pageNum, int pageSize) {
+        if (recruitment != null) {
+            try {
+                return recruitDao.selectSplitCondition(recruitment, pageNum, pageSize);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
         return null;
+    }
+
+    @Override
+    public boolean updateApplication(Application application) {
+        if (application != null) {
+            try {
+                appDao.updateByIdSelective(application);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateRecruitment(Recruitment recruitment) {
+        if (recruitment != null) {
+            try {
+                recruitDao.updateByIdSelective(recruitment);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
     }
 
 }
