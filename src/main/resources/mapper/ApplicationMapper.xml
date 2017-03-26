@@ -50,6 +50,14 @@
         order by modify_time desc
     </select>
     
+    <select id="selectByEmploy" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />           
+        from application, recruitment
+        where application.recruitment = recruitment.id and recruitment.employ = #{employ.id}
+        order by create_time desc
+    </select>
+    
     <delete id="deleteById" parameterType="java.lang.Integer">
         delete from application
         where id = #{id,jdbcType=INTEGER}

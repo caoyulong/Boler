@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import edu.hlju.boler.pojo.po.Application;
+import edu.hlju.boler.pojo.po.User;
 
 @Repository
 public interface IApplicationDao {
@@ -20,6 +21,10 @@ public interface IApplicationDao {
 
     @Cacheable
     List<Application> selectAll() throws SQLException;
+
+    @Cacheable
+    List<Application> selectByEmploy(@Param("employ") User employ, @Param("pageNum") int pageNum,
+            @Param("pageSize") int pageSize) throws SQLException;
 
     @Cacheable
     Application selectById(Integer id) throws SQLException;
