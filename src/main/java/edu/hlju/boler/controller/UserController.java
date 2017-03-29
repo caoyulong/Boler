@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.hlju.boler.datadictory.UserDataDict;
@@ -54,7 +53,7 @@ public class UserController extends BaseController {
 
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public BaseResponse login(HttpServletRequest request, @RequestParam User user) {
+    public BaseResponse login(HttpServletRequest request, User user) {
         User login = userService.login(user);
         if (login != null) {
             request.getSession().setAttribute(USER_OBJECT, login);
@@ -85,6 +84,11 @@ public class UserController extends BaseController {
         }
         this.logout(request);  // 修改密码后自动注销登录
         return this.getResponse(UserDataDict.MODIFY_PASSWD_FAILED);
+    }
+
+    @RequestMapping(value = "/register")
+    public String register() {
+        return "user/register";
     }
 
     @ResponseBody
