@@ -5,7 +5,6 @@ import java.util.Date;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.Length;
 
 public class User {
     private Integer id;
@@ -16,7 +15,6 @@ public class User {
     @Email
     private String email;
 
-    @Length(min = 8, max = 16)
     private String password;
 
     private PersonInfo personInfo;
@@ -24,6 +22,10 @@ public class User {
     private Date createTime;
 
     private Date modifyTime;
+
+    public User() {
+        role = new Role();
+    }
 
     public Date getCreateTime() {
         return createTime;

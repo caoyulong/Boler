@@ -46,6 +46,16 @@ public class UserController extends BaseController {
         return this.getResponse(userService.hasRegisterd(id));
     }
 
+    @RequestMapping(value = "/index")
+    public String index(HttpServletRequest request) {
+        Object obj = request.getSession().getAttribute(USER_OBJECT);
+        if (obj != null) {
+            User user = (User) obj;
+            return "api/" + user.getRole().getName() + "/index";
+        }
+        return "redirect:/";
+    }
+
     @Override
     public void logging(String log) {
         logger.info(LOG_FORMAT, DateTimeUtil.now(), log);
@@ -94,7 +104,7 @@ public class UserController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public BaseResponse register(User user) {
-        this.logging("Register.");
+        logger.info(LOG_FORMAT, user, "Register.");
         if (userService.register(user)) {
             return this.getResponse(UserDataDict.REGISTER_SUCCEED);
         }

@@ -28,11 +28,13 @@ public class UserService implements IUserService {
 
     @Override
     public boolean hasRegisterd(String id) {
-        try {
-            User result = userDao.selectByEmail(id);
-            return result != null;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (id != null) {
+            try {
+                User result = userDao.selectByEmail(id);
+                return result != null;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return true;
     }

@@ -19,12 +19,12 @@ public class HomeController {
     /**
      * Simply selects the home view to render by returning its name.
      */
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = { "/", "home" }, method = RequestMethod.GET)
     public String home(HttpServletRequest request) {
         logger.info("Welcome home!");
         String base = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
                 + request.getContextPath();
-        request.getSession().setAttribute("base", base);
+        request.getSession().setAttribute("basePath", base);
         return "home";
     }
 

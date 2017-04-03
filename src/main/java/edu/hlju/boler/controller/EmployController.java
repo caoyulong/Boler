@@ -28,10 +28,16 @@ import edu.hlju.boler.util.DateTimeUtil;
 @RequestMapping(value = "api/employ")
 public class EmployController extends BaseController {
     private static final String LOG_FORMAT = "[{}] {}";
+    private static final String INDEX = "index";
     private static final Logger logger = LoggerFactory.getLogger(EmployController.class);
 
     @Resource
     private IEmployService employService;
+
+    @RequestMapping(value = "/index")
+    public String index() {
+        return INDEX;
+    }
 
     @Override
     public void logging(String log) {

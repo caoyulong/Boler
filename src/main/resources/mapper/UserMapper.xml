@@ -9,7 +9,7 @@
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
         <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
         
-        <association column="role" property="fole"
+        <association column="role" property="role"
             select="edu.hlju.boler.dao.IRoleDao.selectById" />
         <association column="person_info" property="personInfo"
             select="edu.hlju.boler.dao.IPersonInfoDao.selectById" />
