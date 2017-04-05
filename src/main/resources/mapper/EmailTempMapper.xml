@@ -16,10 +16,17 @@
         id, employ, subject, text, create_time, modify_time
     </sql>
     
-        <select id="selectAll" resultMap="BaseResultMap">
+    <select id="selectAll" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
         from email_template
+    </select>
+    
+     <select id="selectByEmploy" parameterType="edu.hlju.boler.pojo.po.User" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from email_template
+        where employ = #{employ.id jdbcType=INTEGER} 
     </select>
     
     <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
