@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.hlju.boler.datadictory.UserDataDict;
 import edu.hlju.boler.pojo.po.Application;
+import edu.hlju.boler.pojo.po.EmailTemplate;
 import edu.hlju.boler.pojo.po.Recruitment;
 import edu.hlju.boler.pojo.po.User;
 import edu.hlju.boler.pojo.vo.BaseResponse;
@@ -33,6 +34,32 @@ public class EmployController extends BaseController {
 
     @Resource
     private IEmployService employService;
+
+    @ResponseBody
+    @RequestMapping(value = "/add_emailtemp", method = RequestMethod.POST)
+    public BaseResponse addEmailTemplate(HttpServletRequest request, EmailTemplate emailTemp) {
+        Object obj = request.getSession().getAttribute(UserController.USER_OBJECT);
+        if (obj != null) {
+            User employ = (User) obj;
+            emailTemp.setEmploy(employ);
+            if (employService.addEmailTemplate(emailTemp)) {
+                this.userLogging(request, "Add an email template.");
+                return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
+            }
+        }
+        return this.getResponse(UserDataDict.OPERATIING_FAILED);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/del_emailtemp")
+    public BaseResponse delEmailTemp(HttpServletRequest request, int id) {
+        Object obj = request.getSession().getAttribute(UserController.USER_OBJECT);
+        if (obj != null && employService.delEmailTemp(id)) {
+            this.userLogging(request, "Delete an email template.");
+            return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
+        }
+        return this.getResponse(UserDataDict.OPERATIING_FAILED);
+    }
 
     @RequestMapping(value = "/index")
     public String index() {
@@ -98,6 +125,21 @@ public class EmployController extends BaseController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/all_emailtemp")
+    public BaseResponse queryEmailTemp(HttpServletRequest request) {
+        Object obj = request.getSession().getAttribute(UserController.USER_OBJECT);
+        if (obj != null) {
+            User employ = (User) obj;
+            List<EmailTemplate> result = employService.queryEmailTemp(employ);
+            if (result != null) {
+                this.userLogging(request, "Query employ's email templates.");
+                return this.getResponse(result);
+            }
+        }
+        return this.getResponse(UserDataDict.OPERATIING_FAILED);
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/update_app", method = RequestMethod.POST)
     public BaseResponse updateApplication(HttpServletRequest request, Application application) {
         Object obj = request.getSession().getAttribute(UserController.USER_OBJECT);
@@ -106,6 +148,19 @@ public class EmployController extends BaseController {
             application.setEmployee(employ);
             if (employService.updateApplication(application)) {
                 this.userLogging(request, "Update application's state");
+                return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
+            }
+        }
+        return this.getResponse(UserDataDict.OPERATIING_FAILED);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/update_emailtemp", method = RequestMethod.POST)
+    public BaseResponse updateEmailTemp(HttpServletRequest request, EmailTemplate emailTemp) {
+        Object obj = request.getSession().getAttribute(UserController.USER_OBJECT);
+        if (obj != null) {
+            if (employService.updateEmailTemp(emailTemp)) {
+                this.userLogging(request, "Update email template.");
                 return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
             }
         }

@@ -5,7 +5,7 @@ import java.util.Date;
 public class EmailTemplate {
     private Integer id;
 
-    private Integer employ;
+    private User employ;
 
     private String subject;
 
@@ -19,7 +19,7 @@ public class EmailTemplate {
         return createTime;
     }
 
-    public Integer getEmploy() {
+    public User getEmploy() {
         return employ;
     }
 
@@ -43,7 +43,7 @@ public class EmailTemplate {
         this.createTime = createTime;
     }
 
-    public void setEmploy(Integer employ) {
+    public void setEmploy(User employ) {
         this.employ = employ;
     }
 

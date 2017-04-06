@@ -8,9 +8,11 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import edu.hlju.boler.dao.IApplicationDao;
+import edu.hlju.boler.dao.IEmailTempDao;
 import edu.hlju.boler.dao.IJobTypeDao;
 import edu.hlju.boler.dao.IRecruitmentDao;
 import edu.hlju.boler.pojo.po.Application;
+import edu.hlju.boler.pojo.po.EmailTemplate;
 import edu.hlju.boler.pojo.po.JobType;
 import edu.hlju.boler.pojo.po.Recruitment;
 import edu.hlju.boler.pojo.po.User;
@@ -19,9 +21,6 @@ import edu.hlju.boler.service.interfaces.IEmployService;
 @Service("employService")
 public class EmployService implements IEmployService {
     @Resource
-    private IApplicationDao appDao;
-
-    @Resource
     private IJobTypeDao jobDao;
 
     @Resource
@@ -29,6 +28,33 @@ public class EmployService implements IEmployService {
 
     @Resource
     private IApplicationDao applicationDao;
+
+    @Resource
+    private IEmailTempDao emailTempDao;
+
+    @Override
+    public boolean addEmailTemplate(EmailTemplate emailTemp) {
+        if (emailTemp != null) {
+            try {
+                emailTempDao.insert(emailTemp);
+                return true;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean delEmailTemp(int id) {
+        try {
+            emailTempDao.deleteById(id);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     @Override
     public boolean publishRecruitment(Recruitment recruitment) {
@@ -78,13 +104,39 @@ public class EmployService implements IEmployService {
     }
 
     @Override
-    public boolean updateApplication(Application application) {
-        if (application != null) {
+    public List<EmailTemplate> queryEmailTemp(User employ) {
+        if (employ != null) {
             try {
-                appDao.updateByIdSelective(application);
+                return emailTempDao.selectByEmploy(employ);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+        }
+        return null;
+    }
+
+    @Override
+    public boolean updateApplication(Application application) {
+        if (application != null) {
+            try {
+                applicationDao.updateByIdSelective(application);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateEmailTemp(EmailTemplate emailTemp) {
+        if (emailTemp != null) {
+            try {
+                emailTempDao.updateByIdSelective(emailTemp);
+                return true;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
         }
         return false;
     }

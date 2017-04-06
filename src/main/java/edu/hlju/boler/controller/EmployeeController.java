@@ -150,9 +150,9 @@ public class EmployeeController extends BaseController {
             User employee = (User) obj;
             User user = new User();
             user.setId(employee.getId());
-            user.setPersonInfo(info);
+            user.setPersonInfo(info);   // 只更新修改的内容
             if (employeeService.updateEmployee(user)) {
-                this.logging("Save personnal information.");
+                this.logging("Save personal information.");
                 return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
             }
         }
