@@ -1,6 +1,7 @@
 package edu.hlju.boler.core.message;
 
 import javax.annotation.Resource;
+import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
@@ -12,22 +13,22 @@ import org.springframework.stereotype.Component;
 import edu.hlju.boler.core.interfaces.IMessageHandler;
 import edu.hlju.boler.util.DateTimeUtil;
 
-@Component("messageReceiver")
-public class MessageReceiver implements MessageListener {
-    private static final Logger logger = LoggerFactory.getLogger(MessageReceiver.class);
-
-    @Resource
-    private IMessageHandler emailMessageHandler;
+@Component
+public class UserLogMessageListener implements MessageListener {
+    private static final Logger logger = LoggerFactory.getLogger(UserLogMessageListener.class);
 
     @Resource
     private IMessageHandler userLogMessageHandler;
 
     @Override
     public void onMessage(Message message) {
-        ObjectMessage objectMessage = (ObjectMessage) message;
-        logger.info("[{}] {}", DateTimeUtil.now(), "Receive a message.");
-        emailMessageHandler.handle(objectMessage);
-        userLogMessageHandler.handle(objectMessage);
+        try {
+            Object msg = ((ObjectMessage) message).getObject();
+            logger.info("[{}] {}", DateTimeUtil.now(), "Received a UserLog message.");
+            userLogMessageHandler.handle(msg);
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
     }
 
 }

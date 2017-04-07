@@ -1,4 +1,4 @@
-package edu.hlju.boler.core.handler;
+package edu.hlju.boler.core.message.handler;
 
 import javax.annotation.Resource;
 

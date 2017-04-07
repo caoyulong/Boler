@@ -10,22 +10,36 @@
     <bean id="connectionFactory" class="org.apache.activemq.spring.ActiveMQConnectionFactory">
         <property name="brokerURL" value="tcp://127.0.0.1:61616" />
     </bean> 
-     <!-- 点对点消息队列-->
-    <bean id="message_queue" class="org.apache.activemq.command.ActiveMQQueue">
-        <property name="physicalName" value="message_queue" />
+    <!-- 点对点消息队列，用于传输日志 -->
+    <bean id="userLogQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <property name="physicalName" value="userLogQueue" />
     </bean>
-    <!-- JMSTemplate -->
-    <bean id="jmsQueueTemplate" class="org.springframework.jms.core.JmsTemplate">
+    <!-- 点对点消息队列，用于传输电子邮件 -->
+    <bean id="emailQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <property name="physicalName" value="emailQueue" />
+    </bean>
+    <!-- JMSTemplate for UserLog -->
+    <bean id="userLogJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
         <property name="connectionFactory" ref="connectionFactory" />
         <!-- 默认目的地 -->
-        <property name="defaultDestination" ref="message_queue" />
-        <property name="messageConverter" ref="messageConvert" />
+        <property name="defaultDestination" ref="userLogQueue" />
+        <property name="messageConverter" ref="messageConverter" />
+    </bean>
+    <!-- JMSTemplate for Email -->
+    <bean id="emailJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory" />
+        <!-- 默认目的地 -->
+        <property name="defaultDestination" ref="emailQueue" />
+        <property name="messageConverter" ref="messageConverter" />
     </bean>
     <!-- 消息转换器 -->
-    <bean id="messageConvert" class="org.springframework.jms.support.converter.SimpleMessageConverter" />
+    <bean id="messageConverter" class="org.springframework.jms.support.converter.MappingJackson2MessageConverter" />
     <!-- JMS消息监听器 -->
     <jms:listener-container connection-factory="connectionFactory">
-        <jms:listener destination="message_queue" ref="messageReceiver"/>
+        <jms:listener destination="userLogQueue" ref="userLogMessageListener"/>
+    </jms:listener-container>
+    <jms:listener-container connection-factory="connectionFactory">
+        <jms:listener destination="emailQueue" ref="emailMessageListener"/>
     </jms:listener-container>
 
 </beans>
