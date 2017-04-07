@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.fastjson.JSON;
+
 import edu.hlju.boler.core.interfaces.IMessageSender;
 import edu.hlju.boler.util.DateTimeUtil;
 
@@ -19,7 +21,7 @@ public class UserLogMessageSender implements IMessageSender {
 
     @Override
     public void send(Object obj) {
-        userLogJmsTemplate.convertAndSend(obj);
+        userLogJmsTemplate.convertAndSend(JSON.toJSONString(obj));
         logger.info("[{}] {}", DateTimeUtil.now(), "UserLog message sent.");
     }
 

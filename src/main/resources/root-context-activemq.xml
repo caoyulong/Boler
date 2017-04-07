@@ -33,7 +33,7 @@
         <property name="messageConverter" ref="messageConverter" />
     </bean>
     <!-- 消息转换器 -->
-    <bean id="messageConverter" class="org.springframework.jms.support.converter.MappingJackson2MessageConverter" />
+    <bean id="messageConverter" class="org.springframework.jms.support.converter.SimpleMessageConverter" />
     <!-- JMS消息监听器 -->
     <jms:listener-container connection-factory="connectionFactory">
         <jms:listener destination="userLogQueue" ref="userLogMessageListener"/>
