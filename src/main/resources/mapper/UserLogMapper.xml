@@ -5,13 +5,14 @@
     <resultMap id="BaseResultMap" type="edu.hlju.boler.pojo.po.UserLog">
         <id column="id" jdbcType="INTEGER" property="id" />
         <result column="ip_address" jdbcType="VARCHAR" property="ipAddress" />
+        <result column="message" jdbcType="VARCHAR" property="message" />
         <result column="record_time" jdbcType="TIMESTAMP" property="recordTime" />
         
         <association column="user" property="user" select="edu.hlju.boler.dao.IUserDao.selectById"/>
     </resultMap>
     
     <sql id="Base_Column_List">
-        id, record_time, ip_address, user
+        id, user, ip_address, message, record_time
     </sql>
     
     <select id="selectAll" resultMap="BaseResultMap">
@@ -55,12 +56,13 @@
     
     <insert id="insert" parameterType="edu.hlju.boler.pojo.po.UserLog">
         insert into user_log (
-            id, record_time, ip_address, user
+            id, user, ip_address, message, record_time
         ) values (
             #{id,jdbcType=INTEGER}, 
-            #{recordTime,jdbcType=TIMESTAMP},
+            #{user.id,jdbcType=INTEGER},
             #{ipAddress,jdbcType=VARCHAR},
-            #{user.id,jdbcType=INTEGER}
+            #{message,jdbcType=VARCHAR},
+            #{recordTime,jdbcType=TIMESTAMP}
         )
     </insert>
     
@@ -70,28 +72,34 @@
             <if test="id != null">
                 id,
             </if>
-            <if test="recordTime != null">
-                record_time,
+            <if test="user != null">
+                user,
             </if>
             <if test="ipAddress != null">
                 ip_address,
             </if>
-            <if test="user != null">
-                user,
+            <if test="message != null">
+                message,
+            </if>
+            <if test="recordTime != null">
+                record_time,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 #{id,jdbcType=INTEGER},
             </if>
-            <if test="recordTime != null">
-                #{recordTime,jdbcType=TIMESTAMP},
+            <if test="user != null">
+                #{user.id,jdbcType=INTEGER},
             </if>
             <if test="ipAddress != null">
                 #{ipAddress,jdbcType=VARCHAR},
             </if>
-            <if test="user != null">
-                #{user.id,jdbcType=INTEGER},
+            <if test="message != null">
+                #{message,jdbcType=VARCHAR},
+            </if>
+            <if test="recordTime != null">
+                #{recordTime,jdbcType=TIMESTAMP},
             </if>
         </trim>
     </insert>
@@ -99,14 +107,17 @@
     <update id="updateByIdSelective" parameterType="edu.hlju.boler.pojo.po.UserLog">
         update user_log
         <set>
-            <if test="recordTime != null">
-                record_time = #{recordTime,jdbcType=TIMESTAMP},
+            <if test="user != null">
+                user = #{user.id,jdbcType=INTEGER},
             </if>
             <if test="ipAddress != null">
                 ip_address = #{ipAddress,jdbcType=VARCHAR},
+            </if>            
+            <if test="message != null">
+                message = #{message,jdbcType=VARCHAR},
             </if>
-            <if test="user != null">
-                user = #{user.id,jdbcType=INTEGER},
+            <if test="recordTime != null">
+                record_time = #{recordTime,jdbcType=TIMESTAMP},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
@@ -116,9 +127,10 @@
         update 
             user_log
         set 
-            record_time = #{recordTime,jdbcType=TIMESTAMP},
-            ip_address = #{ipAddress,jdbcType=VARCHAR},
             user = #{user.id,jdbcType=INTEGER},
+            ip_address = #{ipAddress,jdbcType=VARCHAR},
+            message = #{message,jdbcType=VARCHAR},
+            record_time = #{recordTime,jdbcType=TIMESTAMP}
         where 
             id = #{id,jdbcType=INTEGER}
     </update>

@@ -3,6 +3,8 @@ package edu.hlju.boler.pojo.po;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.mysql.fabric.xmlrpc.base.Data;
+
 public class UserLog implements Serializable {
     private static final long serialVersionUID = 2195719684454925652L;
 
@@ -14,7 +16,16 @@ public class UserLog implements Serializable {
 
     private Date recordTime;
 
-    public UserLog(String ipAddress, User user, String message) {
+    private String message;
+
+    public UserLog() {
+    }
+
+    public UserLog(String ipAddress, User user, Date recordTime, String message) {
+        this.ipAddress = ipAddress;
+        this.user = user;
+        this.recordTime = recordTime;
+        this.message = message;
     }
 
     public Integer getId() {
@@ -23,6 +34,10 @@ public class UserLog implements Serializable {
 
     public String getIpAddress() {
         return ipAddress;
+    }
+
+    public String getMessage() {
+        return message;
     }
 
     public Date getRecordTime() {
@@ -41,6 +56,10 @@ public class UserLog implements Serializable {
         this.ipAddress = ipAddress;
     }
 
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public void setRecordTime(Date recordTime) {
         this.recordTime = recordTime;
     }
@@ -51,7 +70,8 @@ public class UserLog implements Serializable {
 
     @Override
     public String toString() {
-        return "UserLog [id=" + id + ", user=" + user + ", ipAddress=" + ipAddress + ", recordTime=" + recordTime + "]";
+        return "UserLog [id=" + id + ", user=" + user + ", ipAddress=" + ipAddress + ", recordTime=" + recordTime
+                + ", message=" + message + "]";
     }
 
 }
