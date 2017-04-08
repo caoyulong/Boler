@@ -11,7 +11,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
 import edu.hlju.boler.core.interfaces.IEmailService;
-import edu.hlju.boler.core.message.MessageSender;
+import edu.hlju.boler.core.message.UserLogMessageSender;
 import edu.hlju.boler.dao.IEmailDao;
 import edu.hlju.boler.pojo.po.Email;
 import edu.hlju.boler.pojo.po.User;
@@ -19,7 +19,7 @@ import edu.hlju.boler.service.interfaces.IUserService;
 
 @Service("emailService")
 public class EmailService implements IEmailService {
-    private static final Logger logger = LoggerFactory.getLogger(MessageSender.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserLogMessageSender.class);
 
     @Resource
     private IEmailDao emailDao;

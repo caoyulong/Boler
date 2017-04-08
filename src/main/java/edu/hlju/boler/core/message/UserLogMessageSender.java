@@ -7,20 +7,22 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.fastjson.JSON;
+
 import edu.hlju.boler.core.interfaces.IMessageSender;
 import edu.hlju.boler.util.DateTimeUtil;
 
 @Component
-public class MessageSender implements IMessageSender {
-    private static final Logger logger = LoggerFactory.getLogger(MessageSender.class);
+public class UserLogMessageSender implements IMessageSender {
+    private static final Logger logger = LoggerFactory.getLogger(UserLogMessageSender.class);
 
-    @Resource(name = "jmsQueueTemplate")
-    private JmsTemplate jmsQueueTemplate;
+    @Resource
+    private JmsTemplate userLogJmsTemplate;
 
     @Override
     public void send(Object obj) {
-        jmsQueueTemplate.convertAndSend(obj);
-        logger.info("[{}] {}", DateTimeUtil.now(), "Message sent.");
+        userLogJmsTemplate.convertAndSend(JSON.toJSONString(obj));
+        logger.info("[{}] {}", DateTimeUtil.now(), "UserLog message sent.");
     }
 
 }
