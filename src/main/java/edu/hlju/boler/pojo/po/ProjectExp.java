@@ -112,4 +112,13 @@ public class ProjectExp {
     public void setTeamScale(String teamScale) {
         this.teamScale = teamScale;
     }
+
+    @Override
+    public String toString() {
+        return "ProjectExp [id=" + id + ", name=" + name + ", teamScale=" + teamScale + ", role=" + role
+                + ", projectIntroduction=" + projectIntroduction + ", startTime=" + startTime + ", endTime=" + endTime
+                + ", detail=" + detail + ", resume=" + resume + ", createTime=" + createTime + ", modifyTime="
+                + modifyTime + "]";
+    }
+
 }

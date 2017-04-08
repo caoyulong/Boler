@@ -9,13 +9,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import edu.hlju.boler.core.interfaces.IUserLogService;
-import edu.hlju.boler.core.message.UserLogMessageSender;
 import edu.hlju.boler.dao.IUserLogDao;
 import edu.hlju.boler.pojo.po.UserLog;
+import edu.hlju.boler.util.DateTimeUtil;
 
 @Service("userLogService")
 public class UserLogService implements IUserLogService {
-    private static final Logger logger = LoggerFactory.getLogger(UserLogMessageSender.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserLogService.class);
 
     @Resource
     private IUserLogDao userLogDao;
@@ -24,8 +24,8 @@ public class UserLogService implements IUserLogService {
     public void add(UserLog log) {
         try {
             userLogDao.insert(log);
+            logger.info("[{}] {}", DateTimeUtil.now(), "Save a UserLog.");
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

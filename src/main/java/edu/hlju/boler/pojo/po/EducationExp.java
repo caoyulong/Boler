@@ -113,8 +113,9 @@ public class EducationExp {
 
     @Override
     public String toString() {
-        return "EducationExperience [id=" + id + ", startTime=" + startTime + ", endTime=" + endTime + ", school="
-                + school + ", degree=" + degree + ", major=" + major + ", course=" + course + ", resume=" + resume
+        return "EducationExp [id=" + id + ", startTime=" + startTime + ", endTime=" + endTime + ", school=" + school
+                + ", degree=" + degree + ", major=" + major + ", course=" + course + ", resume=" + resume
                 + ", createTime=" + createTime + ", modifyTime=" + modifyTime + "]";
     }
+
 }

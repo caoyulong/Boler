@@ -18,7 +18,7 @@ import edu.hlju.boler.util.DateTimeUtil;
 
 @Component
 public class EmailMessageListener implements MessageListener {
-    private static final Logger logger = LoggerFactory.getLogger(UserLogMessageListener.class);
+    private static final Logger logger = LoggerFactory.getLogger(EmailMessageListener.class);
 
     @Resource
     private IMessageHandler emailMessageHandler;

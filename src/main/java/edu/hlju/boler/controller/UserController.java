@@ -24,7 +24,7 @@ import edu.hlju.boler.util.DateTimeUtil;
 public class UserController extends BaseController {
     public static final String LOG_FORMAT = "[{}] {}";
     public static final String USER_OBJECT = "userObject";
-    private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Resource(name = "userService")
     private IUserService userService;

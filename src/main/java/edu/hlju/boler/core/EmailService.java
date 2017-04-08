@@ -11,15 +11,15 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
 import edu.hlju.boler.core.interfaces.IEmailService;
-import edu.hlju.boler.core.message.UserLogMessageSender;
 import edu.hlju.boler.dao.IEmailDao;
 import edu.hlju.boler.pojo.po.Email;
 import edu.hlju.boler.pojo.po.User;
 import edu.hlju.boler.service.interfaces.IUserService;
+import edu.hlju.boler.util.DateTimeUtil;
 
 @Service("emailService")
 public class EmailService implements IEmailService {
-    private static final Logger logger = LoggerFactory.getLogger(UserLogMessageSender.class);
+    private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
 
     @Resource
     private IEmailDao emailDao;
@@ -57,6 +57,7 @@ public class EmailService implements IEmailService {
         emailSender.setUsername(user.getEmail());
         emailSender.setPassword(user.getPassword());
         emailSender.send(ssm);
+        logger.info("[{}] {}", DateTimeUtil.now(), "Sent a Email.");
     }
 
 }

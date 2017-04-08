@@ -107,8 +107,9 @@ public class WorkExp {
 
     @Override
     public String toString() {
-        return "WorkExperience [id=" + id + ", startTime=" + startTime + ", endTime=" + endTime + ", corporation="
+        return "WorkExp [id=" + id + ", startTime=" + startTime + ", endTime=" + endTime + ", corporation="
                 + corporation + ", scale=" + scale + ", department=" + department + ", job=" + job + ", detail="
                 + detail + ", resume=" + resume + ", createTime=" + createTime + ", modifyTime=" + modifyTime + "]";
     }
+
 }
