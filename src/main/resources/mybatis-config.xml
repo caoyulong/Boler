@@ -19,6 +19,8 @@
             <property name="reasonable" value="true" />
             <!-- 启用查询方法参数分页 -->
             <property name="supportMethodsArguments" value="true" />
+            <!-- 使用参数方式进行分页 -->
+            <property name="params" value="pageNum=pageNum;pageSize=pageSize;"/>
             <!-- 当pageSize=0时不分页查询 -->
             <property name="pageSizeZero" value="true"/>
         </plugin>

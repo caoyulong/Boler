@@ -3,8 +3,8 @@ package edu.hlju.boler.dao;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.repository.query.Param;
 
 import edu.hlju.boler.pojo.po.Email;
 
