@@ -1,6 +1,7 @@
 package edu.hlju.boler.datadictory;
 
 public enum ApplicationState {
+    NEW,
     APPLIED,
     VIEWED,
     APPLY_REFUSED,
