@@ -19,13 +19,15 @@ public class HomeController {
     /**
      * Simply selects the home view to render by returning its name.
      */
-    @RequestMapping(value = { "/", "home" }, method = RequestMethod.GET)
+    @RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
     public String home(HttpServletRequest request) {
         logger.info("Welcome home!");
-        String base = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-                + request.getContextPath();
-        request.getSession().setAttribute("basePath", base);
-        return "home";
+        Object obj = request.getAttribute(UserController.USER_OBJECT);
+        if (obj != null) {
+            return "redirect:/api/user/index";
+        } else {
+            return "home";
+        }
     }
 
 }

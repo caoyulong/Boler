@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import edu.hlju.boler.datadictory.ApplicationState;
+import edu.hlju.boler.datadictory.PageURL;
 import edu.hlju.boler.datadictory.UserDataDict;
 import edu.hlju.boler.pojo.po.Application;
 import edu.hlju.boler.pojo.po.EmailTemplate;
@@ -23,13 +25,13 @@ import edu.hlju.boler.util.DateTimeUtil;
 
 /**
  * 雇主角色控制层
+ *
  * @author jingqingyun
  */
 @Controller
 @RequestMapping(value = "api/employ")
 public class EmployController extends BaseController {
     private static final String LOG_FORMAT = "[{}] {}";
-    private static final String INDEX = "index";
     private static final Logger logger = LoggerFactory.getLogger(EmployController.class);
 
     @Resource
@@ -62,13 +64,23 @@ public class EmployController extends BaseController {
     }
 
     @RequestMapping(value = "/index")
-    public String index() {
-        return INDEX;
+    public String index(HttpServletRequest request) {
+        return PageURL.EMPLOY_INDEX.getURL();
     }
 
     @Override
     public void logging(String log) {
         logger.info(LOG_FORMAT, DateTimeUtil.now(), log);
+    }
+
+    @RequestMapping(value = "/page_all_apps")
+    public String pageAllApps() {
+        return PageURL.EMPLOY_ALL_APPS.getURL();
+    }
+
+    @RequestMapping(value = "/page_recruit")
+    public String pageRecruit(HttpServletRequest request) {
+        return PageURL.EMPLOY_RECRUIT.getURL();
     }
 
     @ResponseBody
@@ -77,6 +89,7 @@ public class EmployController extends BaseController {
         Object obj = request.getSession().getAttribute(UserController.USER_OBJECT);
         if (obj != null) {
             recruitment.setEmploy((User) obj);
+            recruitment.setState((byte) ApplicationState.NEW.ordinal());
             if (employService.publishRecruitment(recruitment)) {
                 this.userLogging(request, "Publish recruitment.");
                 return this.getResponse(UserDataDict.OPERATIING_SUCCEED);

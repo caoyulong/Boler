@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import edu.hlju.boler.datadictory.PageURL;
 import edu.hlju.boler.datadictory.UserDataDict;
 import edu.hlju.boler.pojo.po.Application;
 import edu.hlju.boler.pojo.po.OnlineResume;
@@ -24,6 +25,7 @@ import edu.hlju.boler.util.DateTimeUtil;
 
 /**
  * 雇员角色控制层
+ *
  * @author jingqingyun
  */
 @Controller
@@ -45,6 +47,11 @@ public class EmployeeController extends BaseController {
         return this.getResponse(UserDataDict.OPERATIING_FAILED);
     }
 
+    @RequestMapping(value = "/index")
+    public String index(HttpServletRequest request) {
+        return PageURL.EMPLOYEE_INDEX.getURL();
+    }
+
     @Override
     public void logging(String log) {
         logger.info(UserController.LOG_FORMAT, DateTimeUtil.now(), log);
@@ -52,6 +59,7 @@ public class EmployeeController extends BaseController {
 
     /**
      * 以分页方式查询所有求职申请
+     *
      * @param request
      * @param pageNum 页数
      * @param pageSize 页大小，为0表示查询所有即不分页

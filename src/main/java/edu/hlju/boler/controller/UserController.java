@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import edu.hlju.boler.datadictory.PageURL;
 import edu.hlju.boler.datadictory.UserDataDict;
 import edu.hlju.boler.pojo.po.Role;
 import edu.hlju.boler.pojo.po.User;
@@ -51,7 +52,7 @@ public class UserController extends BaseController {
         Object obj = request.getSession().getAttribute(USER_OBJECT);
         if (obj != null) {
             User user = (User) obj;
-            return "api/" + user.getRole().getName() + "/index";
+            return "redirect:/api/" + user.getRole().getName() + "/index";
         }
         return "redirect:/";
     }
@@ -98,7 +99,7 @@ public class UserController extends BaseController {
 
     @RequestMapping(value = "/register")
     public String register() {
-        return "user/register";
+        return PageURL.USER_REGISTER.getURL();
     }
 
     @ResponseBody
