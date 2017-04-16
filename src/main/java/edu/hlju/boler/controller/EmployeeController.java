@@ -69,6 +69,8 @@ public class EmployeeController extends BaseController {
             if (result != null) {
                 this.userLogging(request, "Query all applications.");
                 return this.getResponse(result);
+            } else {
+                return this.getResponse(UserDataDict.OPERATIING_FAILED);
             }
         }
         return this.getResponse(UserDataDict.NOT_LOGINED);
@@ -83,6 +85,8 @@ public class EmployeeController extends BaseController {
             if (result != null) {
                 this.userLogging(request, "Query all recruitments.");
                 return this.getResponse(result);
+            } else {
+                return this.getResponse(UserDataDict.OPERATIING_FAILED);
             }
         }
         return this.getResponse(UserDataDict.NOT_LOGINED);
@@ -109,6 +113,8 @@ public class EmployeeController extends BaseController {
             if (result != null) {
                 this.userLogging(request, "Query user's online resumes.");
                 return this.getResponse(result);
+            } else {
+                return this.getResponse(UserDataDict.OPERATIING_FAILED);
             }
         }
         return this.getResponse(UserDataDict.NOT_LOGINED);
@@ -124,6 +130,8 @@ public class EmployeeController extends BaseController {
             if (employeeService.saveApplication(application)) {
                 this.userLogging(request, "Save an application.");
                 return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
+            } else {
+                return this.getResponse(UserDataDict.OPERATIING_FAILED);
             }
         }
         return this.getResponse(UserDataDict.NOT_LOGINED);
@@ -139,6 +147,8 @@ public class EmployeeController extends BaseController {
             if (employeeService.saveOnlineResume(onlineResume)) {
                 this.userLogging(request, "Save a online resume.");
                 return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
+            } else {
+                return this.getResponse(UserDataDict.OPERATIING_FAILED);
             }
         }
         return this.getResponse(UserDataDict.NOT_LOGINED);
@@ -156,6 +166,8 @@ public class EmployeeController extends BaseController {
             if (employeeService.updateEmployee(user)) {
                 this.logging("Save personal information.");
                 return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
+            } else {
+                return this.getResponse(UserDataDict.OPERATIING_FAILED);
             }
         }
         return this.getResponse(UserDataDict.OPERATIING_FAILED);

@@ -89,11 +89,13 @@ public class UserController extends BaseController {
             User logined = (User) obj;
             if (userService.modifyPassword(logined, oldPasswd, newPasswd)) {
                 this.logging("User modify password.");
+                this.logout(request);  // 修改密码后自动注销登录
                 return this.getResponse(UserDataDict.MODIFY_PASSWD_SUCCEED);
+            } else {
+                return this.getResponse(UserDataDict.MODIFY_PASSWD_FAILED);
             }
         }
-        this.logout(request);  // 修改密码后自动注销登录
-        return this.getResponse(UserDataDict.MODIFY_PASSWD_FAILED);
+        return this.getResponse(UserDataDict.NOT_LOGINED);
     }
 
     @ResponseBody

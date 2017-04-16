@@ -5,7 +5,7 @@ import java.util.Date;
 public class EmailTemplate {
     private Integer id;
 
-    private User employ;
+    private User user;
 
     private String subject;
 
@@ -17,10 +17,6 @@ public class EmailTemplate {
 
     public Date getCreateTime() {
         return createTime;
-    }
-
-    public User getEmploy() {
-        return employ;
     }
 
     public Integer getId() {
@@ -39,12 +35,12 @@ public class EmailTemplate {
         return text;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public User getUser() {
+        return user;
     }
 
-    public void setEmploy(User employ) {
-        this.employ = employ;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public void setId(Integer id) {
@@ -63,9 +59,13 @@ public class EmailTemplate {
         this.text = text;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
-        return "EmailTemplate [id=" + id + ", employ=" + employ + ", subject=" + subject + ", text=" + text
+        return "EmailTemplate [id=" + id + ", user=" + user + ", subject=" + subject + ", text=" + text
                 + ", createTime=" + createTime + ", modifyTime=" + modifyTime + "]";
     }
 

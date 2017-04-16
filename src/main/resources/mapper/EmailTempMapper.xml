@@ -9,11 +9,11 @@
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
         <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
 
-        <association column="employ" property="employ" select="edu.hlju.boler.dao.IUserDao.selectById" />
+        <association column="user" property="user" select="edu.hlju.boler.dao.IUserDao.selectById"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, employ, subject, text, create_time, modify_time
+        id, user, subject, text, create_time, modify_time
     </sql>
     
     <select id="selectAll" resultMap="BaseResultMap">
@@ -22,11 +22,11 @@
         from email_template
     </select>
     
-     <select id="selectByEmploy" parameterType="edu.hlju.boler.pojo.po.User" resultMap="BaseResultMap">
+     <select id="selectByUser" parameterType="edu.hlju.boler.pojo.po.User" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
         from email_template
-        where employ = #{employ.id jdbcType=INTEGER} 
+        where user = #{id,jdbcType=INTEGER} 
     </select>
     
     <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -43,10 +43,10 @@
     
     <insert id="insert" parameterType="edu.hlju.boler.pojo.po.EmailTemplate">
         insert into email_template (
-            id, employ, subject, text, create_time, modify_time
+            id, user, subject, text, create_time, modify_time
         ) values (
             #{id,jdbcType=INTEGER}, 
-            #{employ.id,jdbcType=INTEGER},
+            #{user.id,jdbcType=INTEGER},
             #{subject,jdbcType=VARCHAR}, 
             #{text,jdbcType=VARCHAR},
             #{createTime,jdbcType=TIMESTAMP},
@@ -60,8 +60,8 @@
             <if test="id != null">
                 id,
             </if>
-            <if test="employ != null">
-                employ,
+            <if test="user != null">
+                user,
             </if>
             <if test="subject != null">
                 subject,
@@ -80,8 +80,8 @@
             <if test="id != null">
                 #{id,jdbcType=INTEGER},
             </if>
-            <if test="employ != null">
-                #{employ.id,jdbcType=INTEGER},
+            <if test="user != null">
+                #{user.id,jdbcType=INTEGER},
             </if>
             <if test="subject != null">
                 #{subject,jdbcType=VARCHAR},
@@ -101,8 +101,8 @@
     <update id="updateByIdSelective" parameterType="edu.hlju.boler.pojo.po.EmailTemplate">
         update email_template
         <set>
-            <if test="employ != null">
-                employ = #{employ.id,jdbcType=INTEGER},
+            <if test="user != null">
+                user = #{user.id,jdbcType=INTEGER},
             </if>
             <if test="subject != null">
                 subject = #{subject,jdbcType=VARCHAR},
@@ -124,7 +124,7 @@
         update 
             email_template
         set 
-            employ = #{employ.id,jdbcType=INTEGER},
+            user = #{user.id,jdbcType=INTEGER},
             subject = #{subject,jdbcType=VARCHAR},
             text = #{text,jdbcType=VARCHAR},
             create_time = #{createTime,jdbcType=TIMESTAMP},

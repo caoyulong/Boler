@@ -24,7 +24,7 @@ public class PageController {
         return PageURL.EMPLOY_RECRUIT.getURL();
     }
 
-    @RequestMapping(value = "/recruitDetail")
+    @RequestMapping(value = "/recruit_detail")
     public String recruitDetail() {
         return PageURL.EMPLOY_RECRUIT_DETAIL.getURL();
     }

@@ -42,13 +42,33 @@ public class EmployController extends BaseController {
         Object obj = request.getSession().getAttribute(UserController.USER_OBJECT);
         if (obj != null) {
             User employ = (User) obj;
-            emailTemp.setEmploy(employ);
+            emailTemp.setUser(employ);
             if (employService.addEmailTemplate(emailTemp)) {
                 this.userLogging(request, "Add an email template.");
                 return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
+            } else {
+                return this.getResponse(UserDataDict.OPERATIING_FAILED);
             }
         }
         return this.getResponse(UserDataDict.OPERATIING_FAILED);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/close_recruit")
+    public BaseResponse closeRecruitment(HttpServletRequest request, int id) {
+        Object obj = request.getSession().getAttribute(UserController.USER_OBJECT);
+        if (obj != null) {
+            Recruitment recruit = new Recruitment();
+            recruit.setId(id);
+            recruit.setState((byte) ApplicationState.CLOSED.ordinal());
+            if (employService.updateRecruitment(recruit)) {
+                this.userLogging(request, "Change state of recruitment.");
+                return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
+            } else {
+                return this.getResponse(UserDataDict.OPERATIING_FAILED);
+            }
+        }
+        return this.getResponse(UserDataDict.NOT_LOGINED);
     }
 
     @ResponseBody
@@ -77,6 +97,8 @@ public class EmployController extends BaseController {
             if (employService.publishRecruitment(recruitment)) {
                 this.userLogging(request, "Publish recruitment.");
                 return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
+            } else {
+                return this.getResponse(UserDataDict.OPERATIING_FAILED);
             }
         }
         return this.getResponse(UserDataDict.NOT_LOGINED);
@@ -92,6 +114,8 @@ public class EmployController extends BaseController {
             if (result != null) {
                 this.userLogging(request, "Query all applications.");
                 return this.getResponse(result);
+            } else {
+                return this.getResponse(UserDataDict.OPERATIING_FAILED);
             }
         }
         return this.getResponse(UserDataDict.NOT_LOGINED);
@@ -116,6 +140,8 @@ public class EmployController extends BaseController {
             if (result != null) {
                 this.userLogging(request, "Query all recruitments.");
                 return this.getResponse(result);
+            } else {
+                return this.getResponse(UserDataDict.OPERATIING_FAILED);
             }
         }
         return this.getResponse(UserDataDict.NOT_LOGINED);
@@ -131,6 +157,8 @@ public class EmployController extends BaseController {
             if (result != null) {
                 this.userLogging(request, "Query employ's email templates.");
                 return this.getResponse(result);
+            } else {
+                return this.getResponse(UserDataDict.OPERATIING_FAILED);
             }
         }
         return this.getResponse(UserDataDict.NOT_LOGINED);
@@ -146,6 +174,8 @@ public class EmployController extends BaseController {
             if (employService.updateApplication(application)) {
                 this.userLogging(request, "Update application's state");
                 return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
+            } else {
+                return this.getResponse(UserDataDict.OPERATIING_FAILED);
             }
         }
         return this.getResponse(UserDataDict.NOT_LOGINED);
@@ -159,6 +189,8 @@ public class EmployController extends BaseController {
             if (employService.updateEmailTemp(emailTemp)) {
                 this.userLogging(request, "Update email template.");
                 return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
+            } else {
+                return this.getResponse(UserDataDict.OPERATIING_FAILED);
             }
         }
         return this.getResponse(UserDataDict.NOT_LOGINED);
@@ -174,6 +206,8 @@ public class EmployController extends BaseController {
             if (employService.updateRecruitment(recruitment)) {
                 this.userLogging(request, "Update recruitment.");
                 return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
+            } else {
+                return this.getResponse(UserDataDict.OPERATIING_FAILED);
             }
         }
         return this.getResponse(UserDataDict.NOT_LOGINED);

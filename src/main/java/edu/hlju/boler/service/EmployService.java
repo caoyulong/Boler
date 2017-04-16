@@ -107,7 +107,7 @@ public class EmployService implements IEmployService {
     public List<EmailTemplate> queryEmailTemp(User employ) {
         if (employ != null) {
             try {
-                return emailTempDao.selectByEmploy(employ);
+                return emailTempDao.selectByUser(employ);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -146,6 +146,7 @@ public class EmployService implements IEmployService {
         if (recruitment != null) {
             try {
                 recruitDao.updateByIdSelective(recruitment);
+                return true;
             } catch (SQLException e) {
                 e.printStackTrace();
             }

@@ -20,10 +20,10 @@ public interface IEmailTempDao {
     List<EmailTemplate> selectAll() throws SQLException;
 
     @Cacheable
-    List<EmailTemplate> selectByEmploy(User employ) throws SQLException;
+    EmailTemplate selectById(Integer id) throws SQLException;
 
     @Cacheable
-    EmailTemplate selectById(Integer id) throws SQLException;
+    List<EmailTemplate> selectByUser(User user) throws SQLException;
 
     int updateById(EmailTemplate record) throws SQLException;
 
