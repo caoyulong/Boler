@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import edu.hlju.boler.datadictory.PageURL;
 import edu.hlju.boler.datadictory.UserDataDict;
 import edu.hlju.boler.pojo.po.Application;
 import edu.hlju.boler.pojo.po.OnlineResume;
@@ -44,12 +43,7 @@ public class EmployeeController extends BaseController {
             this.userLogging(request, "Delete a online resume.");
             return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
         }
-        return this.getResponse(UserDataDict.OPERATIING_FAILED);
-    }
-
-    @RequestMapping(value = "/index")
-    public String index(HttpServletRequest request) {
-        return PageURL.EMPLOYEE_INDEX.getURL();
+        return this.getResponse(UserDataDict.NOT_LOGINED);
     }
 
     @Override
@@ -77,7 +71,7 @@ public class EmployeeController extends BaseController {
                 return this.getResponse(result);
             }
         }
-        return this.getResponse(UserDataDict.OPERATIING_FAILED);
+        return this.getResponse(UserDataDict.NOT_LOGINED);
     }
 
     @ResponseBody
@@ -91,7 +85,7 @@ public class EmployeeController extends BaseController {
                 return this.getResponse(result);
             }
         }
-        return this.getResponse(UserDataDict.OPERATIING_FAILED);
+        return this.getResponse(UserDataDict.NOT_LOGINED);
     }
 
     @ResponseBody
@@ -102,7 +96,7 @@ public class EmployeeController extends BaseController {
             User employee = (User) obj;
             return this.getResponse(employee.getPersonInfo());
         }
-        return this.getResponse(UserDataDict.OPERATIING_FAILED);
+        return this.getResponse(UserDataDict.NOT_LOGINED);
     }
 
     @ResponseBody
@@ -117,7 +111,7 @@ public class EmployeeController extends BaseController {
                 return this.getResponse(result);
             }
         }
-        return this.getResponse(UserDataDict.OPERATIING_FAILED);
+        return this.getResponse(UserDataDict.NOT_LOGINED);
     }
 
     @ResponseBody
@@ -132,7 +126,7 @@ public class EmployeeController extends BaseController {
                 return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
             }
         }
-        return this.getResponse(UserDataDict.OPERATIING_FAILED);
+        return this.getResponse(UserDataDict.NOT_LOGINED);
     }
 
     @ResponseBody
@@ -147,7 +141,7 @@ public class EmployeeController extends BaseController {
                 return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
             }
         }
-        return this.getResponse(UserDataDict.OPERATIING_FAILED);
+        return this.getResponse(UserDataDict.NOT_LOGINED);
     }
 
     @ResponseBody
@@ -164,7 +158,7 @@ public class EmployeeController extends BaseController {
                 return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
             }
         }
-        return this.getResponse(UserDataDict.MODIFY_PASSWD_FAILED);
+        return this.getResponse(UserDataDict.OPERATIING_FAILED);
     }
 
     @ResponseBody

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import edu.hlju.boler.datadictory.PageURL;
 import edu.hlju.boler.datadictory.UserDataDict;
 import edu.hlju.boler.pojo.po.Role;
 import edu.hlju.boler.pojo.po.User;
@@ -52,7 +51,7 @@ public class UserController extends BaseController {
         Object obj = request.getSession().getAttribute(USER_OBJECT);
         if (obj != null) {
             User user = (User) obj;
-            return "redirect:/api/" + user.getRole().getName() + "/index";
+            return user.getRole().getName() + "/index";
         }
         return "redirect:/";
     }
@@ -95,11 +94,6 @@ public class UserController extends BaseController {
         }
         this.logout(request);  // 修改密码后自动注销登录
         return this.getResponse(UserDataDict.MODIFY_PASSWD_FAILED);
-    }
-
-    @RequestMapping(value = "/register")
-    public String register() {
-        return PageURL.USER_REGISTER.getURL();
     }
 
     @ResponseBody

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.hlju.boler.datadictory.ApplicationState;
-import edu.hlju.boler.datadictory.PageURL;
 import edu.hlju.boler.datadictory.UserDataDict;
 import edu.hlju.boler.pojo.po.Application;
 import edu.hlju.boler.pojo.po.EmailTemplate;
@@ -63,24 +62,9 @@ public class EmployController extends BaseController {
         return this.getResponse(UserDataDict.OPERATIING_FAILED);
     }
 
-    @RequestMapping(value = "/index")
-    public String index(HttpServletRequest request) {
-        return PageURL.EMPLOY_INDEX.getURL();
-    }
-
     @Override
     public void logging(String log) {
         logger.info(LOG_FORMAT, DateTimeUtil.now(), log);
-    }
-
-    @RequestMapping(value = "/page_all_apps")
-    public String pageAllApps() {
-        return PageURL.EMPLOY_ALL_APPS.getURL();
-    }
-
-    @RequestMapping(value = "/page_recruit")
-    public String pageRecruit(HttpServletRequest request) {
-        return PageURL.EMPLOY_RECRUIT.getURL();
     }
 
     @ResponseBody
@@ -95,7 +79,7 @@ public class EmployController extends BaseController {
                 return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
             }
         }
-        return this.getResponse(UserDataDict.OPERATIING_FAILED);
+        return this.getResponse(UserDataDict.NOT_LOGINED);
     }
 
     @ResponseBody
@@ -110,7 +94,7 @@ public class EmployController extends BaseController {
                 return this.getResponse(result);
             }
         }
-        return this.getResponse(UserDataDict.OPERATIING_FAILED);
+        return this.getResponse(UserDataDict.NOT_LOGINED);
     }
 
     @ResponseBody
@@ -134,7 +118,7 @@ public class EmployController extends BaseController {
                 return this.getResponse(result);
             }
         }
-        return this.getResponse(UserDataDict.OPERATIING_FAILED);
+        return this.getResponse(UserDataDict.NOT_LOGINED);
     }
 
     @ResponseBody
@@ -149,7 +133,7 @@ public class EmployController extends BaseController {
                 return this.getResponse(result);
             }
         }
-        return this.getResponse(UserDataDict.OPERATIING_FAILED);
+        return this.getResponse(UserDataDict.NOT_LOGINED);
     }
 
     @ResponseBody
@@ -164,7 +148,7 @@ public class EmployController extends BaseController {
                 return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
             }
         }
-        return this.getResponse(UserDataDict.OPERATIING_FAILED);
+        return this.getResponse(UserDataDict.NOT_LOGINED);
     }
 
     @ResponseBody
@@ -177,7 +161,7 @@ public class EmployController extends BaseController {
                 return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
             }
         }
-        return this.getResponse(UserDataDict.OPERATIING_FAILED);
+        return this.getResponse(UserDataDict.NOT_LOGINED);
     }
 
     @ResponseBody
@@ -192,7 +176,7 @@ public class EmployController extends BaseController {
                 return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
             }
         }
-        return this.getResponse(UserDataDict.LOGIN_FAILED);
+        return this.getResponse(UserDataDict.NOT_LOGINED);
     }
 
     @Override
