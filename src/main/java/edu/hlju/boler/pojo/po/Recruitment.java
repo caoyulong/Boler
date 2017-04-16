@@ -2,6 +2,10 @@ package edu.hlju.boler.pojo.po;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Recruitment {
     private Integer id;
 
@@ -27,6 +31,7 @@ public class Recruitment {
 
     private Byte state;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date expireDate;
 
     private Date createTime;
@@ -49,6 +54,7 @@ public class Recruitment {
         return employ;
     }
 
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")
     public Date getExpireDate() {
         return expireDate;
     }

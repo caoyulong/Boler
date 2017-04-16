@@ -60,7 +60,7 @@ public class EmployService implements IEmployService {
     public boolean publishRecruitment(Recruitment recruitment) {
         if (recruitment != null) {
             try {
-                recruitDao.insert(recruitment);
+                recruitDao.insertSelective(recruitment);
                 return true;
             } catch (SQLException e) {
                 e.printStackTrace();

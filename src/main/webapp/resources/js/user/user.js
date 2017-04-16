@@ -27,7 +27,6 @@ $(function() {
             },
             success : function(data) {
                 if (data.code == 102) {
-//                    $("body").load("api/user/index");
                     window.location = "api/user/index";
                 } else {
                     $("#password").val("");
@@ -41,26 +40,7 @@ $(function() {
     });
 
     $("#regBtn").on("click", function() {
-        $("body").load("api/user/register");
-
-        $(function() {
-            $.ajax({
-                url : "api/user/all_roles",
-                type : "get",
-                dataType : "json",
-                timeout : TIMEOUT,
-                success : function(data) {
-                    console.info("Get all roles.");
-                    data.value.forEach(function(e) {
-                        var option = "<option value='" + e.id + "'>" + e.name + "</option>";
-                        $("#role").append(option);
-                    });
-                },
-                error : function() {
-                    console.error("Get all roles failed.");
-                }
-            });
-        });
+        $("body").load("page/register");
 
         $(function() {
             $("#pwdConfirm").on("blur", function() {

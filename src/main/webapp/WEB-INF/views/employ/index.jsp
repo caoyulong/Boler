@@ -4,6 +4,7 @@
 <head>
   <title>招聘者主页</title>
   <%@ include file="/WEB-INF/views/head.jsp"%>
+  <link href="resources/css/boler.css" rel="stylesheet" />
   <script src="resources/js/employ/employ.js"></script>
 </head>
 <body>
@@ -17,9 +18,9 @@
           </div>
           <div>
             <ul class="nav navbar-nav">
-              <li id="allApp"><a href="javascript:void(0)">所有申请</a></li>
-              <li id="pubRecruitment"><a href="javascript:void(0)">发布招聘</a></li>
-              <li id="addEmailTemp"><a href="javascript:void(0)">邮件模板</a></li>
+              <li id="allApp"><a href="javascript:void(0)">求职申请</a></li>
+              <li id="pageAllRecruits"><a href="javascript:void(0)">招聘启事</a></li>
+              <li id="pageEmailTemp"><a href="javascript:void(0)">邮件模板</a></li>
               <li class="divider"></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">用 户<b class="caret"></b></a>
