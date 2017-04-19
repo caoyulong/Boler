@@ -9,9 +9,19 @@ import edu.hlju.boler.datadictory.PageURL;
 @RequestMapping(value = "/page")
 public class PageController {
 
+    @RequestMapping(value = "/add_email_temp")
+    public String addEmailTemp() {
+        return PageURL.EMPLOY_ADD_EMAIL_TEMPLATE.getURL();
+    }
+
     @RequestMapping(value = "/all_apps")
     public String allApps() {
         return PageURL.EMPLOY_ALL_APPS.getURL();
+    }
+
+    @RequestMapping(value = "/all_email_temp")
+    public String allEmailTemp() {
+        return PageURL.ALL_EMAIL_TEMPLATE.getURL();
     }
 
     @RequestMapping(value = "/all_recruits")
@@ -19,7 +29,12 @@ public class PageController {
         return PageURL.EMPLOY_ALL_RECRUITMENTS.getURL();
     }
 
-    @RequestMapping(value = "/recruit")
+    @RequestMapping(value = "/modify_passwd")
+    public String modifyPassword() {
+        return PageURL.USER_MODIFY_PASSWORD.getURL();
+    }
+
+    @RequestMapping(value = "/add_recruit")
     public String recruit() {
         return PageURL.EMPLOY_RECRUIT.getURL();
     }

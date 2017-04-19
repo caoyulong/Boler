@@ -3,7 +3,7 @@
   <form role="form" id="recruitForm">
     <div class="form-group">
       <label for="corporation">公司</label>
-      <input type="text" class="form-control" name="corporation" id="corporation" placeholder="请输入公司名称">
+      <input type="text" class="form-control" name="corporation" id="corporation" placeholder="请输入公司名称" required>
     </div>
     <div class="form-group">
       <label for="jobName">岗位名称</label>
@@ -43,6 +43,6 @@
     </div>
   </form>
   <div class="form-group col-xs-1 col-xs-offset-6">
-    <button id="addRecruit" class="btn btn-default">确认发布</button>
+    <button id="saveEmailTemp" class="btn btn-default">确认发布</button>
   </div>
 </div>

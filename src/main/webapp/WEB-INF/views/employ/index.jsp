@@ -6,6 +6,7 @@
   <%@ include file="/WEB-INF/views/head.jsp"%>
   <link href="resources/css/boler.css" rel="stylesheet" />
   <script src="resources/js/employ/employ.js"></script>
+  <script src="resources/js/user/user.js"></script>
 </head>
 <body>
   <header></header>
@@ -25,8 +26,8 @@
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">用 户<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="javascript:void(0)">修改密码</a></li>
-                  <li><a href="javascript:void(0)">注 销</a></li>
+                  <li><a id="modifyPassword" href="javascript:void(0)">修改密码</a></li>
+                  <li><a id="logout" href="javascript:void(0)">注 销</a></li>
                 </ul>
               </li>
             </ul>

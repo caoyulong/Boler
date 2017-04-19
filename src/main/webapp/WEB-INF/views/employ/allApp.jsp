@@ -10,7 +10,7 @@
         </tr>
       </thead>
       <tbody id="allApps">
-        <tr id="blankData" class="warning" style="display: none; text-align: center">
+        <tr id="blankData" class="alert alert-warning blankData">
           <td colspan="4"><span>没有数据</span></td>
         </tr>
       </tbody>

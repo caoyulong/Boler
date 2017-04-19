@@ -1,8 +1,11 @@
 <div class="col-md-6 col-md-offset-3">
-  <ul id="recruitList" class="list-group">
+  <div id="emailTempBlank" class="alert alert-warning blankData">
+    没有数据
+  </div>
+  <ul id="emailTempList" class="list-group">
   </ul>
   <div>
-    <button id="pageAddRecruit" class="btn btn-default">新的招聘</button>
+    <button id="addEmailTemp" class="btn btn-default">添加邮件模板</button>
   </div>
   <div class="col-md-offset-5">
     <ul class="pagination">

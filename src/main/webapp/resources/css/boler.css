@@ -1,7 +1,12 @@
 .listItem {
-	
+    
 }
 
 .divGap {
-	
+    
+}
+
+.blankData {
+    display: none;
+    text-align: center;
 }
