@@ -18,7 +18,7 @@ import edu.hlju.boler.util.Encrytor;
 public class UserService implements IUserService {
     public static final String USER_OBJECT = "user";
     public static final int MAX_ERROR_TIMES = 3;
-// private int errorTimes = 0;
+    // private int errorTimes = 0;
 
     @Resource
     private IUserDao userDao;
@@ -58,13 +58,12 @@ public class UserService implements IUserService {
 
     @Override
     public boolean modifyPassword(User logined, String oldPasswd, String newPasswd) {
-        boolean isValid = logined != null && oldPasswd != null && logined.getPassword().equals(oldPasswd);
+        boolean isValid = logined != null && oldPasswd != null
+                && logined.getPassword().equals(Encrytor.encrypt(oldPasswd));
         if (isValid) {
-            User user = new User();
-            user.setId(logined.getId());
-            user.setPassword(Encrytor.encrypt(newPasswd));
+            logined.setPassword(Encrytor.encrypt(newPasswd));
             try {
-                userDao.updateByIdSelective(user);
+                userDao.updateByIdSelective(logined);
                 return true;
             } catch (SQLException e) {
                 e.printStackTrace();
