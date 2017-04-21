@@ -72,6 +72,16 @@ public class EmployeeService implements IEmployeeService {
     }
 
     @Override
+    public Application queryAppById(int id) {
+        try {
+            return applicationDao.selectById(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public List<OnlineResume> queryUserOnlineResumes(User employee) {
         if (employee != null) {
             OnlineResume resume = new OnlineResume();

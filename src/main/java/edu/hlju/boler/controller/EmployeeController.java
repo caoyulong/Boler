@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import edu.hlju.boler.datadictory.EmailDataDict;
 import edu.hlju.boler.datadictory.UserDataDict;
 import edu.hlju.boler.pojo.po.Application;
 import edu.hlju.boler.pojo.po.OnlineResume;
@@ -128,6 +129,11 @@ public class EmployeeController extends BaseController {
             User employee = (User) obj;
             application.setEmployee(employee);
             if (employeeService.saveApplication(application)) {
+                String to = application.getEmployee().getEmail();
+                String from = employee.getEmail();
+                String subject = EmailDataDict.NEW_APPLICATION.getSubject();
+                String text = EmailDataDict.NEW_APPLICATION.getText();
+                this.notifyByEmail(to, from, subject, text);
                 this.userLogging(request, "Save an application.");
                 return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
             } else {
