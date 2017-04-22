@@ -56,11 +56,21 @@
         <include refid="Base_Column_List" />
         from recruitment
         <where>
-            <if test="recruitment.corporation != null">and corporation = #{recruitment.corporation}</if>
-            <if test="recruitment.jobName != null">and job_name = #{recruitment.jobName}</if>
-            <if test="recruitment.state != null">and state = #{recruitment.state}</if>
-            <if test="recruitment.jobType != null">and job_type = #{recruitment.jobType.id}</if>
-            <if test="recruitment.employ != null">and employ = #{recruitment.employ.id}</if>
+            <if test="recruitment.corporation != null">
+                and corporation like CONCAT("%", #{recruitment.corporation}, "%")
+            </if>
+            <if test="recruitment.jobName != null">
+                and job_name like CONCAT("%", #{recruitment.jobName}, "%")
+            </if>
+            <if test="recruitment.state != null">
+                and state = #{recruitment.state}
+            </if>
+            <if test="recruitment.jobType != null">
+                and job_type = #{recruitment.jobType.id}
+            </if>
+            <if test="recruitment.employ != null">
+                and employ = #{recruitment.employ.id}
+            </if>
         </where>
         order by modify_time desc
     </select>

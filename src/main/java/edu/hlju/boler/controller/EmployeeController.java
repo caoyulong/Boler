@@ -93,6 +93,21 @@ public class EmployeeController extends BaseController {
         return this.getResponse(UserDataDict.NOT_LOGINED);
     }
 
+    @RequestMapping(value = "/recruit_condition", method = RequestMethod.POST)
+    public BaseResponse queryAllRecruitments(HttpServletRequest request, Recruitment recruit, int pageNum,
+            int pageSize) {
+        Object obj = request.getSession().getAttribute(UserController.USER_OBJECT);
+        if (obj == null) {
+            return this.getResponse(UserDataDict.NOT_LOGINED);
+        }
+        List<Recruitment> result = employeeService.queryAllRecruitments(recruit, pageNum, pageSize);
+        if (result == null) {
+            return this.getResponse(UserDataDict.OPERATIING_FAILED);
+        }
+        this.userLogging(request, "Query recruitments with condition.");
+        return this.getResponse(result);
+    }
+
     @ResponseBody
     @RequestMapping(value = "/person_info")
     public BaseResponse queryPersonInfo(HttpServletRequest request) {
