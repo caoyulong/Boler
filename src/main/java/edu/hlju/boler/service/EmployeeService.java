@@ -8,11 +8,13 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import edu.hlju.boler.dao.IApplicationDao;
+import edu.hlju.boler.dao.IJobTypeDao;
 import edu.hlju.boler.dao.IOnlineResumeDao;
 import edu.hlju.boler.dao.IPersonInfoDao;
 import edu.hlju.boler.dao.IRecruitmentDao;
 import edu.hlju.boler.dao.IUserDao;
 import edu.hlju.boler.pojo.po.Application;
+import edu.hlju.boler.pojo.po.JobType;
 import edu.hlju.boler.pojo.po.OnlineResume;
 import edu.hlju.boler.pojo.po.PersonInfo;
 import edu.hlju.boler.pojo.po.Recruitment;
@@ -35,6 +37,9 @@ public class EmployeeService implements IEmployeeService {
 
     @Resource
     private IRecruitmentDao recruitmentDao;
+
+    @Resource
+    private IJobTypeDao jobDao;
 
     @Override
     public boolean delOnlineResume(int id) {
@@ -62,9 +67,29 @@ public class EmployeeService implements IEmployeeService {
     }
 
     @Override
+    public List<JobType> queryAllJobTypes() {
+        try {
+            return jobDao.selectAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public List<Recruitment> queryAllRecruitments(int pageNum, int pageSize) {
         try {
             return recruitmentDao.selectSplit(pageNum, pageSize);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Recruitment> queryAllRecruitments(Recruitment recruit, int pageNum, int pageSize) {
+        try {
+            return recruitmentDao.selectSplitCondition(recruit, pageNum, pageSize);
         } catch (SQLException e) {
             e.printStackTrace();
         }

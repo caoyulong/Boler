@@ -5,12 +5,12 @@ var TIMEOUT = 2000;
 
 $(function() {
     login();
-    register();
+    registerPage();
     logout();
-    pagemmodifyPassword();
+    pagemodifyPassword();
 });
 
-function pagemmodifyPassword() {
+function pagemodifyPassword() {
     $("#modifyPassword").on("click", function() {
         $("#content").load("page/modify_passwd", function() {
             modifyPassword();
@@ -78,7 +78,7 @@ function logout() {
     });
 }
 
-function register() {
+function registerPage() {
     $("#regBtn").on("click", function() {
         $("body").load("page/register", function() {
             pwdConfirm();

@@ -77,11 +77,35 @@ public class EmployeeController extends BaseController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/all_job_types")
+    public BaseResponse queryAllJobTypes() {
+        this.logging("Query all job types.");
+        return this.getResponse(employeeService.queryAllJobTypes());
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/all_recruitments")
     public BaseResponse queryAllRecruitments(HttpServletRequest request, int pageNum, int pageSize) {
         Object obj = request.getSession().getAttribute(UserController.USER_OBJECT);
         if (obj != null) {
             List<Recruitment> result = employeeService.queryAllRecruitments(pageNum, pageSize);
+            if (result != null) {
+                this.userLogging(request, "Query all recruitments.");
+                return this.getResponse(result);
+            } else {
+                return this.getResponse(UserDataDict.OPERATIING_FAILED);
+            }
+        }
+        return this.getResponse(UserDataDict.NOT_LOGINED);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/query_recruit_type", method = RequestMethod.POST)
+    public BaseResponse queryAllRecruitments(HttpServletRequest request, Recruitment recruit, int pageNum,
+            int pageSize) {
+        Object obj = request.getSession().getAttribute(UserController.USER_OBJECT);
+        if (obj != null && recruit != null) {
+            List<Recruitment> result = employeeService.queryAllRecruitments(recruit, pageNum, pageSize);
             if (result != null) {
                 this.userLogging(request, "Query all recruitments.");
                 return this.getResponse(result);
@@ -198,7 +222,7 @@ public class EmployeeController extends BaseController {
     @Override
     protected void userLogging(HttpServletRequest request, String message) {
         this.logging(message);
-        this.userLogging(request, message);
+        this.saveUserLog(request, message);
     }
 
 }

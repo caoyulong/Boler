@@ -29,9 +29,24 @@ public class PageController {
         return PageURL.EMPLOY_ALL_RECRUITMENTS.getURL();
     }
 
+    @RequestMapping(value = "/employee_recruit")
+    public String employeeRecruit() {
+        return PageURL.EMPLOYEE_ALL_RECRUITMENTS.getURL();
+    }
+
+    @RequestMapping(value = "/employee_recruit_detail")
+    public String employeeRecruitDetail() {
+        return PageURL.EMPLOYEE_RECRUIT_DETAIL.getURL();
+    }
+
     @RequestMapping(value = "/modify_passwd")
     public String modifyPassword() {
         return PageURL.USER_MODIFY_PASSWORD.getURL();
+    }
+
+    @RequestMapping(value = "/my_apps")
+    public String myApplication() {
+        return PageURL.EMPLOYEE_ALL_APPS.getURL();
     }
 
     @RequestMapping(value = "/add_recruit")

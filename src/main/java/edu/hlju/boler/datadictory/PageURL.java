@@ -10,7 +10,10 @@ public enum PageURL {
     EMPLOY_RECRUIT_DETAIL("employ/recruitDetail"),
     ALL_EMAIL_TEMPLATE("employ/allEmailTemp"),
     EMPLOY_ADD_EMAIL_TEMPLATE("employ/addEmailTemp"),
-    USER_MODIFY_PASSWORD("user/modifyPassword");
+    USER_MODIFY_PASSWORD("user/modifyPassword"),
+    EMPLOYEE_ALL_APPS("employee/application"),
+    EMPLOYEE_ALL_RECRUITMENTS("employee/recruit"),
+    EMPLOYEE_RECRUIT_DETAIL("employee/recruit_detail");
 
     private String url;
 
