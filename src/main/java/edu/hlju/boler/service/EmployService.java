@@ -104,6 +104,16 @@ public class EmployService implements IEmployService {
     }
 
     @Override
+    public Application queryAppById(int id) {
+        try {
+            return applicationDao.selectById(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public List<EmailTemplate> queryEmailTemp(User employ) {
         if (employ != null) {
             try {

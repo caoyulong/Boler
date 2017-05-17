@@ -21,6 +21,8 @@ public interface IEmployeeService {
 
     List<Recruitment> queryAllRecruitments(Recruitment recruit, int pageNum, int pageSize);
 
+    Application queryAppById(int id);
+
     List<OnlineResume> queryUserOnlineResumes(User employee);
 
     boolean saveApplication(Application application);

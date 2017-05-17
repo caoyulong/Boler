@@ -22,6 +22,8 @@ public interface IEmployService {
 
     List<Recruitment> queryAllRecuitments(Recruitment recruitment, int pageNum, int pageSize);
 
+    Application queryAppById(int id);
+
     List<EmailTemplate> queryEmailTemp(User employ);
 
     boolean updateApplication(Application application);

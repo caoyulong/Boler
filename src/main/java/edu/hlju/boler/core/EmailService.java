@@ -30,6 +30,11 @@ public class EmailService implements IEmailService {
     @Resource(name = "userService")
     private IUserService userService;
 
+    /**
+     * 将简单对象的Email转换成可以发送的Email
+     * @param email 简单对象Email
+     * @return SimpleMailMessage, 可以发送的Email
+     */
     private SimpleMailMessage sendable(Email email) {
         SimpleMailMessage ssm = new SimpleMailMessage();
         ssm.setFrom(email.getFrom());
@@ -37,6 +42,7 @@ public class EmailService implements IEmailService {
         ssm.setSubject(email.getSubject());
         ssm.setSentDate(email.getSendTime());
         ssm.setText(email.getText());
+        ssm.setSentDate(email.getSendTime());
         return ssm;
     }
 
@@ -45,18 +51,17 @@ public class EmailService implements IEmailService {
         try {
             emailDao.insert(email);
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
     @Override
     public void send(Email email) {
+        this.save(email);  // 发送前保存记录
         User user = email.getUser();
-        SimpleMailMessage ssm = this.sendable(email);
         emailSender.setUsername(user.getEmail());
         emailSender.setPassword(user.getPassword());
-        emailSender.send(ssm);
+        emailSender.send(this.sendable(email));
         logger.info("[{}] {}", DateTimeUtil.now(), "Sent a Email.");
     }
 

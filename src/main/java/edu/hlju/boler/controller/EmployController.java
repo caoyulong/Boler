@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.hlju.boler.datadictory.ApplicationState;
+import edu.hlju.boler.datadictory.EmailDataDict;
 import edu.hlju.boler.datadictory.UserDataDict;
 import edu.hlju.boler.pojo.po.Application;
 import edu.hlju.boler.pojo.po.EmailTemplate;
@@ -24,7 +25,6 @@ import edu.hlju.boler.util.DateTimeUtil;
 
 /**
  * 雇主角色控制层
- *
  * @author jingqingyun
  */
 @Controller
@@ -165,14 +165,24 @@ public class EmployController extends BaseController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/update_app", method = RequestMethod.POST)
-    public BaseResponse updateApplication(HttpServletRequest request, Application application) {
+    @RequestMapping(value = "/update_app_state", method = RequestMethod.POST)
+    public BaseResponse updateApplicationState(HttpServletRequest request, int id, byte state) {
         Object obj = request.getSession().getAttribute(UserController.USER_OBJECT);
         if (obj != null) {
             User employ = (User) obj;
-            application.setEmployee(employ);
-            if (employService.updateApplication(application)) {
+            Application app = employService.queryAppById(id);
+            if (app == null) {
+                return this.getResponse(UserDataDict.OPERATIING_FAILED);
+            }
+            app.setState(state);
+            if (employService.updateApplication(app)) {
                 this.userLogging(request, "Update application's state");
+
+                String from = employ.getEmail();
+                String to = app.getEmployee().getEmail();
+                String subject = EmailDataDict.APPLICATION_STATE_UPDATED.getSubject();
+                String text = EmailDataDict.APPLICATION_STATE_UPDATED.getText();
+                this.notifyByEmail(to, from, subject, text);
                 return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
             } else {
                 return this.getResponse(UserDataDict.OPERATIING_FAILED);

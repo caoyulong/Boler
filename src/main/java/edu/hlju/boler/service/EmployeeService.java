@@ -88,8 +88,23 @@ public class EmployeeService implements IEmployeeService {
 
     @Override
     public List<Recruitment> queryAllRecruitments(Recruitment recruit, int pageNum, int pageSize) {
+        if (recruit == null) {
+            // 如果条件为空就分页查询所有信息
+            return this.queryAllRecruitments(pageNum, pageSize);
+        } else {
+            try {
+                return recruitmentDao.selectSplitCondition(recruit, pageNum, pageSize);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Application queryAppById(int id) {
         try {
-            return recruitmentDao.selectSplitCondition(recruit, pageNum, pageSize);
+            return applicationDao.selectById(id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
