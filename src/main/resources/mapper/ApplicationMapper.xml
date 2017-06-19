@@ -52,9 +52,12 @@
     
     <select id="selectByEmploy" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />           
-        from application, recruitment
-        where application.recruitment = recruitment.id and recruitment.employ = #{employ.id}
+        	application.id, employee, recruitment, application.state, 
+            application.create_time, application.modify_time           
+        from 
+            application, recruitment
+        where 
+            application.recruitment = recruitment.id and recruitment.employ = #{employ.id}
         order by create_time desc
     </select>
     
@@ -65,10 +68,10 @@
     
     <insert id="insert" parameterType="edu.hlju.boler.pojo.po.Application">
         insert into application (
-            id, employee, create_time, modify_time
+            id, employee, recruitment, state, create_time, modify_time
         ) values (
             #{id,jdbcType=INTEGER}, 
-	        #{employee.id,jdbcType=INTEGER},
+            #{employee.id,jdbcType=INTEGER},
             #{recruitment.id,jdbcType=INTEGER},
             #{state,jdbcType=TINYINT},
             #{createTime,jdbcType=TIMESTAMP},

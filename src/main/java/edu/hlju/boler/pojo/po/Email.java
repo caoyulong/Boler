@@ -18,6 +18,10 @@ public class Email implements Serializable {
 
     private Date modifyTime;
 
+    public Email() {
+        mail = new SimpleMailMessage();
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -83,7 +87,7 @@ public class Email implements Serializable {
     }
 
     public void setTo(String to) {
-        mail.setText(to);
+        mail.setTo(to);
     }
 
     public void setUser(User user) {

@@ -64,4 +64,9 @@ public class PageController {
         return PageURL.USER_REGISTER.getURL();
     }
 
+    @RequestMapping(value = "/employ_resume")
+    public String resume() {
+        return PageURL.EMPLOY_RESUME.getURL();
+    }
+
 }

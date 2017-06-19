@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import edu.hlju.boler.datadictory.ApplicationState;
 import edu.hlju.boler.datadictory.EmailDataDict;
 import edu.hlju.boler.datadictory.UserDataDict;
 import edu.hlju.boler.pojo.po.Application;
@@ -116,23 +117,6 @@ public class EmployeeController extends BaseController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/query_recruit_type", method = RequestMethod.POST)
-    public BaseResponse queryAllRecruitments(HttpServletRequest request, Recruitment recruit, int pageNum,
-            int pageSize) {
-        Object obj = request.getSession().getAttribute(UserController.USER_OBJECT);
-        if (obj != null && recruit != null) {
-            List<Recruitment> result = employeeService.queryAllRecruitments(recruit, pageNum, pageSize);
-            if (result != null) {
-                this.userLogging(request, "Query all recruitments.");
-                return this.getResponse(result);
-            } else {
-                return this.getResponse(UserDataDict.OPERATIING_FAILED);
-            }
-        }
-        return this.getResponse(UserDataDict.NOT_LOGINED);
-    }
-
-    @ResponseBody
     @RequestMapping(value = "/person_info")
     public BaseResponse queryPersonInfo(HttpServletRequest request) {
         Object obj = request.getAttribute(UserController.USER_OBJECT);
@@ -167,14 +151,18 @@ public class EmployeeController extends BaseController {
         if (obj != null) {
             User employee = (User) obj;
             application.setEmployee(employee);
+            application.setState((byte) ApplicationState.NEW.ordinal());
             if (employeeService.saveApplication(application)) {
-                String to = application.getEmployee().getEmail();
-                String from = employee.getEmail();
-                String subject = EmailDataDict.NEW_APPLICATION.getSubject();
-                String text = EmailDataDict.NEW_APPLICATION.getText();
-                this.notifyByEmail(to, from, subject, text);
-                this.userLogging(request, "Save an application.");
-                return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
+                Recruitment recruit = employeeService.queryRecruitById(application.getRecruitment().getId());
+                if (recruit != null) {
+                    String to = recruit.getEmploy().getEmail();
+                    String from = employee.getEmail();
+                    String subject = EmailDataDict.NEW_APPLICATION.getSubject();
+                    String text = EmailDataDict.NEW_APPLICATION.getText();
+                    this.notifyByEmail(to, from, subject, text, employee);
+                    this.userLogging(request, "Save an application.");
+                    return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
+                }
             } else {
                 return this.getResponse(UserDataDict.OPERATIING_FAILED);
             }

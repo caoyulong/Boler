@@ -36,18 +36,20 @@ public abstract class BaseController implements IControllerLog {
 
     /**
      * 发送邮件通知
+     *
      * @param to 收件人
      * @param from 发件人
      * @param subject 主题
      * @param text 内容
      */
-    protected void notifyByEmail(String to, String from, String subject, String text) {
+    protected void notifyByEmail(String to, String from, String subject, String text, User user) {
         Email email = new Email();
         email.setFrom(from);
         email.setTo(to);
         email.setSendTime(new Date());
         email.setSubject(subject);
         email.setText(text);
+        email.setUser(user);
         emailMessageSender.send(email);
     }
 

@@ -2,6 +2,8 @@ package edu.hlju.boler.pojo.po;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Application {
     private Integer id;
 
@@ -15,6 +17,7 @@ public class Application {
 
     private Date modifyTime;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     public Date getCreateTime() {
         return createTime;
     }
@@ -27,6 +30,7 @@ public class Application {
         return id;
     }
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     public Date getModifyTime() {
         return modifyTime;
     }

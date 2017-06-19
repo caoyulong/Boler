@@ -31,6 +31,13 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
     
+    <select id="selectByUser" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from online_resume
+        where user = #{user.id,jdbcType=INTEGER}
+    </select>
+    
     <select id="selectSplit" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />

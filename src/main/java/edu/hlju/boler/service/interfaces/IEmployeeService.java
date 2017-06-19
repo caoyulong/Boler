@@ -23,6 +23,8 @@ public interface IEmployeeService {
 
     Application queryAppById(int id);
 
+    Recruitment queryRecruitById(Integer id);
+
     List<OnlineResume> queryUserOnlineResumes(User employee);
 
     boolean saveApplication(Application application);

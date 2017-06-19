@@ -219,6 +219,24 @@ function update() {
     })
 }
 
+function appDetail(employee) {
+    $.load("page/employee_resume", function() {
+        $.ajax({
+            url : "api/employ/query_resume",
+            type : "post",
+            dataType : "json",
+            timeout : TIMEOUT,
+            data : {"employee" : employee},
+            success : function(data) {
+                
+            },
+            error : function() {
+                console.error("Request to query resume failed.");
+            }
+        });
+    });
+}
+
 function getJobType(callback) {
     $.ajax({
         url : "api/employ/all_job_types",
@@ -276,11 +294,17 @@ function allApp() {
             },
             success : function(data) {
                 if (data.code == 200 && data.value.length > 0) {
-                    var tds = "";
                     data.value.forEach(function(e) {
-                        tds += jointTag(e, "td");
+                        var tds = "";
+                        tds += jointTag(e.employee.email, "td");
+                        tds += jointTag(e.state, "td");
+                        tds += jointTag(e.createTime, "td");
+                        tds += jointTag(e.modifyTime, "td");
+                        var option = "<button class='btn btn-default' onclick='appDetail(" + e.employee.id + ")'>详 情</button>";
+                        tds += jointTag(option, "td");
+                        var tr = jointTag(tds, "tr");
+                        $("#allApps").append(tr);
                     });
-                    jointTag(tds, "tr");
                 } else {
                     console.info("No application data.");
                     $("#blankData").show();

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import edu.hlju.boler.dao.IApplicationDao;
 import edu.hlju.boler.dao.IJobTypeDao;
@@ -22,6 +23,7 @@ import edu.hlju.boler.pojo.po.User;
 import edu.hlju.boler.service.interfaces.IEmployeeService;
 
 @Service("employeeService")
+@Transactional
 public class EmployeeService implements IEmployeeService {
     @Resource
     private IPersonInfoDao personInfoDao;
@@ -105,6 +107,16 @@ public class EmployeeService implements IEmployeeService {
     public Application queryAppById(int id) {
         try {
             return applicationDao.selectById(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Recruitment queryRecruitById(Integer id) {
+        try {
+            return recruitmentDao.selectById(id);
         } catch (SQLException e) {
             e.printStackTrace();
         }

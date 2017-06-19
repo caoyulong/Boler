@@ -5,7 +5,7 @@
       </ul>
       <br />
       <div class="form-group">
-          <input id="keyword" type="text" class="form-control" placeholder="关键字" />
+          <input id="keyword" type="text" class="form-control" placeholder="请输入关键字" />
           <button id="search" class="form-control">搜 索</button>
       </div>
     </form>

@@ -7,6 +7,7 @@
           <th>状 态</th>
           <th>申请时间</th>
           <th>更新时间</th>
+          <th>操 作</th>
         </tr>
       </thead>
       <tbody id="allApps">

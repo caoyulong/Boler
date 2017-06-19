@@ -17,6 +17,7 @@ import edu.hlju.boler.datadictory.EmailDataDict;
 import edu.hlju.boler.datadictory.UserDataDict;
 import edu.hlju.boler.pojo.po.Application;
 import edu.hlju.boler.pojo.po.EmailTemplate;
+import edu.hlju.boler.pojo.po.OnlineResume;
 import edu.hlju.boler.pojo.po.Recruitment;
 import edu.hlju.boler.pojo.po.User;
 import edu.hlju.boler.pojo.vo.BaseResponse;
@@ -25,6 +26,7 @@ import edu.hlju.boler.util.DateTimeUtil;
 
 /**
  * 雇主角色控制层
+ *
  * @author jingqingyun
  */
 @Controller
@@ -147,6 +149,13 @@ public class EmployController extends BaseController {
         return this.getResponse(UserDataDict.NOT_LOGINED);
     }
 
+    @RequestMapping(value = "/edu_exp")
+    @ResponseBody
+    public BaseResponse queryEduExp(HttpServletRequest request, int recruit) {
+        // TODO
+        return null;
+    }
+
     @ResponseBody
     @RequestMapping(value = "/all_emailtemp")
     public BaseResponse queryEmailTemp(HttpServletRequest request) {
@@ -162,6 +171,34 @@ public class EmployController extends BaseController {
             }
         }
         return this.getResponse(UserDataDict.NOT_LOGINED);
+    }
+
+    @RequestMapping(value = "proj_exp")
+    @ResponseBody
+    public BaseResponse queryProjExp(HttpServletRequest request, int recruit) {
+        // TODO
+        return null;
+    }
+
+    @RequestMapping(value = "/query_resume", method = RequestMethod.POST)
+    public BaseResponse queryResumeByEmployee(HttpServletRequest request, int employee) {
+        Object object = request.getSession().getAttribute(UserController.USER_OBJECT);
+        if (object != null) {
+            OnlineResume resume = employService.queryResumeByEmployee(employee);
+            if (resume != null) {
+                this.userLogging(request, "Query employee's online resume");
+                return this.getResponse(resume);
+            }
+            return this.getResponse(UserDataDict.OPERATIING_FAILED);
+        }
+        return this.getResponse(UserDataDict.NOT_LOGINED);
+    }
+
+    @RequestMapping(value = "/work_exp")
+    @ResponseBody
+    public BaseResponse queryWorkExp(HttpServletRequest request, int recruit) {
+        // TODO
+        return null;
     }
 
     @ResponseBody
@@ -182,7 +219,7 @@ public class EmployController extends BaseController {
                 String to = app.getEmployee().getEmail();
                 String subject = EmailDataDict.APPLICATION_STATE_UPDATED.getSubject();
                 String text = EmailDataDict.APPLICATION_STATE_UPDATED.getText();
-                this.notifyByEmail(to, from, subject, text);
+                this.notifyByEmail(to, from, subject, text, employ);
                 return this.getResponse(UserDataDict.OPERATIING_SUCCEED);
             } else {
                 return this.getResponse(UserDataDict.OPERATIING_FAILED);

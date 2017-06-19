@@ -5,6 +5,7 @@ import java.util.List;
 import edu.hlju.boler.pojo.po.Application;
 import edu.hlju.boler.pojo.po.EmailTemplate;
 import edu.hlju.boler.pojo.po.JobType;
+import edu.hlju.boler.pojo.po.OnlineResume;
 import edu.hlju.boler.pojo.po.Recruitment;
 import edu.hlju.boler.pojo.po.User;
 
@@ -25,6 +26,8 @@ public interface IEmployService {
     Application queryAppById(int id);
 
     List<EmailTemplate> queryEmailTemp(User employ);
+
+    OnlineResume queryResumeByEmployee(int employee);
 
     boolean updateApplication(Application application);
 

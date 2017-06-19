@@ -22,6 +22,8 @@ public interface IOnlineResumeDao {
     @Cacheable
     OnlineResume selectById(Integer id) throws SQLException;
 
+    OnlineResume selectByUser(int user) throws SQLException;
+
     @Cacheable
     List<OnlineResume> selectSplit(@Param("pageNum") int pageNum, @Param("pageSize") int pageSize) throws SQLException;
 

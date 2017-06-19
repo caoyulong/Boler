@@ -32,6 +32,7 @@ public class EmailService implements IEmailService {
 
     /**
      * 将简单对象的Email转换成可以发送的Email
+     * 
      * @param email 简单对象Email
      * @return SimpleMailMessage, 可以发送的Email
      */
@@ -57,7 +58,7 @@ public class EmailService implements IEmailService {
 
     @Override
     public void send(Email email) {
-        this.save(email);  // 发送前保存记录
+        // this.save(email); // 发送前保存记录
         User user = email.getUser();
         emailSender.setUsername(user.getEmail());
         emailSender.setPassword(user.getPassword());

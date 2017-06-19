@@ -13,7 +13,8 @@ public enum PageURL {
     USER_MODIFY_PASSWORD("user/modifyPassword"),
     EMPLOYEE_ALL_APPS("employee/application"),
     EMPLOYEE_ALL_RECRUITMENTS("employee/recruit"),
-    EMPLOYEE_RECRUIT_DETAIL("employee/recruit_detail");
+    EMPLOYEE_RECRUIT_DETAIL("employee/recruit_detail"),
+    EMPLOY_RESUME("employ/resume");
 
     private String url;
 
